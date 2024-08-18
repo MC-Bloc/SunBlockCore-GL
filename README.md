@@ -19,7 +19,33 @@ Please see the [docs folder](./docs/) for more documentation.
 - For the JAR file, please see [releases](https://github.com/estineali/Solar_Minecraft/releases).
 - For instructions on how to run this with forge, see [this wiki link](https://github.com/en4395/Solar_Minecraft/wiki/How-to-join-the-Solar-Minecraft-server).  
 
-## The Mod up to now
+## Joining the Server: 
+1. Install and set up the CurseForge app [here](https://www.curseforge.com/download/app)
+2. In "My Modpacks", click `Create Custom Profile`. 
+
+<img src ="https://github.com/en4395/Solar_Documentation/blob/main/Client_Setup/Client_Setup_1.PNG" width=550>
+
+3. Choose "Minecraft Version" `1.20.2` and "Game Type" `Forge`. Click create. 
+
+<img src ="https://github.com/en4395/Solar_Minecraft/blob/updating-wiki/docs/assets/CreateNewProfile.png" width=550>
+
+4. On the options button, click `Open Folder`. This will open the modpack's directory in your file explorer.
+
+<img src ="https://github.com/en4395/Solar_Minecraft/blob/updating-wiki/docs/assets/AddingMods.png" width=550>
+
+5. In your file explorer, open the `mods` directory. 
+
+<img src ="https://github.com/en4395/Solar_Documentation/blob/main/Client_Setup/Client_Setup_5.PNG" width=550>
+
+6. Drag and drop (or move) the [mod (.jar) file](https://github.com/en4395/Solar_Minecraft/releases) into the `mods` directory 
+
+<img src ="https://github.com/en4395/Solar_Documentation/blob/main/Client_Setup/Client_Setup_6.PNG" width=550>
+
+7. Back in CurseForge, Click `Play` to launch the modpack. 
+
+8. Once the game is loaded, choose `Multiplayer` in the main menu. Click `Add Server` and enter the server's IP address, follower by :25565 
+
+## The So Far...
 The mod is set up to display server data on a heads-up display (HUD). 
 
 The CPU temperature values are fetched from the command line on the server side (see how this is done [here](https://github.com/en4395/Solar_Minecraft/blob/main/src/main/java/solarminecraft/services/DataQueryProcess.java)). 
