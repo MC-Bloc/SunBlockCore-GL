@@ -19,6 +19,12 @@ public class ClientEventHandler {
 	private static final Minecraft mc = Minecraft.getInstance();
 	public static boolean showAllSolarStats = false;
 
+	// if 0, display time remaining, if 1 display power details, if 2 display solar stats
+	// set in ClientForgeHandler.
+	public static int statsIndex = 0;
+
+
+
 	@SubscribeEvent
 	public void onRenderTick(RenderGuiOverlayEvent.Post event) {
 		if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
@@ -27,7 +33,7 @@ public class ClientEventHandler {
 
 			String powerString = "Burning " + powerConsumption  + " Watts";
 			String solarStats = "Solar: " + ClientSetup.serverData.getPvVoltage() + "V | " + ClientSetup.serverData.getPvCurrent() + "A";
-			String timeRemainingString = "Time Remaining: " + ClientSetup.serverData.getTimeRemaining() + " Hours (" + ClientSetup.serverData.getBattRemaining() + "%)";
+			String timeRemainingString = ClientSetup.serverData.getTimeRemaining() + " Hours remaining";
 
 			int solarStatsColor = mc.level.isNight() ? 0xCAE34B : 0xCAE34B; // same for now.
 
@@ -37,9 +43,13 @@ public class ClientEventHandler {
 			if (showAllSolarStats) {
 				SolarStats(event);
 			} else {
-				RenderUtils.drawStringBottomLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 1); // lowest line is 1.
-				RenderUtils.drawStringTopLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 0);
-				RenderUtils.drawStringCenter(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 0);
+				if (statsIndex == 0) {
+					RenderUtils.drawStringBottomLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 1); // lowest line is 1.
+				} else if (statsIndex == 1) {
+					RenderUtils.drawStringBottomLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 1); // lowest line is 1.
+				} else if (statsIndex == 2) {
+					RenderUtils.drawStringBottomLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 1); // lowest line is 1.
+				}
 			}
 
 		}
