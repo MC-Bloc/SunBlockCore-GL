@@ -43,12 +43,12 @@ public class ClientEventHandler {
 			if (showAllSolarStats) {
 				SolarStats(event);
 			} else {
-				if (statsIndex == 0) {
-					RenderUtils.drawStringBottomLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 1); // lowest line is 1.
-				} else if (statsIndex == 1) {
-					RenderUtils.drawStringBottomLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 1); // lowest line is 1.
-				} else if (statsIndex == 2) {
-					RenderUtils.drawStringBottomLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 1); // lowest line is 1.
+				if (statsIndex < 5) {
+					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 0);
+				} else if (statsIndex < 10) {
+					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 0);
+				} else if (statsIndex < 15) {
+					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 0);
 				}
 			}
 

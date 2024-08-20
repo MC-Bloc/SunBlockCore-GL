@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class ClientForgeHandler {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        ClientEventHandler.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 3;
+        ClientEventHandler.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
         if (event.phase == TickEvent.Phase.END) {
             if (KeyBindings.INSTANCE.showSolarStats.isDown()) {
                 ClientEventHandler.showAllSolarStats = true;
