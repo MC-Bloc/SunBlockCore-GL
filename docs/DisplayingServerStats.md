@@ -2,18 +2,18 @@
 
 * The server reads the stats from the `JSON` file produced from this python script.
 * This file contains 12 readings namely:
-  1. `timestamp`,
-  2. `pvvoltage`,
-  3. `pvcurrent`,
-  4. `pvpower`,
-  5. `bvoltage`,
-  6. `battChargeCurrent`,
-  7. `battChargePower`,
-  8. `lpower`,
-  9. `bremaining`,
-  10. `btemp`,
-  11. `battOverallCurrent`,
-  12. `powerDraw`.
+  1. `Timestamp`,
+  2. `PVVoltage`,
+  3. `PVCurrent`,
+  4. `PVPower`,
+  5. `BattVoltage`,
+  6. `BattChargeCurrent`,
+  7. `BattChargePower`,
+  8. `LoadPower`,
+  9. `BattPercentage`,
+  10. `btemp`, (This is Deprecated. No sensors in the system. To be removed later)
+  11. `BattOverallCurrent`,
+  12. `CPUPowerDraw`.
 * These readings are read by the modpack in the file [DataQueryProcess.java](src/main/java/solarminecraft/services/DataQueryProcess.java).
 * This file reads and parses the data for each reading, and each of them has a wrapper `GET` function.
 * Each of these functions is called by the [ServerSetup.java](src/main/java/solarminecraft/services/setup/ServerSetup.java) file. This file refreshes these readings every second.

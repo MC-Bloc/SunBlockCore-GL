@@ -176,27 +176,27 @@ public class DataQueryProcess {
                 String data = reader.readLine().strip();
 
                 if (data != null) { 
-                    if (property == SOLAR_DATA.PVVOLTAGE && data.contains("pvvoltage")){ 
+                    if (property == SOLAR_DATA.PVVOLTAGE && data.contains("PVVoltage")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.PVCURRENT && data.contains("pvcurrent")){ 
+                    } else if (property == SOLAR_DATA.PVCURRENT && data.contains("PVCurrent")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.PVPOWER && data.contains("pvpower")){ 
+                    } else if (property == SOLAR_DATA.PVPOWER && data.contains("PVPower")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTVOLTAGE && data.contains("bvoltage")){ 
+                    } else if (property == SOLAR_DATA.BATTVOLTAGE && data.contains("BattVoltage")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTCHARGECURRENT && data.contains("battChargeCurrent")){ 
+                    } else if (property == SOLAR_DATA.BATTCHARGECURRENT && data.contains("BattChargeCurrent")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTCHARGEPOWER && data.contains("battChargePower")){ 
+                    } else if (property == SOLAR_DATA.BATTCHARGEPOWER && data.contains("BattChargePower")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.LPOWER && data.contains("lpower")){ 
+                    } else if (property == SOLAR_DATA.LPOWER && data.contains("LoadPower")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTREMAINING && data.contains("bremaining")){ 
+                    } else if (property == SOLAR_DATA.BATTREMAINING && data.contains("BattPercentage")){
                         return GetValue(data);  
                     } else if (property == SOLAR_DATA.BATTTEMP && data.contains("btemp")){ 
+                        return 0;  // Btemp is deprecated. No sensors in the system.
+                    } else if (property == SOLAR_DATA.BATTOVERALLCURRENT && data.contains("BattOverallCurrent")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTOVERALLCURRENT && data.contains("battOverallCurrent")){ 
-                        return GetValue(data);  
-                    } else if (property == SOLAR_DATA.SYSTEMPOWERDRAW && data.contains("powerdraw")){
+                    } else if (property == SOLAR_DATA.SYSTEMPOWERDRAW && data.contains("CPUPowerDraw")){
                         return GetValue(data);
                     }
                 }
