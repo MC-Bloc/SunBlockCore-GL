@@ -24,7 +24,6 @@ public class DataQueryProcess {
         BATTCHARGEPOWER,
         LPOWER,
         BATTREMAINING,
-        BATTTEMP,
         BATTOVERALLCURRENT,
         SYSTEMPOWERDRAW
     }
@@ -94,10 +93,6 @@ public class DataQueryProcess {
 
     public static float GetBattRemaining() {
         return GetServerData(SOLAR_DATA.BATTREMAINING);
-    }
-
-    public static float GetBattTemp() {
-        return GetServerData(SOLAR_DATA.BATTTEMP);
     }
 
     public static float GetBattOverallCurrent() {
@@ -193,8 +188,6 @@ public class DataQueryProcess {
                         return GetValue(data);  
                     } else if (property == SOLAR_DATA.BATTREMAINING && data.contains("BattPercentage")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTTEMP && data.contains("btemp")){ 
-                        return 0;  // Btemp is deprecated. No sensors in the system.
                     } else if (property == SOLAR_DATA.BATTOVERALLCURRENT && data.contains("BattOverallCurrent")){
                         return GetValue(data);  
                     } else if (property == SOLAR_DATA.SYSTEMPOWERDRAW && data.contains("CPUPowerDraw")){
@@ -204,7 +197,7 @@ public class DataQueryProcess {
             } 
             return 7.7f;
         } catch (Exception e) { 
-            System.out.println("There was an error running this function: " + e.getMessage());
+            System.out.println("Sunblock Error: Failed to complete DataQueryProcess::GetServerData. Reason:  " + e.getMessage());
             return -1f;
         } 
     }

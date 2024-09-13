@@ -66,7 +66,7 @@ public class ServerSetup {
                     currentlPower = DataQueryProcess.GetLPower();
                     
                     currentbattRemaining = DataQueryProcess.GetBattRemaining();
-                    currentbattTemp = DataQueryProcess.GetBattTemp();
+                    currentbattTemp = 0.0f; // deprecated. Remove next.
                     currentbattOverallCurrent = DataQueryProcess.GetBattOverallCurrent();
                     timeRemaining = DataQueryProcess.GetTimeRemaining();
 
