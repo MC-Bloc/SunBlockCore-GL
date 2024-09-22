@@ -24,7 +24,6 @@ public class DataQueryProcess {
         BATTCHARGEPOWER,
         LPOWER,
         BATTREMAINING,
-        BATTTEMP,
         BATTOVERALLCURRENT,
         SYSTEMPOWERDRAW
     }
@@ -96,10 +95,6 @@ public class DataQueryProcess {
         return GetServerData(SOLAR_DATA.BATTREMAINING);
     }
 
-    public static float GetBattTemp() {
-        return GetServerData(SOLAR_DATA.BATTTEMP);
-    }
-
     public static float GetBattOverallCurrent() {
         return GetServerData(SOLAR_DATA.BATTOVERALLCURRENT);
     }
@@ -143,10 +138,10 @@ public class DataQueryProcess {
             
             String data = "";
             for (int i = 0; i < count_lines; i++) 
-                data = reader.readLine().strip();
+                data = reader.readLine();
 
             if (data != null) { 
-                data = data.split(":", 2)[1];
+                data = data.strip().split(":", 2)[1];
             }
             return data; 
         } catch (Exception e) { 
@@ -173,9 +168,10 @@ public class DataQueryProcess {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             for (int i = 0; i < count_lines; i++) {
-                String data = reader.readLine().strip();
+                String data = reader.readLine();
 
-                if (data != null) { 
+                if (data != null) {
+                    data = data.strip();
                     if (property == SOLAR_DATA.PVVOLTAGE && data.contains("PVVoltage")){
                         return GetValue(data);  
                     } else if (property == SOLAR_DATA.PVCURRENT && data.contains("PVCurrent")){
@@ -192,8 +188,6 @@ public class DataQueryProcess {
                         return GetValue(data);  
                     } else if (property == SOLAR_DATA.BATTREMAINING && data.contains("BattPercentage")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTTEMP && data.contains("btemp")){ 
-                        return 0;  // Btemp is deprecated. No sensors in the system.
                     } else if (property == SOLAR_DATA.BATTOVERALLCURRENT && data.contains("BattOverallCurrent")){
                         return GetValue(data);  
                     } else if (property == SOLAR_DATA.SYSTEMPOWERDRAW && data.contains("CPUPowerDraw")){
@@ -203,7 +197,7 @@ public class DataQueryProcess {
             } 
             return 7.7f;
         } catch (Exception e) { 
-            System.out.println("There was an error running this function: " + e.getMessage());
+            System.out.println("Sunblock Error: Failed to complete DataQueryProcess::GetServerData. Reason:  " + e.getMessage());
             return -1f;
         } 
     }
@@ -212,8 +206,11 @@ public class DataQueryProcess {
         // Extract the float value from the string entry from the JSON file
         
         float ret_val = 0.0f;
-        String[] split_data = data.split(":", 2); 
-        ret_val = Float.valueOf(split_data[1].replace('"', '\0').replace(',', '\0').strip());
+        String[] split_data = data.split(":", 2);
+
+        if (split_data.length > 1 && split_data[1] != null ) {
+            ret_val = Float.valueOf(split_data[1].replace('"', '\0').replace(',', '\0').strip());
+        }
 
         return ret_val;
          
