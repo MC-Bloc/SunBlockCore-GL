@@ -29,7 +29,7 @@ public class ServerDataS2CPacket {
                                 float pvVoltage, float pvCurrent, float pvPower, 
                                 float battVoltage, float battChargeCurrent, float battChargePower, 
                                 float lPower, 
-                                float battRemaining, float battTemp, float battOverallCurrent, String timeRemaining) {
+                                float battRemaining, float battOverallCurrent, String timeRemaining) {
         this.cpuTemp = cpuTemp;
         this.power = power;
 
@@ -44,7 +44,6 @@ public class ServerDataS2CPacket {
         this.lPower = lPower;
         
         this.battRemaining = battRemaining;
-        this.battTemp = battTemp;
         this.battOverallCurrent = battOverallCurrent;
         this.timeRemaining = timeRemaining;
     }
@@ -64,7 +63,6 @@ public class ServerDataS2CPacket {
         lPower = buf.readFloat();
 
         battRemaining = buf.readFloat();
-        battTemp = buf.readFloat();
         battOverallCurrent = buf.readFloat();
         timeRemaining = buf.readUtf();
         
@@ -85,7 +83,6 @@ public class ServerDataS2CPacket {
         buf.writeFloat(lPower);
 
         buf.writeFloat(battRemaining);
-        buf.writeFloat(battTemp);
         buf.writeFloat(battOverallCurrent);
 
         buf.writeUtf(timeRemaining);
@@ -109,7 +106,6 @@ public class ServerDataS2CPacket {
                 SolarServerData.setlPower(lPower);
 
                 SolarServerData.setBattRemaining(battRemaining);
-                SolarServerData.setBattTemp(battTemp);
                 SolarServerData.setBattOverallCurrent(battOverallCurrent);
                 SolarServerData.setTimeRemaining(timeRemaining);
 
