@@ -159,7 +159,7 @@ public class DataQueryProcess {
             return -1f; 
         }
 
-        int count_lines = 14;
+        int count_lines = 13; 
 
         try {
             ProcessBuilder pb = new ProcessBuilder("cat", SunblockDataPath);
