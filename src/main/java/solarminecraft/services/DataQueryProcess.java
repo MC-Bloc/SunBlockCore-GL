@@ -27,7 +27,7 @@ public class DataQueryProcess {
         BATTOVERALLCURRENT,
         SYSTEMPOWERDRAW
     }
-    static String CPUTempPath = "/sys/class/thermal/thermal_zone2/temp";
+    static String CPUTempPath = "/sys/class/thermal/thermal_zone1/temp";
     static String SunblockDataPath = "/home/pc/SunblockData/solar_data.json";
     static float MAXBATTERYCAPACITY = 600f; // max battery capacity in Watts
     static int MAXMEMORY = 10; // Last 10 seconds
