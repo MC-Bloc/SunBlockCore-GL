@@ -1,5 +1,5 @@
 # Solar Powered Minecraft
-`Version 1.0.6`
+`Version 1.0.7`
 
 The Solar Minecraft Project is a research project at Concordia University Montreal, under the supervision of Dr. Bart 
 Simon & Dr. Darren Wershler. 
