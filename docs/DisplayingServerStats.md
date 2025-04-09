@@ -14,11 +14,11 @@
   9. `BattPercentage`,
   10. `BattOverallCurrent`,
   11. `CPUPowerDraw`.
-* These readings are read by the modpack in the file [DataQueryProcess.java](../src/main/java/solarminecraft/services/DataQueryProcess.java).
+* These readings are read by the modpack in the file [DataQueryProcess.java](../src/main/java/ca/milieux/sunblock/sunblockcore/services/DataQueryProcess.java).
 * This file reads and parses the data for each reading, and each of them has a wrapper `GET` function.
-* Each of these functions is called by the [ServerSetup.java](../src/main/java/solarminecraft/services/setup/ServerSetup.java) file. This file refreshes these readings every second.
-* After reading these values, they are used as the constructor values for a `ServerDataS2CPacket` object. (This object is defined [here](../src/main/java/solarminecraft/application/network/packets/ServerDataS2CPacket.java))
-* The `ServerDataS2CPacket` object is sent over to the Client via the [ModPackets.SendToClient(...)](../src/main/java/solarminecraft/application/network/ModPackets.java) method.
-* On the client side, the `ServerDataS2CPacket` sets the static class values in the [SolarServerData](../src/main/java/solarminecraft/domain/SolarServerData.java) object.
-* The `SolarServerData` Object is contained within the [ClientSetup](../src/main/java/solarminecraft/services/setup/ClientSetup.java) file.
-* The [ClientEventHandler](../src/main/java/solarminecraft/application/client/ClientEventHandler.java) uses the `SolarServerData` object from the `ClientSetup` object, to get all these values and render them on the HUD.      
+* Each of these functions is called by the [ServerSetup.java](../src/main/java/ca/milieux/sunblock/sunblockcore/services/setup/ServerSetup.java) file. This file refreshes these readings every second.
+* After reading these values, they are used as the constructor values for a `ServerDataS2CPacket` object. (This object is defined [here](../src/main/java/ca/milieux/sunblock/sunblockcore/application/network/packets/ServerDataS2CPacket.java))
+* The `ServerDataS2CPacket` object is sent over to the Client via the [ModPackets.SendToClient(...)](../src/main/java/ca/milieux/sunblock/sunblockcore/application/network/ModPackets.java) method.
+* On the client side, the `ServerDataS2CPacket` sets the static class values in the [SolarServerData](../src/main/java/ca/milieux/sunblock/sunblockcore/domain/SolarServerData.java) object.
+* The `SolarServerData` Object is contained within the [ClientSetup](../src/main/java/ca/milieux/sunblock/sunblockcore/services/setup/ClientSetup.java) file.
+* The [ClientEventHandler](../src/main/java/ca/milieux/sunblock/sunblockcore/application/client/ClientEventHandler.java) uses the `SolarServerData` object from the `ClientSetup` object, to get all these values and render them on the HUD.      

@@ -1,3 +1,4 @@
-# Solar Minecraft 
+# SunBlockCore
 
-This folder contains some Wiki Resources. Find the [wiki here]()
+The core mod for SunBlock - the Solar-Powered Minecraft server. 
+

@@ -3,22 +3,20 @@ loaderVersion="[47,)"
 license="All Rights Reserved"
 issueTrackerURL=" "
 [[mods]]
-    modId="solarminecraft"
-    version="1.20.1"
-    displayName="Solar Minecraft"
-    displayURL=" "
-    authors="Ella Noyes, Shahrom Ali, Stuart Thiel"
-    description='''
-    Solar Powered Minecraft
-    '''
+    modId="sunblockcore"
+    version="0.7.0"
+    displayName="SunBlockCore"
+    displayURL="https://sunblockone.milieux.ca"
+    authors="Shahrom Ali, Ella Noyes, Stuart Thiel"
+    description='''The core mod for SunBlock - the solar-powered minecraft server.'''
 
-[[dependencies.solarminecraft]]
+[[dependencies.sunblockcore]]
     modId="forge"
     mandatory=true
     versionRange="[47,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.solarminecraft]]
+[[dependencies.sunblockcore]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.20.1,)"
