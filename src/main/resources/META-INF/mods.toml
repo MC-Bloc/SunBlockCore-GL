@@ -4,7 +4,7 @@ license="All Rights Reserved"
 issueTrackerURL=" "
 [[mods]]
     modId="sunblockcore"
-    version="0.7.0"
+    version="0.7.0-1.20.1"
     displayName="SunBlockCore"
     displayURL="https://sunblockone.milieux.ca"
     authors="Shahrom Ali, Ella Noyes, Stuart Thiel"
