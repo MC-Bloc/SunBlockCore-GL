@@ -24,12 +24,13 @@ public class ServerDataS2CPacket {
     private static float battTemp;
     private static float battOverallCurrent;
     private static String timeRemaining;
+    private static String timestamp;
 
     public ServerDataS2CPacket( float cpuTemp, float power, 
                                 float pvVoltage, float pvCurrent, float pvPower, 
                                 float battVoltage, float battChargeCurrent, float battChargePower, 
                                 float lPower, 
-                                float battRemaining, float battOverallCurrent, String timeRemaining) {
+                                float battRemaining, float battOverallCurrent, String timeRemaining, String timestamp) {
         this.cpuTemp = cpuTemp;
         this.power = power;
 
@@ -46,6 +47,7 @@ public class ServerDataS2CPacket {
         this.battRemaining = battRemaining;
         this.battOverallCurrent = battOverallCurrent;
         this.timeRemaining = timeRemaining;
+        this.timestamp = timestamp;
     }
 
     public ServerDataS2CPacket(FriendlyByteBuf buf) {
@@ -65,7 +67,7 @@ public class ServerDataS2CPacket {
         battRemaining = buf.readFloat();
         battOverallCurrent = buf.readFloat();
         timeRemaining = buf.readUtf();
-        
+        timestamp = buf.readUtf();
     }
 
     public void toBytes(FriendlyByteBuf buf) {
@@ -86,7 +88,7 @@ public class ServerDataS2CPacket {
         buf.writeFloat(battOverallCurrent);
 
         buf.writeUtf(timeRemaining);
-
+        buf.writeUtf(timestamp);
     }
 
     public static boolean handle(ServerDataS2CPacket packet, Supplier<NetworkEvent.ClientCustomPayloadEvent.Context> ctx) {
@@ -108,6 +110,7 @@ public class ServerDataS2CPacket {
                 SolarServerData.setBattRemaining(battRemaining);
                 SolarServerData.setBattOverallCurrent(battOverallCurrent);
                 SolarServerData.setTimeRemaining(timeRemaining);
+                SolarServerData.setTimestamp(timestamp);
 
         });
         return true;
