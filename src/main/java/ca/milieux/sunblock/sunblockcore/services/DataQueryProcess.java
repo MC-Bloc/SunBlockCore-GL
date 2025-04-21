@@ -11,19 +11,7 @@ import java.util.Queue;
 
 public class DataQueryProcess {
     
-    enum SOLAR_DATA {
-        TIMESTAMP, 
-        PVVOLTAGE,
-        PVCURRENT,
-        PVPOWER,
-        BATTVOLTAGE,
-        BATTCHARGECURRENT,
-        BATTCHARGEPOWER,
-        LPOWER,
-        BATTREMAINING,
-        BATTOVERALLCURRENT,
-        SYSTEMPOWERDRAW
-    }
+
     static String CPUTempPath = "/sys/class/thermal/thermal_zone1/temp";
     static String SunblockDataPath = "/home/pc/SunblockData/solar_data.json";
     static float MAXBATTERYCAPACITY = 600f; // max battery capacity in Watts
@@ -56,50 +44,10 @@ public class DataQueryProcess {
         return 0;
     }
 
-    public static float GetSysPower() {
-        return GetServerData(SOLAR_DATA.SYSTEMPOWERDRAW);
-    }
-    
-    public static float GetPVVoltage() {
-        return GetServerData(SOLAR_DATA.PVVOLTAGE);
-    }
-
-    public static float GetPVCurrent() {
-        return GetServerData(SOLAR_DATA.PVCURRENT);
-    }
-
-    public static float GetPVPower() {
-        return GetServerData(SOLAR_DATA.PVPOWER);
-    }
-
-    public static float GetBattVoltage() {
-        return GetServerData(SOLAR_DATA.BATTVOLTAGE);
-    }
-
-    public static float GetBattChargeCurrent() {
-        return GetServerData(SOLAR_DATA.BATTCHARGECURRENT);
-    }
-
-    public static float GetBattChargePower() {
-        return GetServerData(SOLAR_DATA.BATTCHARGEPOWER);
-    }
-
-    public static float GetLPower() {
-        return GetServerData(SOLAR_DATA.LPOWER);
-    }
-
-    public static float GetBattRemaining() {
-        return GetServerData(SOLAR_DATA.BATTREMAINING);
-    }
-
-    public static float GetBattOverallCurrent() {
-        return GetServerData(SOLAR_DATA.BATTOVERALLCURRENT);
-    }
-
     public static String GetTimeRemaining() {
-        float battRemaining = GetBattRemaining();
+        float battRemaining = GetServerData(SOLAR_DATA.BATTREMAINING);
 
-        float loadPower = GetLPower();
+        float loadPower = GetServerData(SOLAR_DATA.LPOWER);
 
         if (powerConsumptionHistory.size() < MAXMEMORY) {
             powerConsumptionHistory.add(loadPower);
@@ -114,49 +62,39 @@ public class DataQueryProcess {
             return Double.toString(Math.floor(timeRemaining * 100) / 100);
 
         }
-
-
-
-
     }
 
-    // UNTESTED
-    public static String GetTimestamp() { 
-
-        String path = "/home/pc/SunblockData/solar_data.json";
-        int count_lines = 2; // only need to read until the 2nd line 
+    public static String GetTimestamp() {
+        int count_lines = 2 + 11; //2 for the brackets, 11 for the number of entries.
 
         try {
-            ProcessBuilder pb = new ProcessBuilder("cat", path);
+            ProcessBuilder pb = new ProcessBuilder("cat", SunblockDataPath);
             pb.redirectErrorStream(true);
-
             Process process = pb.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            
-            String data = "";
-            for (int i = 0; i < count_lines; i++) 
-                data = reader.readLine();
 
-            if (data != null) { 
-                data = data.strip().split(":", 2)[1];
+            for (int i = 0; i < count_lines; i++) {
+                String data = reader.readLine();
+                if (data != null) {
+                    data = data.strip();
+                    if (data.contains("Timestamp")){
+                        return data;
+                    }
+                }
             }
-            return data; 
-        } catch (Exception e) { 
+            return null;
+        } catch (Exception e) {
             System.out.println("ERROR: There was an error calling GetTimestamp: " + e.getMessage() );
-            return "";
-        }    
+            return null;
+        }
     }
 
-
-    /* PRIVATE FUNCTIONS */
-    static float GetServerData(SOLAR_DATA property) { 
-        // dont use this function to get the timestamp. This function only returns a float. 
-
-        if (property == SOLAR_DATA.TIMESTAMP) { 
-            return -1f; 
+    public static float GetServerData(SOLAR_DATA property) {
+        if (property == SOLAR_DATA.TIMESTAMP) {
+            return -1f;
         }
 
-        int count_lines = 13; 
+        int count_lines = 2 + 11; //2 for the brackets, 11 for the number of entries.
 
         try {
             ProcessBuilder pb = new ProcessBuilder("cat", SunblockDataPath);
@@ -194,7 +132,7 @@ public class DataQueryProcess {
             } 
             return 7.7f;
         } catch (Exception e) { 
-            System.out.println("Sunblock Error: Failed to complete DataQueryProcess::GetServerData. Reason:  " + e.getMessage());
+            System.err.println("SunBlockCore ERROR: Failed to complete DataQueryProcess::GetServerData. \nReason:  " + e.getMessage());
             return -1f;
         } 
     }

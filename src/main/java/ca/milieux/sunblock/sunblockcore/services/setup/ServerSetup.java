@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import ca.milieux.sunblock.sunblockcore.services.SOLAR_DATA;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -20,60 +21,51 @@ import ca.milieux.sunblock.sunblockcore.services.DataQueryProcess;
 public class ServerSetup {
 
     public static MinecraftServer server;
-
     public static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Mod.EventBusSubscriber(modid = SunBlockCore.MODID)
     public class ServerEvents {
 
-        /*
-            The server starting initiates a thread which calls DataQueryProcess methods
-            every second
-        */
+        static int THREAD_SLEEP = 1000; //in milliseconds
+
         @SubscribeEvent
         public static void onServerStarting(ServerStartingEvent event) {
+            // The server starting initiates a thread which calls DataQueryProcess methods every second
 
-            // I got all of the thread code from joanlittlewood... Thanks Stuart :)
             ServerSetup.server = ServerLifecycleHooks.getCurrentServer();
-
             Future<?> future = ServerSetup.executor.submit(() -> {
-                float currentTemp;
-                float currentPower;
-                float currentPVVoltage;
-                float currentPVCurrent;
-                float currentPVPower;
-                float currentbattVoltage;
-                float currentbattChargeCurrent;
-                float currentbattChargePower;
-                float currentlPower;
-                float currentbattRemaining;
-                float currentbattOverallCurrent;
-                String timeRemaining;
-
                 while (!Thread.currentThread().isInterrupted()) {
-                    currentTemp = DataQueryProcess.GetCPUTemp();
-                    currentPower = DataQueryProcess.GetSysPower();
+                    float currentTemp = DataQueryProcess.GetCPUTemp();
+                    float currentPower = DataQueryProcess.GetServerData(SOLAR_DATA.SYSTEMPOWERDRAW);
 
-                    currentPVVoltage = DataQueryProcess.GetPVVoltage();
-                    currentPVCurrent = DataQueryProcess.GetPVCurrent();
-                    currentPVPower = DataQueryProcess.GetPVPower();
-                    
-                    currentbattVoltage = DataQueryProcess.GetBattVoltage();
-                    currentbattChargeCurrent = DataQueryProcess.GetBattChargeCurrent();
-                    currentbattChargePower = DataQueryProcess.GetBattChargePower();
-                    
-                    currentlPower = DataQueryProcess.GetLPower();
-                    
-                    currentbattRemaining = DataQueryProcess.GetBattRemaining();
-                    currentbattOverallCurrent = DataQueryProcess.GetBattOverallCurrent();
-                    timeRemaining = DataQueryProcess.GetTimeRemaining();
+                    float currentPVVoltage = DataQueryProcess.GetServerData(SOLAR_DATA.PVVOLTAGE);
+                    float currentPVCurrent = DataQueryProcess.GetServerData(SOLAR_DATA.PVCURRENT);
+                    float currentPVPower = DataQueryProcess.GetServerData(SOLAR_DATA.PVPOWER);
 
-                    ModPackets.sendToClients(new ServerDataS2CPacket(currentTemp, currentPower, currentPVVoltage, currentPVCurrent, currentPVPower, currentbattVoltage, currentbattChargeCurrent, currentbattChargePower, currentlPower, currentbattRemaining, currentbattOverallCurrent, timeRemaining));
+                    float currentbattVoltage = DataQueryProcess.GetServerData(SOLAR_DATA.BATTVOLTAGE);
+                    float currentbattChargeCurrent = DataQueryProcess.GetServerData(SOLAR_DATA.BATTCHARGECURRENT);
+                    float currentbattChargePower = DataQueryProcess.GetServerData(SOLAR_DATA.BATTCHARGEPOWER);
+
+                    float currentlPower = DataQueryProcess.GetServerData(SOLAR_DATA.LPOWER);
+
+                    float currentbattRemaining = DataQueryProcess.GetServerData(SOLAR_DATA.BATTREMAINING);
+                    float currentbattOverallCurrent = DataQueryProcess.GetServerData(SOLAR_DATA.BATTOVERALLCURRENT);
+                    String timeRemaining = DataQueryProcess.GetTimeRemaining();
+                    String timestamp = DataQueryProcess.GetTimestamp();
+
+
+                    ServerDataS2CPacket _packet = new ServerDataS2CPacket(
+                            currentTemp, currentPower, currentPVVoltage, currentPVCurrent, currentPVPower,
+                            currentbattVoltage, currentbattChargeCurrent, currentbattChargePower, currentlPower,
+                            currentbattRemaining, currentbattOverallCurrent, timeRemaining, timestamp );
+
+
+                    ModPackets.sendToClients(_packet);
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(THREAD_SLEEP);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // Preserve interrupt status
-                        System.out.println("Interrupted!");
+                        System.out.println("SunBlockCore::ServerSetup.java -- Thread Interrupted!");
                         break;
                     }
                 }
@@ -85,7 +77,12 @@ public class ServerSetup {
             if(!event.getLevel().isClientSide()) {
                 if(event.getEntity() instanceof ServerPlayer player) {
                     ServerPlayer eventPlayer = (ServerPlayer) event.getEntity();
-                    ModPackets.sendToPlayer(new ServerDataS2CPacket(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, ""), player);
+                    ServerDataS2CPacket _packet = new ServerDataS2CPacket(
+                            0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
+                            0.0F, 0.0F, 0.0F, 0.0F,
+                            0.0F, 0.0F, "", "");
+
+                    ModPackets.sendToPlayer(_packet, player);
                 }
             }
         }
