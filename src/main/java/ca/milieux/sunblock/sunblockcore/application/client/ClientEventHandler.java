@@ -3,7 +3,7 @@ package ca.milieux.sunblock.sunblockcore.application.client;
 import ca.milieux.sunblock.sunblockcore.SunBlockCore;
 import ca.milieux.sunblock.sunblockcore.application.config.ConfigHandler;
 import ca.milieux.sunblock.sunblockcore.application.util.RenderUtils;
-import ca.milieux.sunblock.sunblockcore.services.setup.ClientSetup;
+import ca.milieux.sunblock.sunblockcore.domain.SolarServerData;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
@@ -34,53 +34,62 @@ public class ClientEventHandler {
 	// if 0, display time remaining, if 1 display power details, if 2 display solar stats
 	// set in ClientForgeHandler.
 	public static int statsIndex = 0;
-	public static int dashboard_version = 2;
 
+	/// if 1, TextHUD. if 2, Graphic HUD.
+	public static int dashboard_version = 1;
 
-//	@SubscribeEvent
-//	public void onRenderTick(RenderGuiOverlayEvent.Post event) {
-//		if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
-//			final Player player = mc.player;
-//			float powerConsumption = ClientSetup.serverData.getlPower();
-//
-//			String powerString = "Burning " + powerConsumption  + " Watts";
-//			String solarStats = "Solar: " + ClientSetup.serverData.getPvVoltage() + "V | " + ClientSetup.serverData.getPvCurrent() + "A";
-//			String timeRemainingString = ClientSetup.serverData.getTimeRemaining() + " Hours remaining";
-//
-//			int solarStatsColor = mc.level.isNight() ? 0xCAE34B : 0xCAE34B; // same for now.
-//
-//			// red if high, orange if mid, white if low
-//			int powerConsumptionColor = powerConsumption > 20 ? 0xD6520B : powerConsumption <= 15 ? 0xFFFFFF : 0xCAE34B;
-//
-//			if (showAllSolarStats) {
-//				SolarStats(event);
-//			} else {
-//				if (statsIndex < 5) {
-//					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 0);
-//				} else if (statsIndex < 10) {
-//					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 0);
-//				} else if (statsIndex < 15) {
-//					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 0);
-//				}
-//			}
-//
-//		}
-//	}
+	@SubscribeEvent
+	public void onRenderTick(RenderGuiOverlayEvent.Post event) {
+		if (dashboard_version == 1) {
+			TextHUD(event);
+		} else if (dashboard_version == 2) {
+			GraphicHUD(event);
+		}
+	}
 
+//	Text HUD
+	public void TextHUD(RenderGuiOverlayEvent.Post event) {
+		if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
+			final Player player = mc.player;
+			float powerConsumption = SolarServerData.getlPower();
+
+			String powerString = "Burning " + powerConsumption  + " Watts";
+			String solarStats = "Solar: " + SolarServerData.getPvVoltage() + "V | " + SolarServerData.getPvCurrent() + "A";
+			String timeRemainingString = SolarServerData.getTimeRemaining() + " Hours remaining";
+
+			int solarStatsColor = mc.level.isNight() ? 0xCAE34B : 0xCAE34B; // same for now.
+
+			// red if high, orange if mid, white if low
+			int powerConsumptionColor = powerConsumption > 20 ? 0xD6520B : powerConsumption <= 15 ? 0xFFFFFF : 0xCAE34B;
+
+			if (showAllSolarStats) {
+				SolarStats(event);
+			} else {
+				if (statsIndex < 5) {
+					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 0);
+				} else if (statsIndex < 10) {
+					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 0);
+				} else if (statsIndex < 15) {
+					RenderUtils.drawStringTopLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 0);
+				}
+			}
+
+		}
+	}
 
 	void SolarStats(RenderGuiOverlayEvent.Post event) {
 
-		float CPUTemp = ClientSetup.serverData.getCpuTemp();
-		float CPUPower = ClientSetup.serverData.getPower(); // CPU power consumption
-		float powerConsumption = ClientSetup.serverData.getlPower();
+		float CPUTemp = SolarServerData.getCpuTemp();
+		float CPUPower = SolarServerData.getPower(); // CPU power consumption
+		float powerConsumption = SolarServerData.getlPower();
 
-		float solarVolts = ClientSetup.serverData.getPvVoltage();
-		float solarCurrent = ClientSetup.serverData.getPvCurrent();
-		float solarPower = ClientSetup.serverData.getPvPower();
+		float solarVolts = SolarServerData.getPvVoltage();
+		float solarCurrent = SolarServerData.getPvCurrent();
+		float solarPower = SolarServerData.getPvPower();
 
-		float batteryVoltage = ClientSetup.serverData.getBattVoltage();
-		float batteryPercentage = ClientSetup.serverData.getBattRemaining();
-		float batteryChargeCurrent = ClientSetup.serverData.getBattChargeCurrent();
+		float batteryVoltage = SolarServerData.getBattVoltage();
+		float batteryPercentage = SolarServerData.getBattRemaining();
+		float batteryChargeCurrent = SolarServerData.getBattChargeCurrent();
 
 		String cpuPowerString = "CPU State: " + CPUPower  + "Watts | " + CPUTemp + "ºC";
 		String systemPowerString = "System Power Consumption: " + powerConsumption  + " Watts";
@@ -104,10 +113,9 @@ public class ClientEventHandler {
 		}
 	}
 
-	// Andrew's HUD
 
-	@SubscribeEvent
-	public void onRenderGui(RenderGuiOverlayEvent.Post event) {
+// Graphic HUD
+	void GraphicHUD(RenderGuiOverlayEvent.Post event) {
 		if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
 
 			GuiGraphics guiGraphics = event.getGuiGraphics();
@@ -142,8 +150,8 @@ public class ClientEventHandler {
 			guiGraphics.pose().scale(1.0F, 1.0F, 1.0F);
 
 
-//		String texturePath = getTexturePath(DataHandler.getTimestamp());
-			String texturePath = getTexturePath(null);
+//		String texturePath = GetTexturePath(DataHandler.getTimestamp());
+			String texturePath = GetTexturePath(null);
 
 			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, texturePath));
 			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, texturePath),
@@ -156,26 +164,26 @@ public class ClientEventHandler {
 
 			// Draw text with modified alpha scaling.
 			guiGraphics.drawString(mc.font, "Montreal, QC " + timeString, 60, 19, textColor);
-			guiGraphics.drawString(mc.font, "CPU: " + ClientSetup.serverData.getPower() + "w", 25, 40, textColor);
-			guiGraphics.drawString(mc.font, "CONSUMPTION: " + ClientSetup.serverData.getlPower() + "w", 25, 58, textColor);
-			guiGraphics.drawString(mc.font, "GENERATION: " + ClientSetup.serverData.getPvVoltage() + "v | " + ClientSetup.serverData.getPvPower() + "w", 25, 76, textColor);
-			guiGraphics.drawString(mc.font, "BATTERY: " + ClientSetup.serverData.getBattVoltage() + "v | " + ClientSetup.serverData.getBattRemaining() + "%", 25, 94, textColor);
+			guiGraphics.drawString(mc.font, "CPU: " + SolarServerData.getPower() + "w", 25, 40, textColor);
+			guiGraphics.drawString(mc.font, "CONSUMPTION: " + SolarServerData.getlPower() + "w", 25, 58, textColor);
+			guiGraphics.drawString(mc.font, "GENERATION: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w", 25, 76, textColor);
+			guiGraphics.drawString(mc.font, "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%", 25, 94, textColor);
 
 			// Icons.
-			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, getCpuIcon()));
-			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, getCpuIcon()), 3, 36, 0, 0, 16, 16, 16, 16);
+			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()));
+			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()), 3, 36, 0, 0, 16, 16, 16, 16);
 
-			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, getLoadIcon()));
-			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, getLoadIcon()), 3, 54, 0, 0, 16, 16, 16, 16);
+			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()));
+			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()), 3, 54, 0, 0, 16, 16, 16, 16);
 
-			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, getGenerationIcon()));
-			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, getGenerationIcon()), 3, 72, 0, 0, 16, 16, 16, 16);
+			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetGenerationIcon()));
+			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetGenerationIcon()), 3, 72, 0, 0, 16, 16, 16, 16);
 
-			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, getBatteryIcon()));
-			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, getBatteryIcon()), 3, 90, 0, 0, 16, 16, 16, 16);
+			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetBatteryIcon()));
+			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetBatteryIcon()), 3, 90, 0, 0, 16, 16, 16, 16);
 
-			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, getBatteryArrowIcon(ClientSetup.serverData.getBattOverallCurrent())));
-			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, getBatteryArrowIcon(ClientSetup.serverData.getBattOverallCurrent())),
+			RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetBatteryArrowIcon(SolarServerData.getBattOverallCurrent())));
+			guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetBatteryArrowIcon(SolarServerData.getBattOverallCurrent())),
 					12, 90, 0, 0, 16, 16, 16, 16);
 
 			guiGraphics.pose().popPose();
@@ -185,9 +193,7 @@ public class ClientEventHandler {
 		}
 	}
 
-
-
-	private String getTexturePath(String timestamp) {
+	String GetTexturePath(String timestamp) {
 		int DAWN = 6;
 		int DAY = 9;
 		int EVENING = 18;
@@ -214,12 +220,10 @@ public class ClientEventHandler {
 		}
 	}
 
-
-
-	private String getCpuIcon() {
+	String GetCPUIcon() {
 		int LOW_THRESH_CPUPOWER = 5;
 		int HIGH_THRESH_CPUPOWER = 20;
-		float cpuPowerDraw = ClientSetup.serverData.getPower();
+		float cpuPowerDraw = SolarServerData.getPower();
 
 		if (cpuPowerDraw < LOW_THRESH_CPUPOWER) {
 			return "textures/gui/mc_sb_icons_iso_cpu_g.png";
@@ -229,13 +233,11 @@ public class ClientEventHandler {
 			return "textures/gui/mc_sb_icons_iso_cpu_r.png";
 		}
 	}
-
-
-
-	private String getLoadIcon() {
+	
+	String GetLoadIcon() {
 		int MIN_THRESH_LPOWER = 10;
 		int MAX_THRESH_LPOWER = 22;
-		float loadPower = ClientSetup.serverData.getlPower();
+		float loadPower = SolarServerData.getlPower();
 
 		if (loadPower < MIN_THRESH_LPOWER) {
 			return "textures/gui/mc_sb_icons_iso_globe_g.png";
@@ -246,10 +248,10 @@ public class ClientEventHandler {
 		}
 	}
 
-	private String getGenerationIcon() {
+	String GetGenerationIcon() {
 		int MIN_THRESH_PVPOWER = 10;
 		int MAX_THRESH_PVPOWER = 22;
-		float pvPower = ClientSetup.serverData.getPvPower();
+		float pvPower = SolarServerData.getPvPower();
 
 		if (pvPower < MIN_THRESH_PVPOWER) {
 			return "textures/gui/mc_sb_icons_iso_sun_r.png";
@@ -260,12 +262,11 @@ public class ClientEventHandler {
 		}
 	}
 
-
-	private String getBatteryIcon() {
+	String GetBatteryIcon() {
 		int HIGH_THRESH_BATTERY = 75;
 		int MED_THRESH_BATTERY = 50;
 		int LOW_THRESH_BATTERY = 25;
-		float battPercentage = ClientSetup.serverData.getBattRemaining();
+		float battPercentage = SolarServerData.getBattRemaining();
 
 		if (battPercentage > HIGH_THRESH_BATTERY) {
 			return "textures/gui/mc_sb_icons_iso_battery_g.png";
@@ -278,7 +279,7 @@ public class ClientEventHandler {
 		}
 	}
 
-	private static String getBatteryArrowIcon(float battOverallCurrent) {
+	String GetBatteryArrowIcon(float battOverallCurrent) {
 		if (battOverallCurrent > 0) {
 			return "textures/gui/mc_sb_icons_iso_arrow_up.png";
 		} else {

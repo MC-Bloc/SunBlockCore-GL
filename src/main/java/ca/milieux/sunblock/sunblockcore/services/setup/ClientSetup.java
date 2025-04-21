@@ -6,7 +6,6 @@ import ca.milieux.sunblock.sunblockcore.application.client.ClientEventHandler;
 import ca.milieux.sunblock.sunblockcore.domain.SolarServerData;
 
 public class ClientSetup {
-    public static SolarServerData serverData;
     public static void init(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
     }
