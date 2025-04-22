@@ -2,7 +2,7 @@ package ca.milieux.sunblock.sunblockcore.domain;
 
 
 // MSA: I think defining vanilla getters and Setters is a terrible
-// idea, considering the are the same for all. 
+// idea, considering they are the same for all.
 // Might wanna refactor this to just public values, or implement validation
 // within each getter. 
 // I am only doing this to continue the pattern followed in the existing code. 

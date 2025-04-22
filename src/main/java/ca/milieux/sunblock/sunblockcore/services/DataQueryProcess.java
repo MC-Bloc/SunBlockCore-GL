@@ -45,9 +45,9 @@ public class DataQueryProcess {
     }
 
     public static String GetTimeRemaining() {
-        float battRemaining = GetServerData(SOLAR_DATA.BATTREMAINING);
+        float battRemaining = GetServerData(SolarDataTypes.BATTREMAINING);
 
-        float loadPower = GetServerData(SOLAR_DATA.LPOWER);
+        float loadPower = GetServerData(SolarDataTypes.LPOWER);
 
         if (powerConsumptionHistory.size() < MAXMEMORY) {
             powerConsumptionHistory.add(loadPower);
@@ -89,8 +89,8 @@ public class DataQueryProcess {
         }
     }
 
-    public static float GetServerData(SOLAR_DATA property) {
-        if (property == SOLAR_DATA.TIMESTAMP) {
+    public static float GetServerData(SolarDataTypes property) {
+        if (property == SolarDataTypes.TIMESTAMP) {
             return -1f;
         }
 
@@ -107,25 +107,25 @@ public class DataQueryProcess {
 
                 if (data != null) {
                     data = data.strip();
-                    if (property == SOLAR_DATA.PVVOLTAGE && data.contains("PVVoltage")){
+                    if (property == SolarDataTypes.PVVOLTAGE && data.contains("PVVoltage")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.PVCURRENT && data.contains("PVCurrent")){
+                    } else if (property == SolarDataTypes.PVCURRENT && data.contains("PVCurrent")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.PVPOWER && data.contains("PVPower")){
+                    } else if (property == SolarDataTypes.PVPOWER && data.contains("PVPower")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTVOLTAGE && data.contains("BattVoltage")){
+                    } else if (property == SolarDataTypes.BATTVOLTAGE && data.contains("BattVoltage")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTCHARGECURRENT && data.contains("BattChargeCurrent")){
+                    } else if (property == SolarDataTypes.BATTCHARGECURRENT && data.contains("BattChargeCurrent")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTCHARGEPOWER && data.contains("BattChargePower")){
+                    } else if (property == SolarDataTypes.BATTCHARGEPOWER && data.contains("BattChargePower")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.LPOWER && data.contains("LoadPower")){
+                    } else if (property == SolarDataTypes.LPOWER && data.contains("LoadPower")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTREMAINING && data.contains("BattPercentage")){
+                    } else if (property == SolarDataTypes.BATTREMAINING && data.contains("BattPercentage")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.BATTOVERALLCURRENT && data.contains("BattOverallCurrent")){
+                    } else if (property == SolarDataTypes.BATTOVERALLCURRENT && data.contains("BattOverallCurrent")){
                         return GetValue(data);  
-                    } else if (property == SOLAR_DATA.SYSTEMPOWERDRAW && data.contains("CPUPowerDraw")){
+                    } else if (property == SolarDataTypes.SYSTEMPOWERDRAW && data.contains("CPUPowerDraw")){
                         return GetValue(data);
                     }
                 }

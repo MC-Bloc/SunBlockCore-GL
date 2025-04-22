@@ -1,6 +1,6 @@
 package ca.milieux.sunblock.sunblockcore.services;
 
-public enum SOLAR_DATA {
+public enum SolarDataTypes {
     TIMESTAMP,
     PVVOLTAGE,
     PVCURRENT,

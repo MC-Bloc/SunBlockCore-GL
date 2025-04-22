@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import ca.milieux.sunblock.sunblockcore.services.SOLAR_DATA;
+import ca.milieux.sunblock.sunblockcore.services.SolarDataTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -36,20 +36,20 @@ public class ServerSetup {
             Future<?> future = ServerSetup.executor.submit(() -> {
                 while (!Thread.currentThread().isInterrupted()) {
                     float currentTemp = DataQueryProcess.GetCPUTemp();
-                    float currentPower = DataQueryProcess.GetServerData(SOLAR_DATA.SYSTEMPOWERDRAW);
+                    float currentPower = DataQueryProcess.GetServerData(SolarDataTypes.SYSTEMPOWERDRAW);
 
-                    float currentPVVoltage = DataQueryProcess.GetServerData(SOLAR_DATA.PVVOLTAGE);
-                    float currentPVCurrent = DataQueryProcess.GetServerData(SOLAR_DATA.PVCURRENT);
-                    float currentPVPower = DataQueryProcess.GetServerData(SOLAR_DATA.PVPOWER);
+                    float currentPVVoltage = DataQueryProcess.GetServerData(SolarDataTypes.PVVOLTAGE);
+                    float currentPVCurrent = DataQueryProcess.GetServerData(SolarDataTypes.PVCURRENT);
+                    float currentPVPower = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER);
 
-                    float currentbattVoltage = DataQueryProcess.GetServerData(SOLAR_DATA.BATTVOLTAGE);
-                    float currentbattChargeCurrent = DataQueryProcess.GetServerData(SOLAR_DATA.BATTCHARGECURRENT);
-                    float currentbattChargePower = DataQueryProcess.GetServerData(SOLAR_DATA.BATTCHARGEPOWER);
+                    float currentbattVoltage = DataQueryProcess.GetServerData(SolarDataTypes.BATTVOLTAGE);
+                    float currentbattChargeCurrent = DataQueryProcess.GetServerData(SolarDataTypes.BATTCHARGECURRENT);
+                    float currentbattChargePower = DataQueryProcess.GetServerData(SolarDataTypes.BATTCHARGEPOWER);
 
-                    float currentlPower = DataQueryProcess.GetServerData(SOLAR_DATA.LPOWER);
+                    float currentlPower = DataQueryProcess.GetServerData(SolarDataTypes.LPOWER);
 
-                    float currentbattRemaining = DataQueryProcess.GetServerData(SOLAR_DATA.BATTREMAINING);
-                    float currentbattOverallCurrent = DataQueryProcess.GetServerData(SOLAR_DATA.BATTOVERALLCURRENT);
+                    float currentbattRemaining = DataQueryProcess.GetServerData(SolarDataTypes.BATTREMAINING);
+                    float currentbattOverallCurrent = DataQueryProcess.GetServerData(SolarDataTypes.BATTOVERALLCURRENT);
                     String timeRemaining = DataQueryProcess.GetTimeRemaining();
                     String timestamp = DataQueryProcess.GetTimestamp();
 
