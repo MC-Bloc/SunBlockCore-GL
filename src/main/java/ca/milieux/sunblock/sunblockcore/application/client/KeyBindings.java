@@ -10,6 +10,7 @@ public final class KeyBindings {
     public static final KeyBindings INSTANCE = new KeyBindings();
 
     private int solarStatsKey = InputConstants.KEY_G;
+    private int switchHUDKey = InputConstants.KEY_F8;
 
     public final KeyMapping showSolarStats = new KeyMapping(
             "key." + SunBlockCore.MODID + ".show_solar_stats",
@@ -17,21 +18,12 @@ public final class KeyBindings {
             InputConstants.getKey(solarStatsKey, -1),
             KeyMapping.CATEGORY_MISC );
 
-    public static final KeyMapping SUNBLOCK_SOLAR_HUD_KEY = new KeyMapping(
-            "key.solarhud.solar_hud",
+    public final KeyMapping switchHUD = new KeyMapping(
+            "key." + SunBlockCore.MODID + ".switch_hud_type",
             KeyConflictContext.IN_GAME,
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_G,
-            "key.categories.solarhud"
-    );
+            InputConstants.getKey(switchHUDKey, -1),
+            KeyMapping.CATEGORY_MISC );
 
-    public static final KeyMapping SOLAR_HUD_SETTINGS_KEY = new KeyMapping(
-            "key.solarhud.solar_hud_settings",
-            KeyConflictContext.IN_GAME,
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_H,
-            "key.categories.solarhud"
-    );
 
     private KeyBindings() {}
 

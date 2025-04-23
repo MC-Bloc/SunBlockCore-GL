@@ -13,5 +13,6 @@ public class ClientModHandler {
     @SubscribeEvent
     public void registerKeys(RegisterKeyMappingsEvent event) {
         event.register(KeyBindings.INSTANCE.showSolarStats);
+        event.register(KeyBindings.INSTANCE.switchHUD);
     }
 }
