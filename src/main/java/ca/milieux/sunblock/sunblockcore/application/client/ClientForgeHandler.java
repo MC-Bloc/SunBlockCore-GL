@@ -11,12 +11,22 @@ import java.time.LocalDateTime;
 public class ClientForgeHandler {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        ClientEventHandler.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
+        HUD.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
         if (event.phase == TickEvent.Phase.END) {
-            if (KeyBindings.INSTANCE.showSolarStats.isDown()) {
-                ClientEventHandler.showAllSolarStats = true;
-            } else if (ClientEventHandler.showAllSolarStats) {
-                ClientEventHandler.showAllSolarStats = false;
+            if (HUD.type == HUDType.TextV0 && KeyBindings.INSTANCE.showSolarStats.isDown()) {
+                HUD.showAllSolarStats = true;
+            } else if (HUD.showAllSolarStats) {
+                HUD.showAllSolarStats = false;
+            }
+
+            if (KeyBindings.INSTANCE.switchHUD.consumeClick()) {
+                if (HUD.type == HUDType.TextV0) {
+                    HUD.type = HUDType.GraphicalV0;
+                } else if (HUD.type == HUDType.GraphicalV0) {
+                    HUD.type = HUDType.None;
+                } else if (HUD.type == HUDType.None) {
+                    HUD.type = HUDType.TextV0;
+                }
             }
         }
     }
