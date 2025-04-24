@@ -90,7 +90,7 @@ public class SolarServerData {
         return battOverallCurrent;
     }
 
-    public static String getTimeRemaining() { return  timeRemaining; }
+    public static String getTimeRemaining() { return timeRemaining == "" ? "0" : timeRemaining; }
 
     public static String getTimestamp() { return timestamp; }
     ////#endregion

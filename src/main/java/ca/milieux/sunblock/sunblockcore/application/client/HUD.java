@@ -18,8 +18,6 @@ public class HUD {
     private static final Logger LOGGER = SunBlockCore.LOGGER;
 
     public static boolean showAllSolarStats = false;
-    private static boolean isHudVisible = true;
-    private static boolean hasLoggedRender = false;
 
     public static int statsIndex = 0;
     public static HUDType type = HUDType.TextV0;
@@ -87,70 +85,70 @@ public class HUD {
         RenderUtils.drawStringTopLeft(event.getGuiGraphics(), "Overall System is " + powerState, powerStateColor, 11);
 }
 
-    static void GraphicHUD(RenderGuiOverlayEvent.Post event) {
+    public static void GraphicHUD(RenderGuiOverlayEvent.Post event) {
         if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
 
             GuiGraphics guiGraphics = event.getGuiGraphics();
+
+            System.out.println(SolarServerData.getTimestamp());
+
 
             double configScale = ConfigHandler.CLIENT.HUD_SCALE.get();
             double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
             float op = (float) configOpacity;
 
-            // Calculate text alpha with 0.32 threshold
-    		int originalAlpha = (int)(configOpacity * 255) & 0xFF;
-
-            int textAlpha;
-            if (originalAlpha < 82) {
-                textAlpha = 0;
-            } else {
-                textAlpha = (int) (((originalAlpha - 82) / 173.0) * 255.0); // 173 = 255 - 82
-            }
-            int textColor = (textAlpha << 24) | 0xFFFFFF;
+            int textColor = 0xFFFFFF;
+            String texturePath = GetTexturePath(null);
 
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
     		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, op);
 
             guiGraphics.pose().pushPose();
-
     		guiGraphics.pose().translate((float)ConfigHandler.CLIENT.HUD_X_POSITION.get(), (float)ConfigHandler.CLIENT.HUD_Y_POSITION.get(), 0);
-
     		guiGraphics.pose().scale((float)configScale, (float)configScale, 1.0F);
 
-    		String texturePath = GetTexturePath(SolarServerData.getTimestamp());
+
 
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, texturePath));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, texturePath),
                     0, 0, 0, 0, 168, 108, 168, 108);
 
             String timestamp = SolarServerData.getTimestamp();
-            String[] timeParts = (timestamp != null && !timestamp.isEmpty()) ? timestamp.split(" ")[1].split(":") : new String[]{"--","--"};
-            String timeString = timeParts[0] + ":" + timeParts[1];
-//            String timeString = "69:69";
+//            String[] timeParts = (timestamp != null && !timestamp.isEmpty()) ? timestamp.split(" ")[1].split(":") : new String[]{"--","--"};
+//            String timeString = timeParts[0] + ":" + timeParts[1];
+            String timeString = "69:69";
 
             // Draw text with modified alpha scaling.
             guiGraphics.drawString(mc.font, "Montreal, QC " + timeString, 60, 19, textColor);
-            guiGraphics.drawString(mc.font, "CPU: " + SolarServerData.getPower() + "w", 25, 40, textColor);
-            guiGraphics.drawString(mc.font, "CONSUMPTION: " + SolarServerData.getlPower() + "w", 25, 58, textColor);
-            guiGraphics.drawString(mc.font, "GENERATION: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w", 25, 76, textColor);
-            guiGraphics.drawString(mc.font, "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%", 25, 94, textColor);
 
-            // Icons.
-            RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()));
-            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()), 3, 36, 0, 0, 16, 16, 16, 16);
+            int _px = 25;
+            //There is a difference of 4 pixels between the line and the graphic.
+            int diff = 4;
 
-            RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()));
-            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()), 3, 54, 0, 0, 16, 16, 16, 16);
-
+            int _py_line1 = 40;
+            guiGraphics.drawString(mc.font, "SOLAR: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w", _px, _py_line1, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetGenerationIcon()));
-            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetGenerationIcon()), 3, 72, 0, 0, 16, 16, 16, 16);
+            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetGenerationIcon()), 3, _py_line1 - diff, 0, 0, 16, 16, 16, 16);
 
+            int _py_line2 = 58;
+            guiGraphics.drawString(mc.font, "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%", _px, _py_line2, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetBatteryIcon()));
-            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetBatteryIcon()), 3, 90, 0, 0, 16, 16, 16, 16);
-
+            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetBatteryIcon()), 3, _py_line2 - diff, 0, 0, 16, 16, 16, 16);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetBatteryArrowIcon(SolarServerData.getBattOverallCurrent())));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetBatteryArrowIcon(SolarServerData.getBattOverallCurrent())),
-                    12, 90, 0, 0, 16, 16, 16, 16);
+                    12, _py_line2 - diff, 0, 0, 16, 16, 16, 16);
+
+            int _py_line3 = 76;
+            guiGraphics.drawString(mc.font, "USAGE: " + SolarServerData.getlPower() + "w", _px, _py_line3, textColor);
+            RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()));
+            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()), 3, _py_line3 - diff, 0, 0, 16, 16, 16, 16);
+
+            int _py_line4 = 94;
+            guiGraphics.drawString(mc.font, "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours", _px, _py_line4, textColor);
+            RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()));
+            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()), 3, _py_line4 - 4, 0, 0, 16, 16, 16, 16);
+
 
             guiGraphics.pose().popPose();
 
@@ -252,6 +250,5 @@ public class HUD {
             return "textures/gui/mc_sb_icons_iso_arrow_down.png";
         }
     }
-
 
 }
