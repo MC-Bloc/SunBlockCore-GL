@@ -23,6 +23,7 @@ public class SunBlockCore {
 	public static final String MODID = "sunblockcore";
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
+	public static ModConfig CLIENT_MOD_CONFIG;
 
 
 	public SunBlockCore() {
@@ -38,7 +39,7 @@ public class SunBlockCore {
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
 		});
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, "SunBlockCore-ClientConfig.toml");
 	}
 
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {

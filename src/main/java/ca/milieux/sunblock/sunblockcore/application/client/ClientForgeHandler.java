@@ -1,6 +1,7 @@
 package ca.milieux.sunblock.sunblockcore.application.client;
 
 import ca.milieux.sunblock.sunblockcore.SunBlockCore;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,6 +10,9 @@ import net.minecraftforge.fml.common.Mod;
 import java.time.LocalDateTime;
 @Mod.EventBusSubscriber(modid = SunBlockCore.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientForgeHandler {
+
+    static Minecraft mc = Minecraft.getInstance();
+
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         HUD.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
@@ -17,6 +21,13 @@ public class ClientForgeHandler {
                 HUD.showAllSolarStats = true;
             } else if (HUD.showAllSolarStats) {
                 HUD.showAllSolarStats = false;
+            }
+
+            if (HUD.type == HUDType.GraphicalV0 && KeyBindings.INSTANCE.showSolarStats.consumeClick())
+            {
+                if (mc.screen == null) {
+                    mc.setScreen(new HUDSettings());
+                }
             }
 
             if (KeyBindings.INSTANCE.switchHUD.consumeClick()) {

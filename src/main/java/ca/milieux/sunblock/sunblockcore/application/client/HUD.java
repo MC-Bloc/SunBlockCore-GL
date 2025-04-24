@@ -92,13 +92,12 @@ public class HUD {
 
             GuiGraphics guiGraphics = event.getGuiGraphics();
 
-//		double configScale = SolarHudConfig.HUD_SCALE.get();
-//		double configOpacity = SolarHudConfig.HUD_OPACITY.get();
-//		float op = (float) configOpacity;
+            double configScale = ConfigHandler.CLIENT.HUD_SCALE.get();
+            double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
+            float op = (float) configOpacity;
 
             // Calculate text alpha with 0.32 threshold
-//		int originalAlpha = (int)(configOpacity * 255) & 0xFF;
-            int originalAlpha = (int) (0.75f * 255) & 0xFF;
+    		int originalAlpha = (int)(configOpacity * 255) & 0xFF;
 
             int textAlpha;
             if (originalAlpha < 82) {
@@ -110,29 +109,24 @@ public class HUD {
 
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-//		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, op);
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+    		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, op);
 
             guiGraphics.pose().pushPose();
 
-//		guiGraphics.pose().translate((float)SolarHudConfig.HUD_X_POSITION.get(), (float)SolarHudConfig.HUD_Y_POSITION.get(), 0);
-            guiGraphics.pose().translate(0, 0, 0);
+    		guiGraphics.pose().translate((float)ConfigHandler.CLIENT.HUD_X_POSITION.get(), (float)ConfigHandler.CLIENT.HUD_Y_POSITION.get(), 0);
 
-//		guiGraphics.pose().scale((float)configScale, (float)configScale, 1.0F);
-            guiGraphics.pose().scale(1.0F, 1.0F, 1.0F);
+    		guiGraphics.pose().scale((float)configScale, (float)configScale, 1.0F);
 
-
-//		String texturePath = GetTexturePath(DataHandler.getTimestamp());
-            String texturePath = GetTexturePath(null);
+    		String texturePath = GetTexturePath(SolarServerData.getTimestamp());
 
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, texturePath));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, texturePath),
                     0, 0, 0, 0, 168, 108, 168, 108);
 
-//		String timestamp = DataHandler.getTimestamp();
-//		String[] timeParts = (timestamp != null && !timestamp.isEmpty()) ? timestamp.split(" ")[1].split(":") : new String[]{"--","--"};
-//		String timeString = timeParts[0] + ":" + timeParts[1];
-            String timeString = "69:69";
+            String timestamp = SolarServerData.getTimestamp();
+            String[] timeParts = (timestamp != null && !timestamp.isEmpty()) ? timestamp.split(" ")[1].split(":") : new String[]{"--","--"};
+            String timeString = timeParts[0] + ":" + timeParts[1];
+//            String timeString = "69:69";
 
             // Draw text with modified alpha scaling.
             guiGraphics.drawString(mc.font, "Montreal, QC " + timeString, 60, 19, textColor);
