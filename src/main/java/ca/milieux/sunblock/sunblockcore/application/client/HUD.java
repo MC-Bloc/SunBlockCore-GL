@@ -90,15 +90,19 @@ public class HUD {
 
             GuiGraphics guiGraphics = event.getGuiGraphics();
 
-            System.out.println(SolarServerData.getTimestamp());
-
+            String timestamp = SolarServerData.getTimestamp();
+            if (timestamp != null && !timestamp.isEmpty()) {
+                String[] timeParts = timestamp.strip().split(" ");
+                timestamp = timeParts[timeParts.length - 1];
+            }
+            String timeString = timestamp.split(":")[0] + ":" + timestamp.split(":")[1];
 
             double configScale = ConfigHandler.CLIENT.HUD_SCALE.get();
             double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
             float op = (float) configOpacity;
 
             int textColor = 0xFFFFFF;
-            String texturePath = GetTexturePath(null);
+            String texturePath = GetTexturePath(timeString);
 
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
@@ -109,15 +113,11 @@ public class HUD {
     		guiGraphics.pose().scale((float)configScale, (float)configScale, 1.0F);
 
 
-
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, texturePath));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, texturePath),
                     0, 0, 0, 0, 168, 108, 168, 108);
 
-            String timestamp = SolarServerData.getTimestamp();
-//            String[] timeParts = (timestamp != null && !timestamp.isEmpty()) ? timestamp.split(" ")[1].split(":") : new String[]{"--","--"};
-//            String timeString = timeParts[0] + ":" + timeParts[1];
-            String timeString = "69:69";
+
 
             // Draw text with modified alpha scaling.
             guiGraphics.drawString(mc.font, "Montreal, QC " + timeString, 60, 19, textColor);
@@ -168,7 +168,7 @@ public class HUD {
         }
 
         try {
-            int hour = Integer.parseInt(timestamp.split(" ")[1].split(":")[0]);
+            int hour = Integer.parseInt(timestamp.split(":")[0]);
             if (hour >= DAWN && hour < DAY) {
                 return "textures/gui/mc_sb_hud_dawn.png";
             } else if (hour >= DAY && hour < EVENING) {
