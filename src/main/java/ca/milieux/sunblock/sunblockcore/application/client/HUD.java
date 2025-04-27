@@ -20,7 +20,7 @@ public class HUD {
     public static boolean showAllSolarStats = false;
 
     public static int statsIndex = 0;
-    public static HUDType type = HUDType.TextV0;
+    public static HUDType type = HUDType.GraphicalV0;
 
     public static void TextHUD(RenderGuiOverlayEvent.Post event) {
         if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
