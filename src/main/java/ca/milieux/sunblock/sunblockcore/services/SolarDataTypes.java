@@ -12,4 +12,5 @@ public enum SolarDataTypes {
     BATTREMAINING,
     BATTOVERALLCURRENT,
     SYSTEMPOWERDRAW,
+    POWERPROFILE
 }

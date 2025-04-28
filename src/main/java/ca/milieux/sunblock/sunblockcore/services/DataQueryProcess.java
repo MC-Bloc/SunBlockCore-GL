@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ProcessBuilder;
 import java.lang.Process;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.LinkedList;
 import java.util.Queue;
 
 
 public class DataQueryProcess {
-    
+
 
     static String CPUTempPath = "/sys/class/thermal/thermal_zone1/temp";
     static String SunblockDataPath = "/home/pc/SunblockData/solar_data.json";
@@ -60,12 +62,11 @@ public class DataQueryProcess {
             float timeRemaining = (battRemaining / 100 ) * (MAXBATTERYCAPACITY / avgPowerConsumption);
             // Truncate to 2 decimal places
             return Double.toString(Math.floor(timeRemaining * 100) / 100);
-
         }
     }
 
     public static String GetTimestamp() {
-        int count_lines = 2 + 11; //2 for the brackets, 11 for the number of entries.
+        int count_lines = 2 + 12; //2 for the brackets, 11 for the number of entries.
 
         try {
             ProcessBuilder pb = new ProcessBuilder("cat", SunblockDataPath);
@@ -108,38 +109,38 @@ public class DataQueryProcess {
                 if (data != null) {
                     data = data.strip();
                     if (property == SolarDataTypes.PVVOLTAGE && data.contains("PVVoltage")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.PVCURRENT && data.contains("PVCurrent")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.PVPOWER && data.contains("PVPower")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.BATTVOLTAGE && data.contains("BattVoltage")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.BATTCHARGECURRENT && data.contains("BattChargeCurrent")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.BATTCHARGEPOWER && data.contains("BattChargePower")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.LPOWER && data.contains("LoadPower")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.BATTREMAINING && data.contains("BattPercentage")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.BATTOVERALLCURRENT && data.contains("BattOverallCurrent")){
-                        return GetValue(data);  
+                        return GetValue(data);
                     } else if (property == SolarDataTypes.SYSTEMPOWERDRAW && data.contains("CPUPowerDraw")){
                         return GetValue(data);
                     }
                 }
-            } 
+            }
             return 7.7f;
-        } catch (Exception e) { 
+        } catch (Exception e) {
             System.err.println("SunBlockCore ERROR: Failed to complete DataQueryProcess::GetServerData. \nReason:  " + e.getMessage());
             return -1f;
-        } 
+        }
     }
 
-    static float GetValue(String data) { 
+    static float GetValue(String data) {
         // Extract the float value from the string entry from the JSON file
-        
+
         float ret_val = 0.0f;
         String[] split_data = data.split(":", 2);
 
@@ -148,7 +149,7 @@ public class DataQueryProcess {
         }
 
         return ret_val;
-         
+
     }
 
     static float SumOfQueue(Queue q){
@@ -162,5 +163,29 @@ public class DataQueryProcess {
         return _sum;
     }
 
+    public static String PowerProfile(){
+        int count_lines = 2 + 12; //2 for the brackets, 11 for the number of entries.
+
+        try {
+            ProcessBuilder pb = new ProcessBuilder("cat", SunblockDataPath);
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            for (int i = 0; i < count_lines; i++) {
+                String data = reader.readLine();
+                if (data != null) {
+                    data = data.strip();
+                    if (data.contains("PowerProfile")){
+                        return data.split(":")[1].replace("\"", "").replace("-", " ");
+                    }
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            System.out.println("ERROR: There was an error calling PowerProfile: " + e.getMessage() );
+            return null;
+        }
+    }
 
 }

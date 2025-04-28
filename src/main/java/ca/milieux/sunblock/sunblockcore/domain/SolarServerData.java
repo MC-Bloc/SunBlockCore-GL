@@ -22,6 +22,7 @@ public class SolarServerData {
     private static float battOverallCurrent;
     private static String timeRemaining;
     private static String timestamp;
+    private static String powerProfile;
 
     public SolarServerData(float power, float cpuTemp) {
         SolarServerData.power = power;
@@ -38,6 +39,7 @@ public class SolarServerData {
         SolarServerData.battOverallCurrent = 0.0f;
         SolarServerData.timeRemaining = "Calculating Time Remaining...";
         SolarServerData.timestamp = "00:00";
+        SolarServerData.powerProfile = "";
     }
 
     //#region GETTERS 
@@ -93,6 +95,7 @@ public class SolarServerData {
     public static String getTimeRemaining() { return timeRemaining == "" ? "0" : timeRemaining; }
 
     public static String getTimestamp() { return timestamp; }
+    public static String getPowerProfile() { return powerProfile; }
     ////#endregion
 
     //#region SETTERS
@@ -146,6 +149,12 @@ public class SolarServerData {
     public static void setTimeRemaining(String t) { SolarServerData.timeRemaining = t; }
 
     public static void setTimestamp(String t) { SolarServerData.timestamp = t; }
+
+    public static void setPowerProfile(String p) { SolarServerData.powerProfile = p; }
+
+
+
+
     ////#endregion
     
 }

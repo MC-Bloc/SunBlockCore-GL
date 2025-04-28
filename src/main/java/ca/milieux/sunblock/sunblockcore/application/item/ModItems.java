@@ -15,8 +15,10 @@ public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, SunBlockCore.MODID);
-//    MSA: FIX THIS
+//  MSA: FIX THIS
     public static final RegistryObject<Item> SOLAR_SWORD = ITEMS.register("solar_sword",
             () -> new SwordItem(Tiers.NETHERITE, Math.min(4, (int) SolarServerData.getPvVoltage()), 2, new Item.Properties()));
+
     public static void register(IEventBus eventBus) {ITEMS.register(eventBus);}
+
 }

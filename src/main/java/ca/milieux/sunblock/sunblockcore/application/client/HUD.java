@@ -12,6 +12,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import org.apache.logging.log4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class HUD {
 
     private static final Minecraft mc = Minecraft.getInstance();
@@ -115,7 +120,7 @@ public class HUD {
 
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, texturePath));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, texturePath),
-                    0, 0, 0, 0, 168, 108, 168, 108);
+                    0, 0, 0, 0, 168, 126, 168, 126);
 
 
 
@@ -146,8 +151,13 @@ public class HUD {
 
             int _py_line4 = 94;
             guiGraphics.drawString(mc.font, "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours", _px, _py_line4, textColor);
+            RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetTimeRemainingIcon()));
+            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetTimeRemainingIcon()), 3, _py_line4 - 4, 0, 0, 16, 16, 16, 16);
+
+            int _py_line5 = 112;
+            guiGraphics.drawString(mc.font, "POWER MODE:" + SolarServerData.getPowerProfile(), _px, _py_line5, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()));
-            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()), 3, _py_line4 - 4, 0, 0, 16, 16, 16, 16);
+            guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()), 3, _py_line5 - 4, 0, 0, 16, 16, 16, 16);
 
 
             guiGraphics.pose().popPose();
@@ -240,6 +250,20 @@ public class HUD {
             return "textures/gui/mc_sb_icons_iso_battery_o.png";
         } else {
             return "textures/gui/mc_sb_icons_iso_battery_r.png";
+        }
+    }
+
+    static String GetTimeRemainingIcon() {
+        int HIGH_THRESH_BATTERY = 40;
+        int MED_THRESH_BATTERY = 12;
+        float hours_rem = Float.parseFloat(SolarServerData.getTimeRemaining());
+
+        if (hours_rem > HIGH_THRESH_BATTERY) {
+            return "textures/gui/mc_sb_icons_iso_clock_g.png";
+        } else if (hours_rem > MED_THRESH_BATTERY) {
+            return "textures/gui/mc_sb_icons_iso_clock_y.png";
+        } else {
+            return "textures/gui/mc_sb_icons_iso_clock_r.png";
         }
     }
 

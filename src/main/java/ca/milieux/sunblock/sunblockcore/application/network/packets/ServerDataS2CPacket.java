@@ -25,12 +25,13 @@ public class ServerDataS2CPacket {
     private static float battOverallCurrent;
     private static String timeRemaining;
     private static String timestamp;
+    private static String powerProfile;
 
     public ServerDataS2CPacket( float cpuTemp, float power, 
                                 float pvVoltage, float pvCurrent, float pvPower, 
                                 float battVoltage, float battChargeCurrent, float battChargePower, 
                                 float lPower, 
-                                float battRemaining, float battOverallCurrent, String timeRemaining, String timestamp) {
+                                float battRemaining, float battOverallCurrent, String timeRemaining, String timestamp, String powerProfile) {
         this.cpuTemp = cpuTemp;
         this.power = power;
 
@@ -48,6 +49,7 @@ public class ServerDataS2CPacket {
         this.battOverallCurrent = battOverallCurrent;
         this.timeRemaining = timeRemaining;
         this.timestamp = timestamp;
+        this.powerProfile = powerProfile;
     }
 
     public ServerDataS2CPacket(FriendlyByteBuf buf) {
@@ -68,6 +70,8 @@ public class ServerDataS2CPacket {
         battOverallCurrent = buf.readFloat();
         timeRemaining = buf.readUtf();
         timestamp = buf.readUtf();
+
+        powerProfile = buf.readUtf();
     }
 
     public void toBytes(FriendlyByteBuf buf) {
@@ -89,6 +93,7 @@ public class ServerDataS2CPacket {
 
         buf.writeUtf(timeRemaining);
         buf.writeUtf(timestamp);
+        buf.writeUtf(powerProfile);
     }
 
     public static boolean handle(ServerDataS2CPacket packet, Supplier<NetworkEvent.ClientCustomPayloadEvent.Context> ctx) {
@@ -111,6 +116,8 @@ public class ServerDataS2CPacket {
                 SolarServerData.setBattOverallCurrent(battOverallCurrent);
                 SolarServerData.setTimeRemaining(timeRemaining);
                 SolarServerData.setTimestamp(timestamp);
+                SolarServerData.setPowerProfile(powerProfile);
+
 
         });
         return true;

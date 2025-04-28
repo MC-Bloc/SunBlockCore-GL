@@ -52,12 +52,13 @@ public class ServerSetup {
                     float currentbattOverallCurrent = DataQueryProcess.GetServerData(SolarDataTypes.BATTOVERALLCURRENT);
                     String timeRemaining = DataQueryProcess.GetTimeRemaining();
                     String timestamp = DataQueryProcess.GetTimestamp();
+                    String powerprofile = DataQueryProcess.PowerProfile();
 
 
                     ServerDataS2CPacket _packet = new ServerDataS2CPacket(
                             currentTemp, currentPower, currentPVVoltage, currentPVCurrent, currentPVPower,
                             currentbattVoltage, currentbattChargeCurrent, currentbattChargePower, currentlPower,
-                            currentbattRemaining, currentbattOverallCurrent, timeRemaining, timestamp );
+                            currentbattRemaining, currentbattOverallCurrent, timeRemaining, timestamp, powerprofile );
 
 
                     ModPackets.sendToClients(_packet);
@@ -80,7 +81,7 @@ public class ServerSetup {
                     ServerDataS2CPacket _packet = new ServerDataS2CPacket(
                             0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
                             0.0F, 0.0F, 0.0F, 0.0F,
-                            0.0F, 0.0F, "", "");
+                            0.0F, 0.0F, "", "", "");
 
                     ModPackets.sendToPlayer(_packet, player);
                 }
