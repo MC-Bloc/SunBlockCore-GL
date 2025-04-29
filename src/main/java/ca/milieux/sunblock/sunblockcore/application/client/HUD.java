@@ -96,11 +96,17 @@ public class HUD {
             GuiGraphics guiGraphics = event.getGuiGraphics();
 
             String timestamp = SolarServerData.getTimestamp();
+            String timeString = "";
             if (timestamp != null && !timestamp.isEmpty()) {
                 String[] timeParts = timestamp.strip().split(" ");
                 timestamp = timeParts[timeParts.length - 1];
+                timeParts = timestamp.split(":");
+                if (timeParts.length > 1) {
+                    timeString = timeParts[0] + ":" + timeParts[1];
+                }
             }
-            String timeString = timestamp.split(":")[0] + ":" + timestamp.split(":")[1];
+
+
 
             double configScale = ConfigHandler.CLIENT.HUD_SCALE.get();
             double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
