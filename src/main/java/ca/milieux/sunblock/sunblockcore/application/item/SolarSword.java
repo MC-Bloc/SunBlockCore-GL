@@ -19,9 +19,12 @@ public class SolarSword extends SwordItem {
 
         System.out.println("SolarSword::hurtEnemy -- target Health" + pTarget.getHealth());
 
-        float solar_voltage = DataQueryProcess.GetServerData(SolarDataTypes.PVVOLTAGE);
+        int solar_charging_threshold = 14; //Volts
+        float inc_damage = Math.abs(DataQueryProcess.GetServerData(SolarDataTypes.PVVOLTAGE) - solar_charging_threshold) * DataQueryProcess.GetServerData(SolarDataTypes.PVCURRENT);
+//        float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER);
+//        float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVVOLTAGE);
 
-        pTarget.setHealth(pTarget.getHealth() - solar_voltage);
+        pTarget.setHealth(pTarget.getHealth() - inc_damage);
 
         return super.hurtEnemy(pStack, pTarget, pAttacker);
     }
