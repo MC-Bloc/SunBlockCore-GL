@@ -102,7 +102,7 @@ public class HUD {
             double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
             float op = (float) configOpacity / 10;
 
-            int textColor = 0xFFFFFF;
+            int textColor = 0xDDDDDD;
             String texturePath = GetTexturePath(timeString);
 
             RenderSystem.enableBlend();
