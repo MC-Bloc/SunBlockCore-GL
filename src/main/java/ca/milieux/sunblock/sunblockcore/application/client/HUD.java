@@ -123,7 +123,7 @@ public class HUD {
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, texturePath),
                     0, 0, 0, 0, 168, 126, 168, 126);
 
-
+            RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 
             // Draw text with modified alpha scaling.
             guiGraphics.drawString(mc.font, "Montreal, QC " + timeString, 60, 19, textColor);
