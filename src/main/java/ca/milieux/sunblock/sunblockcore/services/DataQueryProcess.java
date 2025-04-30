@@ -95,7 +95,7 @@ public class DataQueryProcess {
             return -1f;
         }
 
-        int count_lines = 2 + 11; //2 for the brackets, 11 for the number of entries.
+        int count_lines = 2 + 12; //2 for the brackets, 11 for the number of entries.
 
         try {
             ProcessBuilder pb = new ProcessBuilder("cat", SunblockDataPath);
