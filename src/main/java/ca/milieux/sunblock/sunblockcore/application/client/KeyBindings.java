@@ -8,7 +8,7 @@ import ca.milieux.sunblock.sunblockcore.SunBlockCore;
 public final class KeyBindings {
     public static final KeyBindings INSTANCE = new KeyBindings();
 
-    private int _solarStatsKey = InputConstants.KEY_G;
+    private int _HUDDetailsKey = InputConstants.KEY_U;
     private int _HUDCycleForward = InputConstants.KEY_F8;
 
     public final KeyMapping HUDDetailsKey = new KeyMapping(
