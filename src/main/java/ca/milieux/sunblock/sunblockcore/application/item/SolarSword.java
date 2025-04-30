@@ -17,7 +17,6 @@ public class SolarSword extends SwordItem  {
 
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker){
-        System.out.println("SunBlockCore::SolarSword -- Health before: " + pTarget.getHealth());
 
         //Additional Damage to target when struck with solar sword
         float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 10;
