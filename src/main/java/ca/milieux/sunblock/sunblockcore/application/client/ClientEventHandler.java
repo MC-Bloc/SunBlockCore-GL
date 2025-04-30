@@ -14,6 +14,8 @@ public class ClientEventHandler {
 	public void onRenderTick(RenderGuiOverlayEvent.Post event) {
 		if (HUD.type == HUDType.TextV0) {
 			HUD.TextHUD(event);
+		} else if (HUD.type == HUDType.TextV1) {
+			HUD.TextHUDDetailed(event);
 		} else if (HUD.type == HUDType.GraphicalV0) {
 			HUD.GraphicHUD(event);
 		}

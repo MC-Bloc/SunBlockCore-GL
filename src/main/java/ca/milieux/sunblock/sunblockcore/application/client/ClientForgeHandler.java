@@ -17,11 +17,6 @@ public class ClientForgeHandler {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         HUD.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
         if (event.phase == TickEvent.Phase.END) {
-            if (HUD.type == HUDType.TextV0 && KeyBindings.INSTANCE.showSolarStats.isDown()) {
-                HUD.showAllSolarStats = true;
-            } else if (HUD.showAllSolarStats) {
-                HUD.showAllSolarStats = false;
-            }
 
             if (HUD.type == HUDType.GraphicalV0 && KeyBindings.INSTANCE.showSolarStats.consumeClick())
             {
@@ -30,13 +25,27 @@ public class ClientForgeHandler {
                 }
             }
 
-            if (KeyBindings.INSTANCE.switchHUD.consumeClick()) {
-                if (HUD.type == HUDType.TextV0) {
-                    HUD.type = HUDType.GraphicalV0;
-                } else if (HUD.type == HUDType.GraphicalV0) {
+            if (KeyBindings.INSTANCE.HUDCycleForward.consumeClick()) {
+                if (HUD.type == HUDType.GraphicalV0) {
+                    HUD.type = HUDType.TextV1;
+                } else if (HUD.type == HUDType.TextV1) {
+                    HUD.type = HUDType.TextV0;
+                } else if (HUD.type == HUDType.TextV0) {
                     HUD.type = HUDType.None;
                 } else if (HUD.type == HUDType.None) {
+                    HUD.type = HUDType.GraphicalV0;
+                }
+            }
+
+            if (KeyBindings.INSTANCE.HUDCycleBackwards.consumeClick()) {
+                if (HUD.type == HUDType.GraphicalV0) {
+                    HUD.type = HUDType.None;
+                } else if (HUD.type == HUDType.None) {
+                    HUD.type = HUDType.TextV1;
+                } else if (HUD.type == HUDType.TextV1) {
                     HUD.type = HUDType.TextV0;
+                } else if (HUD.type == HUDType.TextV0) {
+                    HUD.type = HUDType.GraphicalV0;
                 }
             }
         }

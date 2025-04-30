@@ -17,8 +17,6 @@ public class HUD {
     private static final Minecraft mc = Minecraft.getInstance();
     private static final Logger LOGGER = SunBlockCore.LOGGER;
 
-    public static boolean showAllSolarStats = false;
-
     public static int statsIndex = 0;
     public static HUDType type = HUDType.GraphicalV0;
 
@@ -36,22 +34,19 @@ public class HUD {
             // red if high, orange if mid, white if low
             int powerConsumptionColor = powerConsumption > 20 ? 0xD6520B : powerConsumption <= 15 ? 0xFFFFFF : 0xCAE34B;
 
-            if (showAllSolarStats) {
-                SolarStats(event);
-            } else {
-                if (statsIndex < 5) {
-                    RenderUtils.drawStringTopLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 0);
-                } else if (statsIndex < 10) {
-                    RenderUtils.drawStringTopLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 0);
-                } else if (statsIndex < 15) {
-                    RenderUtils.drawStringTopLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 0);
-                }
+            if (statsIndex < 5) {
+                RenderUtils.drawStringTopLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 0);
+            } else if (statsIndex < 10) {
+                RenderUtils.drawStringTopLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 0);
+            } else if (statsIndex < 15) {
+                RenderUtils.drawStringTopLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 0);
             }
+
 
         }
     }
 
-    static void SolarStats(RenderGuiOverlayEvent.Post event) {
+    static void TextHUDDetailed(RenderGuiOverlayEvent.Post event) {
 
         float CPUTemp = SolarServerData.getCpuTemp();
         float CPUPower = SolarServerData.getPower(); // CPU power consumption
