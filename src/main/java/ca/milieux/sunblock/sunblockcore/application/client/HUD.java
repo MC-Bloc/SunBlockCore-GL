@@ -105,7 +105,7 @@ public class HUD {
 
             double configScale = ConfigHandler.CLIENT.HUD_SCALE.get();
             double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
-            float op = (float) configOpacity;
+            float op = (float) configOpacity / 10;
 
             int textColor = 0xFFFFFF;
             String texturePath = GetTexturePath(timeString);
@@ -174,7 +174,7 @@ public class HUD {
         int EVENING = 18;
         int NIGHT = 21;
 
-        if (timestamp == null || timestamp.isEmpty()) {
+        if (timestamp == null || timestamp.isEmpty() || timestamp == "") {
             return "textures/gui/mc_sb_hud_day.png";
         }
 
