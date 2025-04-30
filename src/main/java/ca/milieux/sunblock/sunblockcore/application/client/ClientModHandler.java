@@ -12,8 +12,7 @@ public class ClientModHandler {
 
     @SubscribeEvent
     public void registerKeys(RegisterKeyMappingsEvent event) {
-        event.register(KeyBindings.INSTANCE.showSolarStats);
+        event.register(KeyBindings.INSTANCE.HUDDetailsKey);
         event.register(KeyBindings.INSTANCE.HUDCycleForward);
-        event.register(KeyBindings.INSTANCE.HUDCycleBackwards);
     }
 }
