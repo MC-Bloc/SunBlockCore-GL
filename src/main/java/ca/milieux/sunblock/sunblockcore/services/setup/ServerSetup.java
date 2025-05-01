@@ -66,10 +66,13 @@ public class ServerSetup {
                         Thread.sleep(THREAD_SLEEP);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // Preserve interrupt status
-                        System.out.println("SunBlockCore::ServerSetup.java -- Thread Interrupted!");
+                        System.err.println("SunBlockCore::ServerSetup.java -- Thread Error!" + e.getMessage());
                         break;
                     }
                 }
+                System.err.println("SunBlockCore::ServerSetup.java -- Thread Interrupted!");
+                System.err.println("SunBlockCore::ServerSetup.java -- Thread state: " + Thread.currentThread().getState());
+
             });
         }
 
