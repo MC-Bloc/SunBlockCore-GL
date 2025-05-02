@@ -16,7 +16,7 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, SunBlockCore.MODID);
     public static final RegistryObject<Item> SOLAR_SWORD = ITEMS.register("solar_sword",
-            () -> new SolarSword(Tiers.IRON, 1, 2, new Item.Properties()));
+            () -> new SolarSword(Tiers.IRON, 3, -2.4f, new Item.Properties()));
 
     public static void register(IEventBus eventBus) {ITEMS.register(eventBus);}
 
