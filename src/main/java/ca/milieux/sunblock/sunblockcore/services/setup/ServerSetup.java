@@ -27,7 +27,7 @@ public class ServerSetup {
     public class ServerEvents {
 
         static int THREAD_SLEEP = 1000; //in milliseconds
-
+        static int count = 1;
         @SubscribeEvent
         public static void onServerStarting(ServerStartingEvent event) {
             // The server starting initiates a thread which calls DataQueryProcess methods every second
@@ -35,6 +35,8 @@ public class ServerSetup {
             ServerSetup.server = ServerLifecycleHooks.getCurrentServer();
             Future<?> future = ServerSetup.executor.submit(() -> {
                 while (!Thread.currentThread().isInterrupted()) {
+                    System.out.println("SunBlockCore::ServerSetup -- iteration #" + count);
+
                     float currentTemp = DataQueryProcess.GetCPUTemp();
                     float currentPower = DataQueryProcess.GetServerData(SolarDataTypes.SYSTEMPOWERDRAW);
 
@@ -50,10 +52,12 @@ public class ServerSetup {
 
                     float currentbattRemaining = DataQueryProcess.GetServerData(SolarDataTypes.BATTREMAINING);
                     float currentbattOverallCurrent = DataQueryProcess.GetServerData(SolarDataTypes.BATTOVERALLCURRENT);
+
                     String timeRemaining = DataQueryProcess.GetTimeRemaining();
                     String timestamp = DataQueryProcess.GetTimestamp();
                     String powerprofile = DataQueryProcess.PowerProfile();
 
+                    count += 1;
 
                     ServerDataS2CPacket _packet = new ServerDataS2CPacket(
                             currentTemp, currentPower, currentPVVoltage, currentPVCurrent, currentPVPower,
