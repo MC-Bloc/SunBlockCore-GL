@@ -184,7 +184,18 @@ public class DataQueryProcess {
                 if (data != null) {
                     data = data.strip();
                     if (data.contains("PowerProfile")){
-                        return data.split(":")[1].replace("\"", "").replace("-", " ");
+
+                        System.out.println("SunBlockCore::DataQueryProcess -- Power Profile is: " + data );
+
+                        if (data.contains("performance")) {
+                            return "Performance";
+                        } else if (data.contains("balanced")){
+                            return "Balanced";
+                        } else if (data.contains("saver")){
+                            return "Power Saver";
+                        } else {
+                            return "";
+                        }
                     }
                 }
             }
