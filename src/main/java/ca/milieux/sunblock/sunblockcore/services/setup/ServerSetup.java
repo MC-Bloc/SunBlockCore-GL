@@ -35,7 +35,7 @@ public class ServerSetup {
             ServerSetup.server = ServerLifecycleHooks.getCurrentServer();
             Future<?> future = ServerSetup.executor.submit(() -> {
                 while (!Thread.currentThread().isInterrupted()) {
-                    System.out.println("SunBlockCore::ServerSetup -- iteration #" + count);
+//                    System.out.println("SunBlockCore::ServerSetup -- iteration #" + count);
 
                     float currentTemp = DataQueryProcess.GetCPUTemp();
                     float currentPower = DataQueryProcess.GetServerData(SolarDataTypes.SYSTEMPOWERDRAW);

@@ -187,7 +187,7 @@ public class DataQueryProcess {
                     data = data.strip();
                     if (data.contains("PowerProfile")){
 
-                        System.out.println("SunBlockCore::DataQueryProcess -- Power Profile is: " + data );
+//                        System.out.println("SunBlockCore::DataQueryProcess -- Power Profile is: " + data );
 
                         if (data.contains("performance")) {
                             return "Performance";
