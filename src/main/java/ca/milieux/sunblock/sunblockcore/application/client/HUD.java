@@ -85,16 +85,7 @@ public class HUD {
 
             GuiGraphics guiGraphics = event.getGuiGraphics();
 
-            String timestamp = SolarServerData.getTimestamp();
-            String timeString = "";
-            if (timestamp != null && !timestamp.isEmpty()) {
-                String[] timeParts = timestamp.strip().split(" ");
-                timestamp = timeParts[timeParts.length - 1];
-                timeParts = timestamp.split(":");
-                if (timeParts.length > 1) {
-                    timeString = timeParts[0] + ":" + timeParts[1];
-                }
-            }
+            String timeString = SolarServerData.getTimestamp();
 
 
 

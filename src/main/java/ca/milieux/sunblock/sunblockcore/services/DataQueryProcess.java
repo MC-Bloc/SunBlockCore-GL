@@ -79,7 +79,14 @@ public class DataQueryProcess {
                 if (data != null) {
                     data = data.strip();
                     if (data.contains("Timestamp")){
-                        return data;
+                        String[] timeParts = data.strip().split(" ");
+                        String timestamp = timeParts[timeParts.length - 1];
+                        timeParts = timestamp.split(":");
+                        if (timeParts.length > 1) {
+                            return timeParts[0] + ":" + timeParts[1];
+                        } else {
+                            return "00:00";
+                        }
                     }
                 }
             }
