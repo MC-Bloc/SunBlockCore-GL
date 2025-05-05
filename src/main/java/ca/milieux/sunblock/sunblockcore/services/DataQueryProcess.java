@@ -90,10 +90,10 @@ public class DataQueryProcess {
                     }
                 }
             }
-            return null;
+            return "";
         } catch (Exception e) {
             System.out.println("ERROR: There was an error calling GetTimestamp: " + e.getMessage() );
-            return null;
+            return "";
         }
     }
 
@@ -199,10 +199,11 @@ public class DataQueryProcess {
                     }
                 }
             }
-            return null;
+
+            return "";
         } catch (Exception e) {
             System.out.println("ERROR: There was an error calling PowerProfile: " + e.getMessage() );
-            return null;
+            return "";
         }
     }
 
