@@ -174,6 +174,8 @@ public class DataQueryProcess {
         int count_lines = 2 + 12; //2 for the brackets, 11 for the number of entries.
 
         try {
+//            System.err.println("SunBlockCore::DataQueryProcess -- Reading Power Profile");
+
             ProcessBuilder pb = new ProcessBuilder("cat", SunblockDataPath);
             pb.redirectErrorStream(true);
             Process process = pb.start();

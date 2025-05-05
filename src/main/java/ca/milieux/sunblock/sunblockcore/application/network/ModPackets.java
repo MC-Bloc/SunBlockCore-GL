@@ -29,11 +29,13 @@ public class ModPackets {
 
     // Send packet to player
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
+//        System.out.println("SunBlockCore::ModPackets -- Sending packet to Player! \nPacket: " + message.toString());
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 
     // Send packet to all clients on server
     public static <MSG> void sendToClients(MSG message) {
+//        System.out.println("SunBlockCore::ModPackets -- Sending packet to Client! \nPacket: " + message.toString());
         INSTANCE.send(PacketDistributor.ALL.noArg(), message);
     }
 }
