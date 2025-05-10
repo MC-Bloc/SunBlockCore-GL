@@ -1,5 +1,5 @@
 # SunBlockCore 
-Version `0.7.6-1.20.1`
+Version `0.8.0-1.20.1`
 
 SunBlockCore is a forge mod for the [SunBlock](https://github.com/MC-Bloc/SunBlock) system, 
 It loads up real-time solar data on the server-side into Minecraft and broadcasts it live to users that recieve it on 
