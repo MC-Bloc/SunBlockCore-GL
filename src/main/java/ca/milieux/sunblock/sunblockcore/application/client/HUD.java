@@ -8,9 +8,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Optional;
 
 public class HUD {
 
@@ -119,12 +123,26 @@ public class HUD {
             int diff = 4;
 
             int _py_line1 = 40;
-            guiGraphics.drawString(mc.font, "SOLAR: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w", _px, _py_line1, textColor);
+
+
+            String solar_stats = "SOLAR: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w";
+            String battery_stats = "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%";
+            String usage_stats = "USAGE: " + SolarServerData.getlPower() + "w";
+            String time_left = "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours";
+            String power_profile = "POWER MODE:" + SolarServerData.getPowerProfile();
+
+            String delim = "\n\n";
+
+            FormattedText t = FormattedText.of(solar_stats + delim + battery_stats + delim + usage_stats + delim + time_left + delim + power_profile);
+            guiGraphics.drawWordWrap(mc.font, t, _px, _py_line1,168, textColor);
+
+
+//            guiGraphics.drawString(mc.font, "SOLAR: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w", _px, _py_line1, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetGenerationIcon()));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetGenerationIcon()), 3, _py_line1 - diff, 0, 0, 16, 16, 16, 16);
 
             int _py_line2 = 58;
-            guiGraphics.drawString(mc.font, "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%", _px, _py_line2, textColor);
+//            guiGraphics.drawString(mc.font, "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%", _px, _py_line2, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetBatteryIcon()));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetBatteryIcon()), 3, _py_line2 - diff, 0, 0, 16, 16, 16, 16);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetBatteryArrowIcon(SolarServerData.getBattOverallCurrent())));
@@ -132,17 +150,17 @@ public class HUD {
                     12, _py_line2 - diff, 0, 0, 16, 16, 16, 16);
 
             int _py_line3 = 76;
-            guiGraphics.drawString(mc.font, "USAGE: " + SolarServerData.getlPower() + "w", _px, _py_line3, textColor);
+//            guiGraphics.drawString(mc.font, "USAGE: " + SolarServerData.getlPower() + "w", _px, _py_line3, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetLoadIcon()), 3, _py_line3 - diff, 0, 0, 16, 16, 16, 16);
 
             int _py_line4 = 94;
-            guiGraphics.drawString(mc.font, "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours", _px, _py_line4, textColor);
+//            guiGraphics.drawString(mc.font, "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours", _px, _py_line4, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetTimeRemainingIcon()));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetTimeRemainingIcon()), 3, _py_line4 - 4, 0, 0, 16, 16, 16, 16);
 
             int _py_line5 = 112;
-            guiGraphics.drawString(mc.font, "POWER MODE:" + SolarServerData.getPowerProfile(), _px, _py_line5, textColor);
+//            guiGraphics.drawString(mc.font, "POWER MODE:" + SolarServerData.getPowerProfile(), _px, _py_line5, textColor);
             RenderSystem.setShaderTexture(0, new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()));
             guiGraphics.blit(new ResourceLocation(SunBlockCore.MODID, GetCPUIcon()), 3, _py_line5 - 4, 0, 0, 16, 16, 16, 16);
 
@@ -153,6 +171,8 @@ public class HUD {
             RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
         }
     }
+
+
 
     static String GetTexturePath(String timestamp) {
         int DAWN = 6;
