@@ -1,6 +1,7 @@
 {
   "key.sunblockcore.show_solar_stats": "Show Solar Stats Key",
   "item.sunblockcore.solar_sword": "Solar-Powered Sword",
+  "block.sunblockcore.power_button": "Power Button",
   "key.sunblockcore.sunblock_hud": "Toggle SunBlock HUD",
   "key.categories.sunblock_hud": "SunBlock HUD",
   "key.sunblockcore.sunblock_hud_settings": "SunBlock HUD Settings"
