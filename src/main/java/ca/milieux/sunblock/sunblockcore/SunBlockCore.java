@@ -1,5 +1,6 @@
 package ca.milieux.sunblock.sunblockcore;
 
+import ca.milieux.sunblock.sunblockcore.application.block.ModBlocks;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,6 +32,7 @@ public class SunBlockCore {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		ModItems.register(modEventBus);
+		ModBlocks.register(modEventBus);
 
 		modEventBus.addListener(CommonSetup::init);
 		modEventBus.addListener(this::addCreative);
