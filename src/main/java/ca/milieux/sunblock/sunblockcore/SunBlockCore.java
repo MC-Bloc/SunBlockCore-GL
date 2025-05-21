@@ -48,5 +48,7 @@ public class SunBlockCore {
 		if (event.getTabKey() == CreativeModeTabs.COMBAT) {
 			event.accept(ModItems.SOLAR_SWORD);
 		}
+
+		event.accept(ModBlocks.POWER_BUTTON);
 	}
 }
