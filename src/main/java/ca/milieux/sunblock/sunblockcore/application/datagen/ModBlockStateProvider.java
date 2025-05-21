@@ -3,6 +3,7 @@ package ca.milieux.sunblock.sunblockcore.application.datagen;
 import ca.milieux.sunblock.sunblockcore.SunBlockCore;
 import ca.milieux.sunblock.sunblockcore.application.block.ModBlocks;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ButtonBlock;
@@ -17,7 +18,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        buttonBlock((ButtonBlock) ModBlocks.POWER_BUTTON.get(), blockTexture(Blocks.GOLD_BLOCK));
+        buttonBlock((ButtonBlock) ModBlocks.POWER_BUTTON.get(), new ResourceLocation(SunBlockCore.MODID, "block/power_button"));
 
     }
 
