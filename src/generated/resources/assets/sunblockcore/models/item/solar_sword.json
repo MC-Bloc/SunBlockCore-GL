@@ -1,6 +1,4 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "sunblockcore:item/solar_sword"
-  }
+  "parent": "sunblockcore:item/solar_sword_base",
+  "textures": { "layer0": "sunblockcore:item/solar_sword" }
 }
