@@ -1,0 +1,4 @@
+{
+  "power_on":  { "category": "blocks", "subtitle": "sunblockcore.subtitle.power_on",  "sounds": [{ "name": "sunblockcore:power_on" }] },
+  "power_off": { "category": "blocks", "subtitle": "sunblockcore.subtitle.power_off", "sounds": [{ "name": "sunblockcore:power_off" }] }
+}
