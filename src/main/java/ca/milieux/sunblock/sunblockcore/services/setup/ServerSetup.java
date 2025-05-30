@@ -45,7 +45,7 @@ public class ServerSetup {
                     float currentPVPower = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER);
 
                     float currentbattVoltage = DataQueryProcess.GetServerData(SolarDataTypes.BATTVOLTAGE);
-                    float currentbattChargeCurrent = DataQueryProcess.GetServerData(SolarDataTypes.BATTCHARGECURRENT);
+                    float currentbattTemperature = DataQueryProcess.GetServerData(SolarDataTypes.BATTTEMPERATURE);
                     float currentbattChargePower = DataQueryProcess.GetServerData(SolarDataTypes.BATTCHARGEPOWER);
 
                     float currentlPower = DataQueryProcess.GetServerData(SolarDataTypes.LPOWER);
@@ -61,7 +61,7 @@ public class ServerSetup {
 
                     ServerDataS2CPacket _packet = new ServerDataS2CPacket(
                             currentTemp, currentPower, currentPVVoltage, currentPVCurrent, currentPVPower,
-                            currentbattVoltage, currentbattChargeCurrent, currentbattChargePower, currentlPower,
+                            currentbattVoltage, currentbattTemperature, currentbattChargePower, currentlPower,
                             currentbattRemaining, currentbattOverallCurrent, timeRemaining, timestamp, powerprofile );
 
 

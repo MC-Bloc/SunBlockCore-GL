@@ -62,15 +62,14 @@ public class HUD {
 
         float batteryVoltage = SolarServerData.getBattVoltage();
         float batteryPercentage = SolarServerData.getBattRemaining();
-        float batteryChargeCurrent = SolarServerData.getBattChargeCurrent();
 
         String cpuPowerString = "CPU State: " + CPUPower  + "Watts | " + CPUTemp + "ºC";
         String systemPowerString = "System Power Consumption: " + powerConsumption  + " Watts";
         String solarPowerString = "Solar Power Generation: " + solarVolts + "V | " + solarCurrent + "A | " + solarPower + "W";
         String batteryPowerString = "Battery: " + batteryVoltage + "V | " + batteryPercentage + "%";
 
-        String chargingState = batteryChargeCurrent > 0 ? "Charging" : "Discharging";
-        int chargingStateColor = batteryChargeCurrent > 0 ? 0xFFFFFF : 0xD6520B;
+        String chargingState = solarPower > powerConsumption ? "Charging" : "Discharging";
+        int chargingStateColor = solarPower > powerConsumption ? 0xFFFFFF : 0xD6520B;
 
         String powerState = powerConsumption >= solarPower ? "draining. Consumption is higher than solar regeneration" : "Storing Power";
         int powerStateColor = powerConsumption >= solarPower ? 0xD6520B : 0xFFFFFF;

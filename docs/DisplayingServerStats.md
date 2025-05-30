@@ -8,7 +8,7 @@
   3. `PVCurrent`,
   4. `PVPower`,
   5. `BattVoltage`,
-  6. `BattChargeCurrent`,
+  6. `BattTemperature`,
   7. `BattChargePower`,
   8. `LoadPower`,
   9. `BattPercentage`,

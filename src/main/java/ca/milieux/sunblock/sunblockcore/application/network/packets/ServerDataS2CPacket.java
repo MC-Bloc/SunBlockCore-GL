@@ -17,11 +17,10 @@ public class ServerDataS2CPacket {
     private static float pvCurrent;
     private static float pvPower;
     private static float battVoltage;
-    private static float battChargeCurrent;
+    private static float battTemperature;
     private static float battChargePower;
     private static float lPower;
     private static float battRemaining;
-    private static float battTemp;
     private static float battOverallCurrent;
     private static String timeRemaining;
     private static String timestamp;
@@ -29,7 +28,7 @@ public class ServerDataS2CPacket {
 
     public ServerDataS2CPacket( float cpuTemp, float power, 
                                 float pvVoltage, float pvCurrent, float pvPower, 
-                                float battVoltage, float battChargeCurrent, float battChargePower, 
+                                float battVoltage, float battTemperature, float battChargePower,
                                 float lPower, 
                                 float battRemaining, float battOverallCurrent, String timeRemaining, String timestamp, String powerProfile) {
         this.cpuTemp = cpuTemp;
@@ -40,7 +39,7 @@ public class ServerDataS2CPacket {
         this.pvPower = pvPower;
         
         this.battVoltage = battVoltage;
-        this.battChargeCurrent = battChargeCurrent;
+        this.battTemperature = battTemperature;
         this.battChargePower = battChargePower;
         
         this.lPower = lPower;
@@ -64,7 +63,7 @@ public class ServerDataS2CPacket {
         pvPower = buf.readFloat();
 
         battVoltage = buf.readFloat();
-        battChargeCurrent = buf.readFloat();
+        battTemperature = buf.readFloat();
         battChargePower = buf.readFloat();
 
         lPower = buf.readFloat();
@@ -88,7 +87,7 @@ public class ServerDataS2CPacket {
         buf.writeFloat(pvPower);
 
         buf.writeFloat(battVoltage);
-        buf.writeFloat(battChargeCurrent);
+        buf.writeFloat(battTemperature);
         buf.writeFloat(battChargePower);
 
         buf.writeFloat(lPower);
@@ -117,7 +116,7 @@ public class ServerDataS2CPacket {
                 SolarServerData.setPvPower(pvPower);
 
                 SolarServerData.setBattVoltage(battVoltage);
-                SolarServerData.setBattChargeCurrent(battChargeCurrent);
+                SolarServerData.setBattTemperature(battTemperature);
                 SolarServerData.setBattChargePower(battChargePower);
 
                 SolarServerData.setlPower(lPower);

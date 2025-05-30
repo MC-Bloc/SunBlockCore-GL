@@ -123,7 +123,7 @@ public class DataQueryProcess {
                         return GetValue(data);
                     } else if (property == SolarDataTypes.BATTVOLTAGE && data.contains("BattVoltage")){
                         return GetValue(data);
-                    } else if (property == SolarDataTypes.BATTCHARGECURRENT && data.contains("BattChargeCurrent")){
+                    } else if (property == SolarDataTypes.BATTTEMPERATURE && data.contains("BattTemperature")){
                         return GetValue(data);
                     } else if (property == SolarDataTypes.BATTCHARGEPOWER && data.contains("BattChargePower")){
                         return GetValue(data);

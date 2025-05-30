@@ -14,7 +14,7 @@ public class SolarServerData {
     private static float pvCurrent;
     private static float pvPower;
     private static float battVoltage;
-    private static float battChargeCurrent;
+    private static float battTemperature;
     private static float battChargePower;
     private static float lPower;
     private static float battRemaining;
@@ -31,7 +31,7 @@ public class SolarServerData {
         SolarServerData.pvCurrent = 0.0f;
         SolarServerData.pvPower = 0.0f;
         SolarServerData.battVoltage = 0.0f;
-        SolarServerData.battChargeCurrent = 0.0f;
+        SolarServerData.battTemperature = 0.0f;
         SolarServerData.battChargePower = 0.0f;
         SolarServerData.lPower = 0.0f;
         SolarServerData.battRemaining = 0.0f;
@@ -68,8 +68,8 @@ public class SolarServerData {
         return battVoltage;
     }
 
-    public static float getBattChargeCurrent() {
-        return battChargeCurrent;
+    public static float getBattTemperature() {
+        return battTemperature;
     }
 
     public static float getBattChargePower() {
@@ -123,8 +123,8 @@ public class SolarServerData {
         SolarServerData.battVoltage = battVoltage;
     }
 
-    public static void setBattChargeCurrent(float battChargeCurrent) {
-        SolarServerData.battChargeCurrent = battChargeCurrent;
+    public static void setBattTemperature(float battTemperature) {
+        SolarServerData.battTemperature = battTemperature;
     }
 
     public static void setBattChargePower(float battChargePower) {
