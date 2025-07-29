@@ -2,7 +2,7 @@
 Version `0.8.1-1.20.1`
 
 SunBlockCore is a forge mod for the [SunBlock](https://github.com/MC-Bloc/SunBlock) system, 
-It loads up real-time solar data on the server-side into Minecraft and broadcasts it live to users that recieve it on 
+It loads up real-time solar data on the server-side into Minecraft and broadcasts it live to users that receive it on 
 the client-side, enabling new game mechanics for a solar-powered survival multiplayer experience.  
 
 For the mod file (JAR), please see [releases](https://github.com/MC-Bloc/SB1-DataVisMod/releases).
