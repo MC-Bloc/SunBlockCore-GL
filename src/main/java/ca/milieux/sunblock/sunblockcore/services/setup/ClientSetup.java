@@ -28,6 +28,45 @@ public class ClientSetup {
                         if (pv >= 10f) return 0.5f;   //medium
                         return 0.0f;                  //low
                     });
+            ItemProperties.register(ModItems.SOLAR_PICKAXE.get(),
+                    new ResourceLocation(SunBlockCore.MODID, "power"),
+                    (stack, level, entity, seed) -> {
+                        //Use live cached PV power even when level == null (inventory)
+                        float pv = ca.milieux.sunblock.sunblockcore.domain.SolarServerData.getPvPower();
+                        if (pv >= 20f) return 1.0f;   //high
+                        if (pv >= 10f) return 0.5f;   //medium
+                        return 0.0f;                  //low
+                    });
+
+            ItemProperties.register(ModItems.SOLAR_AXE.get(),
+                    new ResourceLocation(SunBlockCore.MODID, "power"),
+                    (stack, level, entity, seed) -> {
+                        //Use live cached PV power even when level == null (inventory)
+                        float pv = ca.milieux.sunblock.sunblockcore.domain.SolarServerData.getPvPower();
+                        if (pv >= 20f) return 1.0f;   //high
+                        if (pv >= 10f) return 0.5f;   //medium
+                        return 0.0f;                  //low
+                    });
+
+            ItemProperties.register(ModItems.SOLAR_SHOVEL.get(),
+                    new ResourceLocation(SunBlockCore.MODID, "power"),
+                    (stack, level, entity, seed) -> {
+                        //Use live cached PV power even when level == null (inventory)
+                        float pv = ca.milieux.sunblock.sunblockcore.domain.SolarServerData.getPvPower();
+                        if (pv >= 20f) return 1.0f;   //high
+                        if (pv >= 10f) return 0.5f;   //medium
+                        return 0.0f;                  //low
+                    });
+
+            ItemProperties.register(ModItems.SOLAR_HOE.get(),
+                    new ResourceLocation(SunBlockCore.MODID, "power"),
+                    (stack, level, entity, seed) -> {
+                        //Use live cached PV power even when level == null (inventory)
+                        float pv = ca.milieux.sunblock.sunblockcore.domain.SolarServerData.getPvPower();
+                        if (pv >= 20f) return 1.0f;   //high
+                        if (pv >= 10f) return 0.5f;   //medium
+                        return 0.0f;                  //low
+                    });
         });
     }
 }

@@ -1,0 +1,9 @@
+{
+  "parent": "item/handheld",
+  "textures": { "layer0": "sunblockcore:item/solar_axe" },
+  "overrides": [
+    { "predicate": { "sunblockcore:power": 0.66 }, "model": "sunblockcore:item/solar_axe" },
+    { "predicate": { "sunblockcore:power": 0.33 }, "model": "sunblockcore:item/solar_axe_med" },
+    { "predicate": { "sunblockcore:power": 0.00 }, "model": "sunblockcore:item/solar_axe_low" }
+  ]
+}

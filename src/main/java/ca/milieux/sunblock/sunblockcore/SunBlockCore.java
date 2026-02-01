@@ -49,6 +49,10 @@ public class SunBlockCore {
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == CreativeModeTabs.COMBAT) {
 			event.accept(ModItems.SOLAR_SWORD);
+			event.accept(ModItems.SOLAR_PICKAXE);
+			event.accept(ModItems.SOLAR_AXE);
+			event.accept(ModItems.SOLAR_HOE);
+			event.accept(ModItems.SOLAR_SHOVEL);
 		}
 		event.accept(ModBlocks.POWER_BUTTON);
 	}

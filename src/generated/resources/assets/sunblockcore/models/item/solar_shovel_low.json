@@ -1,0 +1,4 @@
+{
+  "parent": "sunblockcore:item/solar_shovel_base",
+  "textures": { "layer0": "sunblockcore:item/solar_shovel_low" }
+}
