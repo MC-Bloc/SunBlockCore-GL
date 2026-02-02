@@ -1,0 +1,16 @@
+package ca.milieux.sunblock.core.services;
+
+public enum SolarDataTypes {
+    TIMESTAMP,
+    PVVOLTAGE,
+    PVCURRENT,
+    PVPOWER,
+    BATTVOLTAGE,
+    BATTCHARGECURRENT,
+    BATTCHARGEPOWER,
+    LPOWER,
+    BATTREMAINING,
+    BATTOVERALLCURRENT,
+    SYSTEMPOWERDRAW,
+    POWERPROFILE
+}

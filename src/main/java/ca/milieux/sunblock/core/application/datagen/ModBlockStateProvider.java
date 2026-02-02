@@ -1,0 +1,28 @@
+package ca.milieux.sunblock.core.application.datagen;
+
+import ca.milieux.sunblock.core.SunBlockCore;
+import ca.milieux.sunblock.core.application.block.ModBlocks;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
+
+public class ModBlockStateProvider extends BlockStateProvider {
+    public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
+        super(output, SunBlockCore.MODID, exFileHelper);
+    }
+
+    @Override
+    protected void registerStatesAndModels() {
+        buttonBlock((ButtonBlock) ModBlocks.POWER_BUTTON.get(), new ResourceLocation(SunBlockCore.MODID, "block/power_button"));
+
+    }
+
+    private void blockWithItem (RegistryObject<Block> blockRegistryObject) {
+        simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
+    }
+}
+
