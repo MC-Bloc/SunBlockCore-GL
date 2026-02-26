@@ -27,6 +27,18 @@ Please see the [docs](./docs/) for more technical information.
 4. Gradle
 
 
+## Changelog 
+* 0.8.2 -- Solar Tools 
+* 0.8.1 -- Serverside configs 
+* 0.8.0 -- Power Mode Button 
+* 0.7.6 -- Debug Cleanup 
+* 0.7.5 -- Fix HUD Crashes & Improved Solar Sword base stats 
+* 0.7.4 -- Update Sword graphics 
+* 0.7.3 -- Cycle between HUDs, and other HUD improvements 
+* 0.7.2 -- Fixes for HUD, Sword, and datastream 
+* 0.7.1 -- Solar Sword 
+* 0.7.0 -- Reset to SunBlockCore
+
 ## Contributors:
 1. [Shahrom Ali](https://github.com/estineali)
 2. [Andrew](https://github.com/WonderAnchor)
