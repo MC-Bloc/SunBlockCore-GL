@@ -2,6 +2,7 @@ package ca.milieux.sunblock.core;
 
 import ca.milieux.sunblock.core.application.block.ModBlocks;
 import ca.milieux.sunblock.core.application.config.ConfigHandler;
+import ca.milieux.sunblock.core.application.config.ConfigHandlerServer;
 import ca.milieux.sunblock.core.application.item.ModItems;
 import ca.milieux.sunblock.core.registry.ModSounds;
 import ca.milieux.sunblock.core.services.setup.ClientSetup;
@@ -40,10 +41,16 @@ public class SunBlockCore {
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () ->
 				() -> modEventBus.addListener(ClientSetup::init));
 
-		//Config file
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT,
+		//Config files
+		ModLoadingContext.get().registerConfig(
+				ModConfig.Type.CLIENT,
 				ConfigHandler.CLIENT_SPEC,
 				"SunBlockCore-ClientConfig.toml");
+
+		ModLoadingContext.get().registerConfig(
+				ModConfig.Type.SERVER,
+				ConfigHandlerServer.SPEC,
+				"SunBlockCore-ServerConfig.toml");
 	}
 
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {

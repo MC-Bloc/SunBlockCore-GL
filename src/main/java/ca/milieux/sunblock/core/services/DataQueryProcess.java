@@ -1,5 +1,11 @@
 package ca.milieux.sunblock.core.services;
 
+import ca.milieux.sunblock.core.application.config.ConfigHandlerServer;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.DedicatedServer;
+import net.minecraft.server.dedicated.DedicatedServerProperties;
+import net.minecraftforge.server.ServerLifecycleHooks;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +19,7 @@ public class DataQueryProcess {
 
 
     static String CPUTempPath = "/sys/class/thermal/thermal_zone1/temp";
-    static String SunblockDataPath = "/home/pc/SunblockData/solar_data.json";
+    static String SunblockDataPath = ConfigHandlerServer.SUNBLOCK_DATA_PATH.get();
     static float MAXBATTERYCAPACITY = 1200f; // max battery capacity in Watts
     static int MAXMEMORY = 10; // Last 10 seconds
 
@@ -136,7 +142,7 @@ public class DataQueryProcess {
                     }
                 }
             }
-            return 7.7f;
+            return 7.07f;
         } catch (Exception e) {
             System.err.println("SunBlockCore ERROR: Failed to complete DataQueryProcess::GetServerData. \nReason:  " + e.getMessage());
             return -1f;
