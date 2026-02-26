@@ -1,5 +1,6 @@
 package ca.milieux.sunblock.core.application.block;
 
+import ca.milieux.sunblock.core.application.config.ConfigHandlerServer;
 import ca.milieux.sunblock.core.registry.ModSounds;
 import ca.milieux.sunblock.core.services.DataQueryProcess;
 import net.minecraft.core.BlockPos;
@@ -102,7 +103,7 @@ public class PowerButton extends ButtonBlock {
     //REST calls
     private void performanceMode() {
         try {
-            URL url = new URL("https://photon.sunblockone.milieux.ca/performance-mode");
+            URL url = new URL(ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/performance-mode");
             URLConnection conn = url.openConnection();
             try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
         } catch (Exception e) {
@@ -112,7 +113,7 @@ public class PowerButton extends ButtonBlock {
 
     private void powerSaverMode() {
         try {
-            URL url = new URL("https://photon.sunblockone.milieux.ca/power-saver-mode");
+            URL url = new URL(ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/power-saver-mode");
             URLConnection conn = url.openConnection();
             try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
         } catch (Exception e) {
