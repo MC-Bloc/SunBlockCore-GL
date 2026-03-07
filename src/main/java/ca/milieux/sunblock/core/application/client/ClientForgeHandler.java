@@ -1,7 +1,10 @@
 package ca.milieux.sunblock.core.application.client;
 
 import ca.milieux.sunblock.core.SunBlockCore;
+import ca.milieux.sunblock.core.services.DataQueryProcess;
+import ca.milieux.sunblock.core.services.SolarDataTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +20,8 @@ public class ClientForgeHandler {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         HUD.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
         if (event.phase == TickEvent.Phase.END) {
+
+            HealSolarTool();
 
             if (HUD.type == HUDType.GraphicalV0 && KeyBindings.INSTANCE.HUDDetailsKey.consumeClick())
             {
@@ -35,6 +40,17 @@ public class ClientForgeHandler {
                 } else if (HUD.type == HUDType.None) {
                     HUD.type = HUDType.GraphicalV0;
                 }
+            }
+
+        }
+    }
+
+    public static void HealSolarTool() {
+        if (mc.player != null) {
+
+            ItemStack item = mc.player.getMainHandItem();
+            if (item.toString().contains("solar")){
+                item.setDamageValue(item.getDamageValue() - (int)DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER));
             }
         }
     }
