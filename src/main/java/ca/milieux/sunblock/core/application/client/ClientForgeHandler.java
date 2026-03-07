@@ -4,9 +4,13 @@ import ca.milieux.sunblock.core.SunBlockCore;
 import ca.milieux.sunblock.core.services.DataQueryProcess;
 import ca.milieux.sunblock.core.services.SolarDataTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -17,12 +21,16 @@ public class ClientForgeHandler {
     static Minecraft mc = Minecraft.getInstance();
 
     @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END && !mc.mouseHandler.isLeftPressed()) {
+            HealSolarTool(event.player);
+        }
+    }
+
+    @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         HUD.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
         if (event.phase == TickEvent.Phase.END) {
-
-            HealSolarTool();
-
             if (HUD.type == HUDType.GraphicalV0 && KeyBindings.INSTANCE.HUDDetailsKey.consumeClick())
             {
                 if (mc.screen == null) {
@@ -45,12 +53,15 @@ public class ClientForgeHandler {
         }
     }
 
-    public static void HealSolarTool() {
-        if (mc.player != null) {
+    public static void HealSolarTool(Player player) {
+        if (player != null) {
 
-            ItemStack item = mc.player.getMainHandItem();
+            ItemStack item = player.getMainHandItem();
+
+            System.out.println(item);
             if (item.toString().contains("solar")){
-                item.setDamageValue(item.getDamageValue() - (int)DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER));
+                int recover = item.getDamageValue() - (int) (1 + (DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 20));
+                item.setDamageValue(recover);
             }
         }
     }
