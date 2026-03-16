@@ -25,7 +25,7 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, SunBlockCore.MODID);
 
     public static final RegistryObject<Block> POWER_BUTTON = registerBlock("power_button",
-            () -> new PowerButton(BlockBehaviour.Properties.copy(Blocks.STONE_BUTTON), BlockSetType.IRON, 10, true));
+            () -> new PowerButton(BlockBehaviour.Properties.copy(Blocks.STONE_BUTTON).strength(-1.0F, 3600000.0F), BlockSetType.IRON, 10, true));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
