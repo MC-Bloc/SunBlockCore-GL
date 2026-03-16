@@ -2,11 +2,14 @@ package ca.milieux.sunblock.core.application.item;
 
 import ca.milieux.sunblock.core.services.DataQueryProcess;
 import ca.milieux.sunblock.core.services.SolarDataTypes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
@@ -23,6 +26,15 @@ public class SolarHoe extends HoeItem {
         pTarget.setHealth(pTarget.getHealth() - inc_damage);
 
         return super.hurtEnemy(pStack, pTarget, pAttacker);
+    }
+
+//    Healing
+    @Override
+    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack  && player.isShiftKeyDown()) {
+            int recover = pStack.getDamageValue() - (int) (1 + (DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 20));
+            pStack.setDamageValue(recover);
+        }
     }
 
     @Override

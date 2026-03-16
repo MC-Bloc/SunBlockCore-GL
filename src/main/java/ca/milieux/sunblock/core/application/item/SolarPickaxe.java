@@ -3,8 +3,10 @@ package ca.milieux.sunblock.core.application.item;
 import ca.milieux.sunblock.core.services.DataQueryProcess;
 import ca.milieux.sunblock.core.services.SolarDataTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
@@ -40,7 +42,15 @@ public class SolarPickaxe extends PickaxeItem {
         }
 
         return true;
-    }   
+    }
+    //    Healing
+    @Override
+    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack  && player.isShiftKeyDown()) {
+            int recover = pStack.getDamageValue() - (int) (1 + (DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 20));
+            pStack.setDamageValue(recover);
+        }
+    }
 
     @Override
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {

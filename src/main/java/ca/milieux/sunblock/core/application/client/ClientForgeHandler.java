@@ -21,13 +21,6 @@ public class ClientForgeHandler {
     static Minecraft mc = Minecraft.getInstance();
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && !mc.mouseHandler.isLeftPressed()) {
-            HealSolarTool(event.player);
-        }
-    }
-
-    @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         HUD.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
         if (event.phase == TickEvent.Phase.END) {
@@ -54,15 +47,6 @@ public class ClientForgeHandler {
     }
 
     public static void HealSolarTool(Player player) {
-        if (player != null) {
 
-            ItemStack item = player.getMainHandItem();
-
-            System.out.println(item);
-            if (item.toString().contains("solar")){
-                int recover = item.getDamageValue() - (int) (1 + (DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 20));
-                item.setDamageValue(recover);
-            }
-        }
     }
 }
