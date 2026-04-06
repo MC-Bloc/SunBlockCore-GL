@@ -18,7 +18,7 @@ public class ModItems {
                     Tiers.IRON,
                     3,
                     -2.4f,
-                    new Item.Properties().durability(251)));
+                    new Item.Properties().durability(600)));
 
     public static final RegistryObject<Item> SOLAR_PICKAXE = ITEMS.register("solar_pickaxe",
             () -> new SolarPickaxe(
@@ -32,14 +32,14 @@ public class ModItems {
                     Tiers.IRON,
                     3,
                     -2.4f,
-                    new Item.Properties().durability(251)));
+                    new Item.Properties().durability(600)));
 
     public static final RegistryObject<Item> SOLAR_HOE = ITEMS.register("solar_hoe",
             () -> new SolarHoe(
                     Tiers.IRON,
                     3,
                     -2.4f,
-                    new Item.Properties().durability(251)));
+                    new Item.Properties().durability(600)));
 
     public static final RegistryObject<Item> SOLAR_SHOVEL = ITEMS.register("solar_shovel",
             () -> new SolarShovel(
