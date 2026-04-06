@@ -33,7 +33,7 @@ public class SolarAxe extends AxeItem {
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
         if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack  && player.isShiftKeyDown()) {
-            int recover = pStack.getDamageValue() - (int) (1 + (DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 20));
+            int recover = pStack.getDamageValue() - (int) Math.ceil(DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 20);
             pStack.setDamageValue(recover);
         }
     }
