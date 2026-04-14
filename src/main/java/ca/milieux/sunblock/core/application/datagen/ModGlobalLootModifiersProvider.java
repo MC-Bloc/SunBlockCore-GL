@@ -57,5 +57,10 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
                         LootItemRandomChanceCondition.randomChance(_probability).build(),
                 }, Blocks.JUNGLE_SAPLING.asItem())
         );
+        add("mangrove_sapling_chance_with_solar_hoe", new AddItemModifier(new LootItemCondition[]{
+                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.MANGROVE_LEAVES).build(),
+                        LootItemRandomChanceCondition.randomChance(_probability).build(),
+                }, Blocks.MANGROVE_PROPAGULE.asItem())
+        );
     }
 }

@@ -1,0 +1,22 @@
+{
+  "type": "sunblockcore:add_item",
+  "conditions": [
+    {
+      "block": "natures_spirit:yellow_maple_leaves",
+      "condition": "minecraft:block_state_property"
+    },
+    {
+      "chance": 0.2,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "items": [
+          "sunblockcore:solar_hoe"
+        ]
+      }
+    }
+  ],
+  "item": "natures_spirit:yellow_maple_sapling"
+}
