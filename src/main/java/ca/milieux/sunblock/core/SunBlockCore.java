@@ -4,6 +4,7 @@ import ca.milieux.sunblock.core.application.block.ModBlocks;
 import ca.milieux.sunblock.core.application.config.ConfigHandler;
 import ca.milieux.sunblock.core.application.config.ConfigHandlerServer;
 import ca.milieux.sunblock.core.application.item.ModItems;
+import ca.milieux.sunblock.core.application.loot.ModLootModifiers;
 import ca.milieux.sunblock.core.registry.ModSounds;
 import ca.milieux.sunblock.core.services.setup.ClientSetup;
 import ca.milieux.sunblock.core.services.setup.CommonSetup;
@@ -33,6 +34,7 @@ public class SunBlockCore {
 		ModItems.register(modEventBus);
 		ModBlocks.register(modEventBus);
 		ModSounds.init(modEventBus);           // <-- NEW: sound events
+		ModLootModifiers.register(modEventBus);
 
 		//Common + client setup hooks
 		modEventBus.addListener(CommonSetup::init);
