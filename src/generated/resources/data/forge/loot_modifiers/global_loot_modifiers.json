@@ -1,0 +1,11 @@
+{
+  "entries": [
+    "sunblockcore:dark_oak_sapling_chance_with_solar_hoe",
+    "sunblockcore:oak_sapling_chance_with_solar_hoe",
+    "sunblockcore:cherry_sapling_chance_with_solar_hoe",
+    "sunblockcore:birch_sapling_chance_with_solar_hoe",
+    "sunblockcore:acacia_sapling_chance_with_solar_hoe",
+    "sunblockcore:spruce_sapling_chance_with_solar_hoe"
+  ],
+  "replace": false
+}
