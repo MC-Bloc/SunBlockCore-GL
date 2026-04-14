@@ -21,7 +21,7 @@ public class SolarAxe extends AxeItem {
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker){
 
-        //Additional Damage to target when struck with solar sword
+        //Additional Damage to target when struck with solar axe
         float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 10;
         pTarget.setHealth(pTarget.getHealth() - inc_damage);
 

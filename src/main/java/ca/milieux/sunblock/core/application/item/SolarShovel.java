@@ -18,16 +18,6 @@ public class SolarShovel extends ShovelItem {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
 
-    @Override
-    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker){
-
-        //Additional Damage to target when struck with solar sword
-        float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 10;
-        pTarget.setHealth(pTarget.getHealth() - inc_damage);
-
-        return super.hurtEnemy(pStack, pTarget, pAttacker);
-    }
-
     //    Healing
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
