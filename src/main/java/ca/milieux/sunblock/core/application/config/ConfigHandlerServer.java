@@ -10,7 +10,7 @@ public class ConfigHandlerServer {
     public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_URL;
 
     static {
-        BUILDER.push("Configs for SunBlockCore Mod");
+        BUILDER.push("Server");
 
         // HERE DEFINE YOUR CONFIGS
         SUNBLOCK_DATA_PATH = BUILDER.comment("SunBlockCore Data Path")
