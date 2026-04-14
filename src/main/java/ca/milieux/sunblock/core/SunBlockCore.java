@@ -50,17 +50,26 @@ public class SunBlockCore {
 		ModLoadingContext.get().registerConfig(
 				ModConfig.Type.SERVER,
 				ConfigHandlerServer.SPEC,
-				"SunBlockCore-ServerConfig.toml");
+				"SunBlockCore-server.toml");
 	}
 
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == CreativeModeTabs.COMBAT) {
 			event.accept(ModItems.SOLAR_SWORD);
-			event.accept(ModItems.SOLAR_PICKAXE);
 			event.accept(ModItems.SOLAR_AXE);
-			event.accept(ModItems.SOLAR_HOE);
-			event.accept(ModItems.SOLAR_SHOVEL);
 		}
-		event.accept(ModBlocks.POWER_BUTTON);
+
+		if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+			event.accept(ModItems.SOLAR_PICKAXE);
+			event.accept(ModItems.SOLAR_SHOVEL);
+			event.accept(ModItems.SOLAR_HOE);
+			event.accept(ModItems.SOLAR_AXE);
+
+		}
+
+		if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+			event.accept(ModBlocks.POWER_BUTTON);
+		}
+
 	}
 }
