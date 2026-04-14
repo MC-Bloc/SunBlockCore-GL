@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ProcessBuilder;
 import java.lang.Process;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -213,4 +215,26 @@ public class DataQueryProcess {
         }
     }
 
+    public static void PerformanceMode() {
+        String url_path = ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/performance-mode";
+        try {
+            URL url = new URL(url_path);
+            URLConnection conn = url.openConnection();
+            try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
+        } catch (Exception e) {
+            System.err.println("SunBlockCore::PowerButton -- performanceMode() error " + e.getMessage());
+        }
+    }
+
+    public static void PowerSaverMode() {
+        String url_path = ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/power-saver-mode";
+
+        try {
+            URL url = new URL(url_path);
+            URLConnection conn = url.openConnection();
+            try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
+        } catch (Exception e) {
+            System.err.println("SunBlockCore::PowerButton -- powerSaverMode() error " + e.getMessage());
+        }
+    }
 }

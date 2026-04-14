@@ -22,6 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -52,10 +53,10 @@ public class PowerButton extends ButtonBlock {
             boolean isSaver = "Power Saver".equals(DataQueryProcess.PowerProfile());
 
             if (isSaver) {
-                performanceMode();
+                DataQueryProcess.PerformanceMode();
                 play(level, pos, ModSounds.POWER_ON.get());
             } else {
-                powerSaverMode();
+                DataQueryProcess.PowerSaverMode();
                 play(level, pos, ModSounds.POWER_OFF.get());
             }
             spawnParticles(level, pos, state);
@@ -98,26 +99,5 @@ public class PowerButton extends ButtonBlock {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.literal("Switch power profile of the system (right‑click)!"));
         super.appendHoverText(stack, level, tooltip, flag);
-    }
-
-    //REST calls
-    private void performanceMode() {
-        try {
-            URL url = new URL(ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/performance-mode");
-            URLConnection conn = url.openConnection();
-            try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
-        } catch (Exception e) {
-            System.err.println("SunBlockCore::PowerButton -- performanceMode() error " + e.getMessage());
-        }
-    }
-
-    private void powerSaverMode() {
-        try {
-            URL url = new URL(ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/power-saver-mode");
-            URLConnection conn = url.openConnection();
-            try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
-        } catch (Exception e) {
-            System.err.println("SunBlockCore::PowerButton -- powerSaverMode() error " + e.getMessage());
-        }
     }
 }
