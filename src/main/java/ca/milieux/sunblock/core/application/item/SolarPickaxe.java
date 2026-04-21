@@ -21,28 +21,6 @@ public class SolarPickaxe extends PickaxeItem {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
 
-//    @Override
-//    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker){
-//
-//        //Additional Damage to target when struck with solar sword
-//        float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 10;
-//        pTarget.setHealth(pTarget.getHealth() - inc_damage);
-//
-//        return super.hurtEnemy(pStack, pTarget, pAttacker);
-//    }
-
-    @Override
-    public boolean mineBlock(ItemStack pStack, Level pLevel, BlockState pState, BlockPos pPos, LivingEntity pEntityLiving) {
-        float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 5;
-
-        if (!pLevel.isClientSide && pState.getDestroySpeed(pLevel, pPos) != 0.0F) {
-            pStack.hurtAndBreak((int) 20, pEntityLiving, (p) -> {
-                p.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-            });
-        }
-
-        return true;
-    }
     //    Healing
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
