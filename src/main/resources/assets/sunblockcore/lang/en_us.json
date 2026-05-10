@@ -6,9 +6,14 @@
   "item.sunblockcore.solar_shovel": "Solar Shovel",
   "item.sunblockcore.solar_hoe": "Solar Hoe",
   "block.sunblockcore.power_button": "Power Button",
-  "key.sunblockcore.sunblock_hud": "Toggle SunBlock HUD",
-  "key.categories.sunblock_hud": "SunBlock HUD",
+  "key.categories.sunblockcore": "SunBlock Core",
+  "key.sunblockcore.hud_settings": "Open HUD Settings",
+  "key.sunblockcore.cycle_hud": "Cycle HUD Type",
   "key.sunblockcore.sunblock_hud_settings": "SunBlock HUD Settings",
   "sunblockcore.subtitle.power_on":  "Solar power boost",
-  "sunblockcore.subtitle.power_off": "Solar power fading"
+  "sunblockcore.subtitle.power_off": "Solar power fading",
+  "block.sunblockcore.solar_switch": "Solar Switch",
+  "block.sunblockcore.solar_light_switch": "Solar Lamp",
+  "tooltip.sunblockcore.solar_switch": "Switch power profile of the system (right-click)!",
+  "tooltip.sunblockcore.solar_light_switch": "A solar light. Wear sunscreen please."
 }

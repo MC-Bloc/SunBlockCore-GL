@@ -27,6 +27,18 @@ public class ModBlocks {
     public static final RegistryObject<Block> POWER_BUTTON = registerBlock("power_button",
             () -> new PowerButton(BlockBehaviour.Properties.copy(Blocks.STONE_BUTTON).strength(-1.0F, 3600000.0F), BlockSetType.IRON, 10, true));
 
+    public static final RegistryObject<Block> SOLAR_SWITCH = registerBlock("solar_switch",
+            () -> new SolarSwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .strength(1.5F)
+                    .noOcclusion()
+                    .lightLevel(state -> state.getValue(SolarSwitchBlock.SWITCH_STATE) == SolarSwitchBlock.SolarSwitchState.ON ? 14 : 0)));
+
+    public static final RegistryObject<Block> SOLAR_LIGHT_SWITCH = registerBlock("solar_light_switch",
+            () -> new SolarLightSwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .strength(1.5F)
+                    .noOcclusion()
+                    .lightLevel(state -> state.getValue(SolarLightSwitchBlock.SWITCH_STATE) == SolarLightSwitchBlock.SolarLightSwitchState.ON ? 14 : 0)));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
@@ -37,7 +49,9 @@ public class ModBlocks {
         return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
+
 }

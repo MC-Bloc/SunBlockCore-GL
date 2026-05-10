@@ -73,5 +73,9 @@ public class SunBlockCore {
 			event.accept(ModBlocks.POWER_BUTTON);
 		}
 
+		if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+			event.accept(ModBlocks.SOLAR_LIGHT_SWITCH);
+		}
+
 	}
 }

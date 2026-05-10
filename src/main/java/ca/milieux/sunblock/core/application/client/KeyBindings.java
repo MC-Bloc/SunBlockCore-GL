@@ -1,29 +1,30 @@
 package ca.milieux.sunblock.core.application.client;
 
+import ca.milieux.sunblock.core.SunBlockCore;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.settings.KeyConflictContext;
-import ca.milieux.sunblock.core.SunBlockCore;
 
 public final class KeyBindings {
     public static final KeyBindings INSTANCE = new KeyBindings();
 
-    private int _HUDDetailsKey = InputConstants.KEY_U;
-    private int _HUDCycleForward = InputConstants.KEY_F8;
+    private static final String CATEGORY = "key.categories." + SunBlockCore.MODID;
 
     public final KeyMapping HUDDetailsKey = new KeyMapping(
-            "key." + SunBlockCore.MODID + ".hud_details_key",
+            "key." + SunBlockCore.MODID + ".hud_settings",
             KeyConflictContext.IN_GAME,
-            InputConstants.getKey(_HUDDetailsKey, -1),
-            KeyMapping.CATEGORY_MISC );
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_U,
+            CATEGORY
+    );
 
     public final KeyMapping HUDCycleForward = new KeyMapping(
-            "key." + SunBlockCore.MODID + ".switch_hud_forward",
+            "key." + SunBlockCore.MODID + ".cycle_hud",
             KeyConflictContext.IN_GAME,
-            InputConstants.getKey(_HUDCycleForward, -1),
-            KeyMapping.CATEGORY_MISC );
-
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_F8,
+            CATEGORY
+    );
 
     private KeyBindings() {}
-
 }
