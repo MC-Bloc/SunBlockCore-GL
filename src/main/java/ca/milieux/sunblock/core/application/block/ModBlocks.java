@@ -29,7 +29,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> SOLAR_SWITCH = registerBlock("solar_switch",
             () -> new SolarSwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
-                    .strength(1.5F)
+                    .strength(-1.0F, 3600000.0F)
                     .noOcclusion()
                     .lightLevel(state -> state.getValue(SolarSwitchBlock.SWITCH_STATE) == SolarSwitchBlock.SolarSwitchState.ON ? 14 : 0)));
 
