@@ -57,7 +57,9 @@ public class ServerSetup {
                     String timestamp = DataQueryProcess.GetTimestamp();
                     String powerprofile = DataQueryProcess.PowerProfile();
 
-                    count += 1;
+                    count++;
+                    if (DataQueryProcess.LAST_PROFILE_SWITCH > 0) DataQueryProcess.LAST_PROFILE_SWITCH--;
+                    System.out.println(DataQueryProcess.LAST_PROFILE_SWITCH);
 
                     ServerDataS2CPacket _packet = new ServerDataS2CPacket(
                             currentTemp, currentPower, currentPVVoltage, currentPVCurrent, currentPVPower,

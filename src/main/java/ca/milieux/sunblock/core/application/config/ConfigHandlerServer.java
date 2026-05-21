@@ -9,6 +9,7 @@ public class ConfigHandlerServer {
     public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_DATA_PATH;
     public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_URL;
     public static final ForgeConfigSpec.ConfigValue<Float> BATTERY_CAPACITY;
+    public static final ForgeConfigSpec.ConfigValue<Integer> POWER_PROFILE_COOLDOWN;
 
     static {
         BUILDER.push("Server");
@@ -22,6 +23,9 @@ public class ConfigHandlerServer {
 
         BATTERY_CAPACITY = BUILDER.comment("Server Battery Capacity in Watts (voltage x Ah)")
                 .define("Battery Capacity", 1200f);
+
+        POWER_PROFILE_COOLDOWN = BUILDER.comment("How long before power profile can be changed again - in seconds")
+                .define("Cooldown", 60);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

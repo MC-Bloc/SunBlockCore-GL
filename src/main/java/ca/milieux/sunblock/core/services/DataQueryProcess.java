@@ -13,6 +13,7 @@ import java.lang.ProcessBuilder;
 import java.lang.Process;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -24,6 +25,8 @@ public class DataQueryProcess {
     static String SunblockDataPath = ConfigHandlerServer.SUNBLOCK_DATA_PATH.get();
     static float MAXBATTERYCAPACITY = ConfigHandlerServer.BATTERY_CAPACITY.get(); // max battery capacity in Watts
     static int MAXMEMORY = 10; // Last 10 seconds
+
+   public static int LAST_PROFILE_SWITCH = 0;
 
     // array of the past 10 power consumption values to
     static Queue<Float> powerConsumptionHistory = new LinkedList<>();
@@ -216,23 +219,31 @@ public class DataQueryProcess {
     }
 
     public static void PerformanceMode() {
+        if (PowerProfile().isEmpty() || LAST_PROFILE_SWITCH > 0) return; //prevent calling method client-side
+
         String url_path = ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/performance-mode";
         try {
             URL url = new URL(url_path);
             URLConnection conn = url.openConnection();
             try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
+            LAST_PROFILE_SWITCH = ConfigHandlerServer.POWER_PROFILE_COOLDOWN.get();
         } catch (Exception e) {
             System.err.println("SunBlockCore::PowerButton -- performanceMode() error " + e.getMessage());
         }
     }
 
     public static void PowerSaverMode() {
+        if (PowerProfile().isEmpty() || LAST_PROFILE_SWITCH > 0) return; //prevent calling method client-side
+
+
         String url_path = ConfigHandlerServer.SUNBLOCK_API_URL.get() + "/power-saver-mode";
 
         try {
             URL url = new URL(url_path);
             URLConnection conn = url.openConnection();
             try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
+            LAST_PROFILE_SWITCH = ConfigHandlerServer.POWER_PROFILE_COOLDOWN.get();
+
         } catch (Exception e) {
             System.err.println("SunBlockCore::PowerButton -- powerSaverMode() error " + e.getMessage());
         }
