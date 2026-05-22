@@ -45,6 +45,8 @@ public class PowerButton extends ButtonBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos,
                                  Player player, InteractionHand hand, BlockHitResult hit) {
+
+        if (DataQueryProcess.LAST_PROFILE_SWITCH > 0) return InteractionResult.FAIL;
         //vanilla press logic (handles POWERED state & click sounds)
         InteractionResult result = super.use(state, level, pos, player, hand, hit);
 
