@@ -16,10 +16,10 @@ public class ConfigHandlerServer {
 
         // HERE DEFINE YOUR CONFIGS
         SUNBLOCK_DATA_PATH = BUILDER.comment("SunBlockCore Data Path")
-                .define("Data Path", "/home/pc/SunblockData/solar_data.json");
+                .define("Data Path", "");
 
         SUNBLOCK_API_URL = BUILDER.comment("SunBlockExpress API Endpoint")
-                .define("API URL", "https://photon.sunblockone.milieux.ca");
+                .define("API URL", "");
 
         BATTERY_CAPACITY = BUILDER.comment("Server Battery Capacity in Watts (voltage x Ah)")
                 .define("Battery Capacity", 1200f);

@@ -23,6 +23,7 @@ public class SolarServerData {
     private static String timeRemaining;
     private static String timestamp;
     private static String powerProfile;
+    private static int cooldownSecondsRemaining;
 
     public SolarServerData(float power, float cpuTemp) {
         SolarServerData.power = power;
@@ -40,6 +41,7 @@ public class SolarServerData {
         SolarServerData.timeRemaining = "Calculating Time Remaining...";
         SolarServerData.timestamp = "00:00";
         SolarServerData.powerProfile = "";
+        SolarServerData.cooldownSecondsRemaining = 0;
     }
 
     //#region GETTERS 
@@ -96,6 +98,7 @@ public class SolarServerData {
 
     public static String getTimestamp() { return timestamp; }
     public static String getPowerProfile() { return powerProfile; }
+    public static int getCooldownSecondsRemaining() { return cooldownSecondsRemaining; }
     ////#endregion
 
     //#region SETTERS
@@ -152,7 +155,7 @@ public class SolarServerData {
 
     public static void setPowerProfile(String p) { SolarServerData.powerProfile = p; }
 
-
+    public static void setCooldownSecondsRemaining(int s) { SolarServerData.cooldownSecondsRemaining = s; }
 
 
     ////#endregion

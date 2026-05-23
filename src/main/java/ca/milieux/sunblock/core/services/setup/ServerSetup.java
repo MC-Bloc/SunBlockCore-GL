@@ -63,7 +63,7 @@ public class ServerSetup {
                     ServerDataS2CPacket _packet = new ServerDataS2CPacket(
                             currentTemp, currentPower, currentPVVoltage, currentPVCurrent, currentPVPower,
                             currentbattVoltage, currentbattChargeCurrent, currentbattChargePower, currentlPower,
-                            currentbattRemaining, currentbattOverallCurrent, timeRemaining, timestamp, powerprofile );
+                            currentbattRemaining, currentbattOverallCurrent, timeRemaining, timestamp, powerprofile, DataQueryProcess.LAST_PROFILE_SWITCH);
 
 
                     ModPackets.sendToClients(_packet);
@@ -89,7 +89,7 @@ public class ServerSetup {
                     ServerDataS2CPacket _packet = new ServerDataS2CPacket(
                             0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
                             0.0F, 0.0F, 0.0F, 0.0F,
-                            0.0F, 0.0F, "", "", "");
+                            0.0F, 0.0F, "", "", "", 0);
 
                     ModPackets.sendToPlayer(_packet, player);
                 }

@@ -125,7 +125,9 @@ public class HUD {
             String solar_stats = "SOLAR: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w";
             String battery_stats = "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%";
             String usage_stats = "USAGE: " + SolarServerData.getlPower() + "w";
-            String time_left = "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours";
+            String time_left = SolarServerData.getCooldownSecondsRemaining() > 0 ?
+                    "COOLDOWN: " + SolarServerData.getCooldownSecondsRemaining() + " Secs" :
+                    "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours";
             String power_profile = "POWER MODE:" + SolarServerData.getPowerProfile();
 
             String delim = "\n\n";
