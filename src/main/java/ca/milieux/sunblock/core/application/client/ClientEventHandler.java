@@ -27,8 +27,8 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	public void onBlockStartBreak(PlayerEvent.BreakSpeed event){
 		String item = event.getEntity().getMainHandItem().toString();
-		float inc_speed = Math.max(DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER), event.getOriginalSpeed());
 		if (item.contains("solar_pickaxe") || item.contains("solar_shovel")){
+			float inc_speed = Math.max(DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER), event.getOriginalSpeed());
 			event.setNewSpeed(inc_speed);
 		}
 	}
