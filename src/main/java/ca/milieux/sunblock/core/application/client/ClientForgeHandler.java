@@ -45,8 +45,4 @@ public class ClientForgeHandler {
 
         }
     }
-
-    public static void HealSolarTool(Player player) {
-
-    }
 }
