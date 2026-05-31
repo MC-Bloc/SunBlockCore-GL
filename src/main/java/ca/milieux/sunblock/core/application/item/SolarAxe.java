@@ -2,6 +2,7 @@ package ca.milieux.sunblock.core.application.item;
 
 import ca.milieux.sunblock.core.services.DataQueryProcess;
 import ca.milieux.sunblock.core.services.SolarDataTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +23,14 @@ public class SolarAxe extends AxeItem {
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker){
 
         //Additional Damage to target when struck with solar axe
-        float inc_damage = DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 10;
-        pTarget.setHealth(pTarget.getHealth() - inc_damage);
+        float inc_damage =  DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 10;
+
+        DamageSource source =
+                pAttacker instanceof Player player ?
+                        pAttacker.level().damageSources().playerAttack(player) :
+                        pAttacker.level().damageSources().mobAttack(pAttacker) ;
+
+        pTarget.hurt(source, inc_damage);
 
         return super.hurtEnemy(pStack, pTarget, pAttacker);
     }
