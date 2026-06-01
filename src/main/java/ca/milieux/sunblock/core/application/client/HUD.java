@@ -21,13 +21,34 @@ public class HUD {
     public static int statsIndex = 0;
     public static HUDType type = HUDType.GraphicalV0;
 
-    static ResourceLocation BG_DAWN = null, BG_DAY = null, BG_DUSK = null, BG_NIGHT = null;
-    static ResourceLocation CPU_HIGH = null, CPU_MED = null, CPU_LOW = null;
-    static ResourceLocation LOAD_HIGH = null, LOAD_MED = null, LOAD_LOW = null;
-    static ResourceLocation GEN_HIGH = null, GEN_MED = null, GEN_LOW = null;
-    static ResourceLocation BATT_HIGH = null, BATT_MED = null, BATT_LOW = null, BATT_DAM = null;
-    static ResourceLocation TIME_HIGH = null, TIME_MED = null, TIME_LOW = null;
-    static ResourceLocation BATT_CHARGING = null, BATT_DISCHARGE = null;
+    private static final ResourceLocation BG_DAWN       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dawn.png");
+    private static final ResourceLocation BG_DAY        = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_day.png");
+    private static final ResourceLocation BG_DUSK       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dusk.png");
+    private static final ResourceLocation BG_NIGHT      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_night.png");
+
+    private static final ResourceLocation CPU_LOW       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_g.png");
+    private static final ResourceLocation CPU_MED       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_y.png");
+    private static final ResourceLocation CPU_HIGH      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_r.png");
+
+    private static final ResourceLocation LOAD_LOW      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_g.png");
+    private static final ResourceLocation LOAD_MED      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_y.png");
+    private static final ResourceLocation LOAD_HIGH     = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_r.png");
+
+    private static final ResourceLocation GEN_LOW       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_r.png");
+    private static final ResourceLocation GEN_MED       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_o.png");
+    private static final ResourceLocation GEN_HIGH      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun.png");
+
+    private static final ResourceLocation BATT_HIGH     = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_g.png");
+    private static final ResourceLocation BATT_MED      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_y.png");
+    private static final ResourceLocation BATT_LOW      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_o.png");
+    private static final ResourceLocation BATT_DAM      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_r.png");
+
+    private static final ResourceLocation TIME_HIGH     = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_g.png");
+    private static final ResourceLocation TIME_MED      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_y.png");
+    private static final ResourceLocation TIME_LOW      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_r.png");
+
+    private static final ResourceLocation BATT_CHARGING = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_up.png");
+    private static final ResourceLocation BATT_DISCHARGE= new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_down.png");
 
 
     public static void TextHUD(RenderGuiOverlayEvent.Post event) {
@@ -175,12 +196,6 @@ public class HUD {
     static ResourceLocation GetTexture(String timestamp) {
         int DAWN = 6, DAY = 9, EVENING = 18, NIGHT = 21;
 
-        // init on first use
-        if (BG_DAWN == null) BG_DAWN = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dawn.png" );
-        if (BG_DAY == null) BG_DAY = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_day.png" );
-        if (BG_DUSK == null) BG_DUSK = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dusk.png" );
-        if (BG_NIGHT == null) BG_NIGHT = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_night.png" );
-
         // base case
         if (timestamp == null || timestamp.isEmpty()) {
             return BG_DAY;
@@ -202,11 +217,6 @@ public class HUD {
         int LOW_THRESH_CPUPOWER = 5, HIGH_THRESH_CPUPOWER = 20;
         float cpuPowerDraw = SolarServerData.getPower();
 
-        // init on first use
-        if (CPU_LOW == null) CPU_LOW = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_g.png");
-        if (CPU_MED == null) CPU_MED = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_y.png");
-        if (CPU_HIGH == null) CPU_HIGH = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_r.png");
-
         if (cpuPowerDraw < LOW_THRESH_CPUPOWER) return CPU_LOW;
         else if (cpuPowerDraw < HIGH_THRESH_CPUPOWER) return CPU_MED;
         else return CPU_HIGH;
@@ -217,11 +227,6 @@ public class HUD {
         int MAX_THRESH_LPOWER = 22;
         float loadPower = SolarServerData.getlPower();
 
-        // init on first use
-        if (LOAD_LOW == null) LOAD_LOW = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_g.png");
-        if (LOAD_MED == null) LOAD_MED = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_y.png");
-        if (LOAD_HIGH == null) LOAD_HIGH = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_r.png");
-
         if (loadPower < MIN_THRESH_LPOWER) return LOAD_LOW;
         else if (loadPower < MAX_THRESH_LPOWER) return LOAD_MED;
         else return LOAD_HIGH;
@@ -231,11 +236,6 @@ public class HUD {
         int MIN_THRESH_PVPOWER = 10;
         int MAX_THRESH_PVPOWER = 22;
         float pvPower = SolarServerData.getPvPower();
-
-        // init on first use
-        if (GEN_LOW == null) GEN_LOW = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_r.png");
-        if (GEN_MED == null) GEN_MED = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_o.png");
-        if (GEN_HIGH == null) GEN_HIGH = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun.png");
 
         if (pvPower < MIN_THRESH_PVPOWER) return GEN_LOW;
         else if (pvPower < MAX_THRESH_PVPOWER) return GEN_MED;
@@ -248,12 +248,6 @@ public class HUD {
         int LOW_THRESH_BATTERY = 25;
         float battPercentage = SolarServerData.getBattRemaining();
 
-        // init on first use
-        if (BATT_DAM == null) BATT_DAM = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_r.png");
-        if (BATT_LOW == null) BATT_LOW = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_o.png");
-        if (BATT_MED == null) BATT_MED = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_y.png");
-        if (BATT_HIGH == null) BATT_HIGH = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_g.png");
-
         if (battPercentage > HIGH_THRESH_BATTERY) return BATT_HIGH;
         else if (battPercentage > MED_THRESH_BATTERY) return BATT_MED;
         else if (battPercentage > LOW_THRESH_BATTERY) return BATT_LOW;
@@ -265,19 +259,12 @@ public class HUD {
         int MED_THRESH_BATTERY = 12;
         float hours_rem = Float.parseFloat(SolarServerData.getTimeRemaining());
 
-        if (TIME_LOW == null) TIME_LOW = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_r.png");
-        if (TIME_MED == null) TIME_MED = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_y.png");
-        if (TIME_HIGH == null) TIME_HIGH = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_g.png");
-
         if (hours_rem > HIGH_THRESH_BATTERY) return TIME_HIGH;
         else if (hours_rem > MED_THRESH_BATTERY) return TIME_MED;
         else return TIME_LOW;
     }
 
     static ResourceLocation GetBatteryArrowIcon() {
-        if (BATT_CHARGING == null) BATT_CHARGING = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_up.png");
-        if (BATT_DISCHARGE == null) BATT_DISCHARGE = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_down.png");
-
         if (SolarServerData.getBattOverallCurrent() > 0) return BATT_CHARGING;
         else return BATT_DISCHARGE;
     }
