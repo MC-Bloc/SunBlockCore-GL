@@ -54,11 +54,11 @@ public class HUD {
     public static void TextHUD(RenderGuiOverlayEvent.Post event) {
         if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
 
-            float powerConsumption = SolarServerData.getlPower();
+            float powerConsumption = SolarServerData.lPower;
 
             String powerString = "Burning " + powerConsumption  + " Watts";
-            String solarStats = "Solar: " + SolarServerData.getPvVoltage() + "V | " + SolarServerData.getPvCurrent() + "A";
-            String timeRemainingString = SolarServerData.getTimeRemaining() + " Hours remaining";
+            String solarStats = "Solar: " + SolarServerData.pvVoltage + "V | " + SolarServerData.pvCurrent + "A";
+            String timeRemainingString = SolarServerData.timeRemaining + " Hours remaining";
 
             int solarStatsColor = mc.level.isNight() ? 0xCAE34B : 0xCAE34B; // same for now.
 
@@ -79,17 +79,17 @@ public class HUD {
 
     static void TextHUDDetailed(RenderGuiOverlayEvent.Post event) {
 
-        float CPUTemp = SolarServerData.getCpuTemp();
-        float CPUPower = SolarServerData.getPower(); // CPU power consumption
-        float powerConsumption = SolarServerData.getlPower();
+        float CPUTemp = SolarServerData.cpuTemp;
+        float CPUPower = SolarServerData.power; // CPU power consumption
+        float powerConsumption = SolarServerData.lPower;
 
-        float solarVolts = SolarServerData.getPvVoltage();
-        float solarCurrent = SolarServerData.getPvCurrent();
-        float solarPower = SolarServerData.getPvPower();
+        float solarVolts = SolarServerData.pvVoltage;
+        float solarCurrent = SolarServerData.pvCurrent;
+        float solarPower = SolarServerData.pvPower;
 
-        float batteryVoltage = SolarServerData.getBattVoltage();
-        float batteryPercentage = SolarServerData.getBattRemaining();
-        float batteryChargeCurrent = SolarServerData.getBattChargeCurrent();
+        float batteryVoltage = SolarServerData.battVoltage;
+        float batteryPercentage = SolarServerData.battRemaining;
+        float batteryChargeCurrent = SolarServerData.battChargeCurrent;
 
         String cpuPowerString = "CPU State: " + CPUPower  + "Watts | " + CPUTemp + "ºC";
         String systemPowerString = "System Power Consumption: " + powerConsumption  + " Watts";
@@ -116,7 +116,7 @@ public class HUD {
 
             GuiGraphics guiGraphics = event.getGuiGraphics();
 
-            String timeString = SolarServerData.getTimestamp();
+            String timeString = SolarServerData.timestamp;
 
             double configScale = ConfigHandler.CLIENT.HUD_SCALE.get();
             double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
@@ -148,13 +148,13 @@ public class HUD {
             String delim = "\n\n";
 
 
-            String solar_stats = "SOLAR: " + SolarServerData.getPvVoltage() + "v | " + SolarServerData.getPvPower() + "w";
-            String battery_stats = "BATTERY: " + SolarServerData.getBattVoltage() + "v | " + SolarServerData.getBattRemaining() + "%";
-            String usage_stats = "USAGE: " + SolarServerData.getlPower() + "w";
-            String time_left = SolarServerData.getCooldownSecondsRemaining() > 0 ?
-                    "COOLDOWN: " + SolarServerData.getCooldownSecondsRemaining() + " Secs" :
-                    "TIME LEFT: " + SolarServerData.getTimeRemaining() + " Hours";
-            String power_profile = "POWER MODE:" + SolarServerData.getPowerProfile();
+            String solar_stats = "SOLAR: " + SolarServerData.pvVoltage + "v | " + SolarServerData.pvPower + "w";
+            String battery_stats = "BATTERY: " + SolarServerData.battVoltage + "v | " + SolarServerData.battRemaining + "%";
+            String usage_stats = "USAGE: " + SolarServerData.lPower + "w";
+            String time_left = SolarServerData.cooldownSecondsRemaining > 0 ?
+                    "COOLDOWN: " + SolarServerData.cooldownSecondsRemaining + " Secs" :
+                    "TIME LEFT: " + SolarServerData.timeRemaining + " Hours";
+            String power_profile = "POWER MODE:" + SolarServerData.powerProfile;
 
 
             FormattedText t = FormattedText.of(solar_stats + delim + battery_stats + delim + usage_stats + delim + time_left + delim + power_profile);
@@ -215,7 +215,7 @@ public class HUD {
 
     static ResourceLocation GetCPUIcon() {
         int LOW_THRESH_CPUPOWER = 5, HIGH_THRESH_CPUPOWER = 20;
-        float cpuPowerDraw = SolarServerData.getPower();
+        float cpuPowerDraw = SolarServerData.power;
 
         if (cpuPowerDraw < LOW_THRESH_CPUPOWER) return CPU_LOW;
         else if (cpuPowerDraw < HIGH_THRESH_CPUPOWER) return CPU_MED;
@@ -225,7 +225,7 @@ public class HUD {
     static ResourceLocation GetLoadIcon() {
         int MIN_THRESH_LPOWER = 10;
         int MAX_THRESH_LPOWER = 22;
-        float loadPower = SolarServerData.getlPower();
+        float loadPower = SolarServerData.lPower;
 
         if (loadPower < MIN_THRESH_LPOWER) return LOAD_LOW;
         else if (loadPower < MAX_THRESH_LPOWER) return LOAD_MED;
@@ -235,7 +235,7 @@ public class HUD {
     static ResourceLocation GetGenerationIcon() {
         int MIN_THRESH_PVPOWER = 10;
         int MAX_THRESH_PVPOWER = 22;
-        float pvPower = SolarServerData.getPvPower();
+        float pvPower = SolarServerData.pvPower;
 
         if (pvPower < MIN_THRESH_PVPOWER) return GEN_LOW;
         else if (pvPower < MAX_THRESH_PVPOWER) return GEN_MED;
@@ -246,7 +246,7 @@ public class HUD {
         int HIGH_THRESH_BATTERY = 75;
         int MED_THRESH_BATTERY = 50;
         int LOW_THRESH_BATTERY = 25;
-        float battPercentage = SolarServerData.getBattRemaining();
+        float battPercentage = SolarServerData.battRemaining;
 
         if (battPercentage > HIGH_THRESH_BATTERY) return BATT_HIGH;
         else if (battPercentage > MED_THRESH_BATTERY) return BATT_MED;
@@ -257,7 +257,7 @@ public class HUD {
     static ResourceLocation GetTimeRemainingIcon() {
         int HIGH_THRESH_BATTERY = 40;
         int MED_THRESH_BATTERY = 12;
-        float hours_rem = Float.parseFloat(SolarServerData.getTimeRemaining());
+        float hours_rem = Float.parseFloat(SolarServerData.timeRemaining);
 
         if (hours_rem > HIGH_THRESH_BATTERY) return TIME_HIGH;
         else if (hours_rem > MED_THRESH_BATTERY) return TIME_MED;
@@ -265,7 +265,7 @@ public class HUD {
     }
 
     static ResourceLocation GetBatteryArrowIcon() {
-        if (SolarServerData.getBattOverallCurrent() > 0) return BATT_CHARGING;
+        if (SolarServerData.battOverallCurrent > 0) return BATT_CHARGING;
         else return BATT_DISCHARGE;
     }
 

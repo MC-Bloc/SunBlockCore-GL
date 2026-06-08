@@ -21,7 +21,6 @@ public class ServerDataS2CPacket {
     private static float battChargePower;
     private static float lPower;
     private static float battRemaining;
-    private static float battTemp;
     private static float battOverallCurrent;
     private static String timeRemaining;
     private static String timestamp;
@@ -112,26 +111,26 @@ public class ServerDataS2CPacket {
                 // On client side
 //                System.out.println("SunBlockCore::ServerDataS2CPacket -- received packets on client side");
 
-                SolarServerData.setCpuTemp(cpuTemp);
-                SolarServerData.setPower(power);
+                SolarServerData.cpuTemp = cpuTemp;
+                SolarServerData.power = power;
 
-                SolarServerData.setPvVoltage(pvVoltage);
-                SolarServerData.setPvCurrent(pvCurrent);
-                SolarServerData.setPvPower(pvPower);
+                SolarServerData.pvVoltage = pvVoltage;
+                SolarServerData.pvCurrent = pvCurrent;
+                SolarServerData.pvPower = pvPower;
 
-                SolarServerData.setBattVoltage(battVoltage);
-                SolarServerData.setBattChargeCurrent(battChargeCurrent);
-                SolarServerData.setBattChargePower(battChargePower);
+                SolarServerData.battVoltage = battVoltage;
+                SolarServerData.battChargeCurrent = battChargeCurrent;
+                SolarServerData.battChargePower = battChargePower;
 
-                SolarServerData.setlPower(lPower);
+                SolarServerData.lPower = lPower;
 
-                SolarServerData.setBattRemaining(battRemaining);
-                SolarServerData.setBattOverallCurrent(battOverallCurrent);
-                SolarServerData.setTimeRemaining(timeRemaining);
-                SolarServerData.setTimestamp(timestamp);
-                SolarServerData.setPowerProfile(powerProfile);
+                SolarServerData.battRemaining = battRemaining;
+                SolarServerData.battOverallCurrent = battOverallCurrent;
+                SolarServerData.timeRemaining = timeRemaining;
+                SolarServerData.timestamp = timestamp;
+                SolarServerData.powerProfile = powerProfile;
 
-                SolarServerData.setCooldownSecondsRemaining(cooldownSecondsRemaining);
+                SolarServerData.cooldownSecondsRemaining = cooldownSecondsRemaining;
 
 //                System.out.println("SunBlockCore::ServerDataS2CPacket -- handled and  parsed packets");
 
