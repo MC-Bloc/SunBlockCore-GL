@@ -1,8 +1,7 @@
 package ca.milieux.sunblock.core.application.block;
 
-import ca.milieux.sunblock.core.application.config.ConfigHandlerServer;
 import ca.milieux.sunblock.core.registry.ModSounds;
-import ca.milieux.sunblock.core.services.DataQueryProcess;
+import ca.milieux.sunblock.core.services.setup.ServerManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -22,11 +21,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import javax.xml.crypto.Data;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.Random;
 
@@ -46,19 +40,19 @@ public class PowerButton extends ButtonBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos,
                                  Player player, InteractionHand hand, BlockHitResult hit) {
 
-        if (DataQueryProcess.LAST_PROFILE_SWITCH > 0) return InteractionResult.FAIL;
+        if (ServerManager.LAST_PROFILE_SWITCH > 0) return InteractionResult.FAIL;
         //vanilla press logic (handles POWERED state & click sounds)
         InteractionResult result = super.use(state, level, pos, player, hand, hit);
 
         //server‑side custom logic
         if (!level.isClientSide && result.consumesAction()) {
-            boolean isSaver = "Power Saver".equals(DataQueryProcess.PowerProfile());
+            boolean isSaver = "Power Saver".equals(ServerManager.cachedPowerProfile);
 
             if (isSaver) {
-                DataQueryProcess.PerformanceMode();
+                ServerManager.PerformanceMode();
                 play(level, pos, ModSounds.POWER_ON.get());
             } else {
-                DataQueryProcess.PowerSaverMode();
+                ServerManager.PowerSaverMode();
                 play(level, pos, ModSounds.POWER_OFF.get());
             }
             spawnParticles(level, pos, state);

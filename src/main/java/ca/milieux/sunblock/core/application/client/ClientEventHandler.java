@@ -1,11 +1,8 @@
 package ca.milieux.sunblock.core.application.client;
 
-import ca.milieux.sunblock.core.services.DataQueryProcess;
-import ca.milieux.sunblock.core.services.SolarDataTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 
@@ -24,12 +21,4 @@ public class ClientEventHandler {
 		}
 	}
 
-	@SubscribeEvent
-	public void onBlockStartBreak(PlayerEvent.BreakSpeed event){
-		String item = event.getEntity().getMainHandItem().toString();
-		if (item.contains("solar_pickaxe") || item.contains("solar_shovel")){
-			float inc_speed = Math.max(DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER), event.getOriginalSpeed());
-			event.setNewSpeed(inc_speed);
-		}
-	}
 }

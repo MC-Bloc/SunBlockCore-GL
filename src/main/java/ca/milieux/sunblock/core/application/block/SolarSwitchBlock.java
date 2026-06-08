@@ -1,6 +1,6 @@
 package ca.milieux.sunblock.core.application.block;
 
-import ca.milieux.sunblock.core.services.DataQueryProcess;
+import ca.milieux.sunblock.core.services.setup.ServerManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -179,9 +179,9 @@ public class SolarSwitchBlock extends Block {
 
         // Switch the server power mode after the pressed animation finishes.
         if (shouldTurnOn) {
-            DataQueryProcess.PerformanceMode();
+            ServerManager.PerformanceMode();
         } else {
-            DataQueryProcess.PowerSaverMode();
+            ServerManager.PowerSaverMode();
         }
 
         BlockState finalState = state

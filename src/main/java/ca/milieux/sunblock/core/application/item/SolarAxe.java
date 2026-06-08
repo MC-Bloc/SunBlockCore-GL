@@ -1,7 +1,6 @@
 package ca.milieux.sunblock.core.application.item;
 
-import ca.milieux.sunblock.core.services.DataQueryProcess;
-import ca.milieux.sunblock.core.services.SolarDataTypes;
+import ca.milieux.sunblock.core.services.setup.ServerManager;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +22,7 @@ public class SolarAxe extends AxeItem {
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker){
 
         //Additional Damage to target when struck with solar axe
-        float inc_damage =  DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 10;
+        float inc_damage =  ServerManager.cachedPvPower / 10;
 
         DamageSource source =
                 pAttacker instanceof Player player ?
@@ -40,7 +39,7 @@ public class SolarAxe extends AxeItem {
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
         if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack  && player.isShiftKeyDown()) {
-            int recover = pStack.getDamageValue() - (int) Math.ceil(DataQueryProcess.GetServerData(SolarDataTypes.PVPOWER) / 20);
+            int recover = pStack.getDamageValue() - (int) Math.ceil(ServerManager.cachedPvPower / 20);
             pStack.setDamageValue(recover);
         }
     }

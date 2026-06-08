@@ -1,4 +1,4 @@
-package ca.milieux.sunblock.core.domain;
+package ca.milieux.sunblock.core.application.client;
 
 public class SolarServerData {
     public static float power;

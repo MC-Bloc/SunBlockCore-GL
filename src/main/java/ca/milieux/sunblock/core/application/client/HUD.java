@@ -3,7 +3,7 @@ package ca.milieux.sunblock.core.application.client;
 import ca.milieux.sunblock.core.SunBlockCore;
 import ca.milieux.sunblock.core.application.config.ConfigHandler;
 import ca.milieux.sunblock.core.application.util.RenderUtils;
-import ca.milieux.sunblock.core.domain.SolarServerData;
+import ca.milieux.sunblock.core.application.client.SolarServerData;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -58,7 +58,9 @@ public class HUD {
 
             String powerString = "Burning " + powerConsumption  + " Watts";
             String solarStats = "Solar: " + SolarServerData.pvVoltage + "V | " + SolarServerData.pvCurrent + "A";
-            String timeRemainingString = SolarServerData.timeRemaining + " Hours remaining";
+            String timeRemainingString = SolarServerData.timeRemaining < 0 ?
+                    "Calculating" :
+                    SolarServerData.timeRemaining  + " Hours remaining";
 
             int solarStatsColor = mc.level.isNight() ? 0xCAE34B : 0xCAE34B; // same for now.
 

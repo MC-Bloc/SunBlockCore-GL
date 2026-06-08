@@ -3,7 +3,7 @@ package ca.milieux.sunblock.core.services.setup;
 import ca.milieux.sunblock.core.SunBlockCore;
 import ca.milieux.sunblock.core.application.client.ClientEventHandler;
 import ca.milieux.sunblock.core.application.item.ModItems;
-import ca.milieux.sunblock.core.domain.SolarServerData;
+import ca.milieux.sunblock.core.application.client.SolarServerData;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;

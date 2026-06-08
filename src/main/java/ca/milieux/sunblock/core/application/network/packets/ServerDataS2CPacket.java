@@ -2,12 +2,12 @@ package ca.milieux.sunblock.core.application.network.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import ca.milieux.sunblock.core.domain.SolarServerData;
+import ca.milieux.sunblock.core.application.client.SolarServerData;
 
 import java.util.function.Supplier;
 
 /* Server data packets will be sent from the server to clients every second.
-(See thread in ServerSetup.onServerStarting)
+(See thread in ServerManager.onServerStarting)
  */
 
 public class ServerDataS2CPacket {
