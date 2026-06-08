@@ -8,6 +8,9 @@ public class ConfigHandlerServer {
 
     public static final ForgeConfigSpec.ConfigValue<String> CPU_TEMP_PATH;
     public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_URL;
+    public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_PERFORMANCE;
+    public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_POWER_SAVER;
+    public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_TOKEN;
     public static final ForgeConfigSpec.ConfigValue<Float> BATTERY_CAPACITY;
     public static final ForgeConfigSpec.ConfigValue<Integer> POWER_PROFILE_COOLDOWN;
 
@@ -20,6 +23,15 @@ public class ConfigHandlerServer {
 
         SUNBLOCK_API_URL = BUILDER.comment("SunBlockCore API Endpoint")
                 .define("API URL", "");
+
+        SUNBLOCK_API_PERFORMANCE = BUILDER.comment("SunBlockCore Performance Mode API Endpoint")
+                .define("PerformanceEndpoint", "");
+
+        SUNBLOCK_API_POWER_SAVER = BUILDER.comment("SunBlockCore Power Saver Mode API Endpoint")
+                .define("PowerSaverEndpoint", "");
+
+        SUNBLOCK_API_TOKEN = BUILDER.comment("SunBlockCore API Authorization Token")
+                .define("TOKEN", "");
 
         BATTERY_CAPACITY = BUILDER.comment("Server Battery Capacity in Watts (voltage x Ah)")
                 .define("Battery Capacity", 1200f);

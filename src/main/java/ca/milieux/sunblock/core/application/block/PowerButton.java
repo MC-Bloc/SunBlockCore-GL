@@ -47,15 +47,14 @@ public class PowerButton extends ButtonBlock {
         //server‑side custom logic
         if (!level.isClientSide && result.consumesAction()) {
             boolean isSaver = "Power Saver".equals(ServerManager.cachedPowerProfile);
+            ServerManager.PowerProfileSwitch();
 
-            if (isSaver) {
-                ServerManager.PerformanceMode();
-                play(level, pos, ModSounds.POWER_ON.get());
-            } else {
-                ServerManager.PowerSaverMode();
-                play(level, pos, ModSounds.POWER_OFF.get());
-            }
+            //Change to Performance
+            if (isSaver) play(level, pos, ModSounds.POWER_ON.get());
+            else play(level, pos, ModSounds.POWER_OFF.get());
+
             spawnParticles(level, pos, state);
+
         }
         return result;
     }

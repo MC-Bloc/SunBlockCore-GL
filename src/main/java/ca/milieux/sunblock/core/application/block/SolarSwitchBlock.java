@@ -178,11 +178,7 @@ public class SolarSwitchBlock extends Block {
         boolean shouldTurnOn = state.getValue(TURNING_ON);
 
         // Switch the server power mode after the pressed animation finishes.
-        if (shouldTurnOn) {
-            ServerManager.PerformanceMode();
-        } else {
-            ServerManager.PowerSaverMode();
-        }
+        if (shouldTurnOn) ServerManager.PowerProfileSwitch();
 
         BlockState finalState = state
                 .setValue(SWITCH_STATE, shouldTurnOn ? SolarSwitchState.ON : SolarSwitchState.OFF)

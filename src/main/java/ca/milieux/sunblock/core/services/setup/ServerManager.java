@@ -46,31 +46,21 @@ public class ServerManager {
     // Power profile API calls
     // -------------------------------------------------------------------------
 
-    public static void PerformanceMode() {
-        if (LAST_PROFILE_SWITCH > 0) return;
-        String apiUrl = ConfigHandlerServer.SUNBLOCK_API_URL.get();
-        if (apiUrl.isEmpty()) return;
+    public static void PowerProfileSwitch() {
+
+        String apiUrl = cachedPowerProfile.equals("Power Saver") ?
+                ConfigHandlerServer.SUNBLOCK_API_PERFORMANCE.get() :
+                ConfigHandlerServer.SUNBLOCK_API_POWER_SAVER.get();
+
+        if (LAST_PROFILE_SWITCH > 0 || apiUrl.isEmpty()) return;
+
         try {
-            URL url = new URL(apiUrl + "/performance-mode");
+            URL url = new URL(apiUrl);
             URLConnection conn = url.openConnection();
             try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
             LAST_PROFILE_SWITCH = ConfigHandlerServer.POWER_PROFILE_COOLDOWN.get();
         } catch (Exception e) {
             SunBlockCore.LOGGER.error("SunBlockCore: PerformanceMode() error: {}", e.getMessage());
-        }
-    }
-
-    public static void PowerSaverMode() {
-        if (LAST_PROFILE_SWITCH > 0) return;
-        String apiUrl = ConfigHandlerServer.SUNBLOCK_API_URL.get();
-        if (apiUrl.isEmpty()) return;
-        try {
-            URL url = new URL(apiUrl + "/power-saver-mode");
-            URLConnection conn = url.openConnection();
-            try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
-            LAST_PROFILE_SWITCH = ConfigHandlerServer.POWER_PROFILE_COOLDOWN.get();
-        } catch (Exception e) {
-            SunBlockCore.LOGGER.error("SunBlockCore: PowerSaverMode() error: {}", e.getMessage());
         }
     }
 
