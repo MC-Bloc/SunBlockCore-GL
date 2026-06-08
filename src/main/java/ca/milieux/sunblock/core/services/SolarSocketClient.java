@@ -56,6 +56,17 @@ public final class SolarSocketClient {
                             args.length > 0 ? String.valueOf(args[0]) : "unknown"));
 
             socket.on("solar_data", args -> {
+                // Guard against events delivered in the brief window around
+                // server shutdown/restart — the socket I/O thread is async and
+                // can race the server lifecycle, so `socket == null` alone
+                // isn't reliable (a callback may already be mid-flight when
+                // disconnect() runs). toSnapshot() reads several
+                // ConfigHandlerServer values (CPU_TEMP_PATH, BATTERY_CAPACITY,
+                // etc.) which throw "Cannot get config value before config is
+                // loaded" once the server config unloads — checking
+                // SPEC.isLoaded() up front avoids that race entirely rather
+                // than relying on catching it after the fact.
+                if (socket == null || !ConfigHandlerServer.SPEC.isLoaded()) return;
                 if (args.length == 0 || !(args[0] instanceof JSONObject payload)) return;
                 try {
                     onData.accept(toSnapshot(payload));

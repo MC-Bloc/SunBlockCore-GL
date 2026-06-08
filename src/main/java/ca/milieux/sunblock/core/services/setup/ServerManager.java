@@ -8,8 +8,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -194,9 +194,17 @@ public class ServerManager {
             }
         }
 
-        // When world is unloaded, close the websocket connection
+        // When the server stops (world unload / quit to title / dedicated server
+        // shutdown), close the websocket connection BEFORE the server config
+        // unloads. This must be `static` — `@Mod.EventBusSubscriber` only
+        // auto-registers static @SubscribeEvent methods (an instance method here
+        // would silently never fire, leaving the socket connected after shutdown
+        // and causing "Cannot get config value before config is loaded" once a
+        // late "solar_data" push tries to read CPU_TEMP_PATH from the unloaded
+        // config). ServerStoppingEvent also fires exactly once per server
+        // lifecycle, unlike LevelEvent.Unload which fires per-dimension.
         @SubscribeEvent
-        public void onServerShutdown(LevelEvent.Unload event) {
+        public static void onServerStopping(ServerStoppingEvent event) {
             SolarSocketClient.disconnect();
         }
     }
