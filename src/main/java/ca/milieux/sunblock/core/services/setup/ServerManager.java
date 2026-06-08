@@ -17,10 +17,8 @@ import ca.milieux.sunblock.core.SunBlockCore;
 import ca.milieux.sunblock.core.application.network.ModPackets;
 import ca.milieux.sunblock.core.application.network.packets.ServerDataS2CPacket;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedList;
@@ -54,13 +52,31 @@ public class ServerManager {
 
         if (LAST_PROFILE_SWITCH > 0 || apiUrl.isEmpty()) return;
 
+        String token = ConfigHandlerServer.SUNBLOCK_API_TOKEN.get();
+        if (token == null || token.isEmpty()) {
+            SunBlockCore.LOGGER.warn("SunBlockCore: ServerManager::PowerProfileSwitch() — SUNBLOCK_API_TOKEN is not configured, skipping switch request to '{}'", apiUrl);
+            return;
+        }
+
+        HttpURLConnection conn = null;
         try {
             URL url = new URL(apiUrl);
-            URLConnection conn = url.openConnection();
-            try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
-            LAST_PROFILE_SWITCH = ConfigHandlerServer.POWER_PROFILE_COOLDOWN.get();
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + token);
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(5000);
+
+            int status = conn.getResponseCode();
+            if (status >= 200 && status < 300) {
+                LAST_PROFILE_SWITCH = ConfigHandlerServer.POWER_PROFILE_COOLDOWN.get();
+            } else {
+                SunBlockCore.LOGGER.error("SunBlockCore: ServerManager::PowerProfileSwitch() — request to '{}' failed with HTTP {}", apiUrl, status);
+            }
         } catch (Exception e) {
             SunBlockCore.LOGGER.error("SunBlockCore: ServerManager::PowerProfileSwitch() error: {}", e.getMessage());
+        } finally {
+            if (conn != null) conn.disconnect();
         }
     }
 
