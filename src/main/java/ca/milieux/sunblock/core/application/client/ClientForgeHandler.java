@@ -1,16 +1,9 @@
 package ca.milieux.sunblock.core.application.client;
 
 import ca.milieux.sunblock.core.SunBlockCore;
-import ca.milieux.sunblock.core.services.DataQueryProcess;
-import ca.milieux.sunblock.core.services.SolarDataTypes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
