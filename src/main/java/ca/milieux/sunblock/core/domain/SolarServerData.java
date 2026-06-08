@@ -12,7 +12,7 @@ public class SolarServerData {
     public static float lPower;
     public static float battRemaining;
     public static float battOverallCurrent;
-    public static String timeRemaining;
+    public static float timeRemaining;
     public static String timestamp;
     public static String powerProfile;
     public static int cooldownSecondsRemaining;
@@ -29,7 +29,7 @@ public class SolarServerData {
         SolarServerData.lPower = 0.0f;
         SolarServerData.battRemaining = 0.0f;
         SolarServerData.battOverallCurrent = 0.0f;
-        SolarServerData.timeRemaining = "Calculating Time Remaining...";
+        SolarServerData.timeRemaining = 0.0f;
         SolarServerData.timestamp = "00:00";
         SolarServerData.powerProfile = "";
         SolarServerData.cooldownSecondsRemaining = 0;

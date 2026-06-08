@@ -22,16 +22,21 @@ public class ServerDataS2CPacket {
     private static float lPower;
     private static float battRemaining;
     private static float battOverallCurrent;
-    private static String timeRemaining;
+    private static float timeRemaining;
     private static String timestamp;
     private static String powerProfile;
     private static int cooldownSecondsRemaining;
 
-    public ServerDataS2CPacket( float cpuTemp, float power, 
+    public static ServerDataS2CPacket EMPTY = new ServerDataS2CPacket(
+            0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
+            0.0F, 0.0F, 0.0F, 0.0F,
+            0.0F, 0.0F, 0.0f, "", "", 0);
+
+    public ServerDataS2CPacket( float cpuTemp, float power,
                                 float pvVoltage, float pvCurrent, float pvPower, 
                                 float battVoltage, float battChargeCurrent, float battChargePower, 
                                 float lPower, 
-                                float battRemaining, float battOverallCurrent, String timeRemaining, String timestamp, String powerProfile, int cooldownSecondsRemaining) {
+                                float battRemaining, float battOverallCurrent, float timeRemaining, String timestamp, String powerProfile, int cooldownSecondsRemaining) {
         this.cpuTemp = cpuTemp;
         this.power = power;
 
@@ -72,7 +77,7 @@ public class ServerDataS2CPacket {
 
         battRemaining = buf.readFloat();
         battOverallCurrent = buf.readFloat();
-        timeRemaining = buf.readUtf();
+        timeRemaining = buf.readFloat();
         timestamp = buf.readUtf();
 
         powerProfile = buf.readUtf();
@@ -96,8 +101,8 @@ public class ServerDataS2CPacket {
 
         buf.writeFloat(battRemaining);
         buf.writeFloat(battOverallCurrent);
+        buf.writeFloat(timeRemaining);
 
-        buf.writeUtf(timeRemaining);
         buf.writeUtf(timestamp);
         buf.writeUtf(powerProfile);
 

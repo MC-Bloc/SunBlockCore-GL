@@ -257,7 +257,7 @@ public class HUD {
     static ResourceLocation GetTimeRemainingIcon() {
         int HIGH_THRESH_BATTERY = 40;
         int MED_THRESH_BATTERY = 12;
-        float hours_rem = Float.parseFloat(SolarServerData.timeRemaining);
+        float hours_rem = SolarServerData.timeRemaining;
 
         if (hours_rem > HIGH_THRESH_BATTERY) return TIME_HIGH;
         else if (hours_rem > MED_THRESH_BATTERY) return TIME_MED;
