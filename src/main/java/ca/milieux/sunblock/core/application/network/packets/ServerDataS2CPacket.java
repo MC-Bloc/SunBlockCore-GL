@@ -11,21 +11,21 @@ import java.util.function.Supplier;
  */
 
 public class ServerDataS2CPacket {
-    private static float cpuTemp;
-    private static float power;
-    private static float pvVoltage;
-    private static float pvCurrent;
-    private static float pvPower;
-    private static float battVoltage;
-    private static float battChargeCurrent;
-    private static float battChargePower;
-    private static float lPower;
-    private static float battRemaining;
-    private static float battOverallCurrent;
-    private static float timeRemaining;
-    private static String timestamp;
-    private static String powerProfile;
-    private static int cooldownSecondsRemaining;
+    private float cpuTemp;
+    private float power;
+    private float pvVoltage;
+    private float pvCurrent;
+    private float pvPower;
+    private float battVoltage;
+    private float battChargeCurrent;
+    private float battChargePower;
+    private float lPower;
+    private float battRemaining;
+    private float battOverallCurrent;
+    private float timeRemaining;
+    private String timestamp;
+    private String powerProfile;
+    private int cooldownSecondsRemaining;
 
     public static ServerDataS2CPacket EMPTY = new ServerDataS2CPacket(
             0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
@@ -111,26 +111,26 @@ public class ServerDataS2CPacket {
         ctx.get().enqueueWork( () ->{
                 // On client side
 
-                SolarServerData.cpuTemp = cpuTemp;
-                SolarServerData.power = power;
+                SolarServerData.cpuTemp = packet.cpuTemp;
+                SolarServerData.power = packet.power;
 
-                SolarServerData.pvVoltage = pvVoltage;
-                SolarServerData.pvCurrent = pvCurrent;
-                SolarServerData.pvPower = pvPower;
+                SolarServerData.pvVoltage = packet.pvVoltage;
+                SolarServerData.pvCurrent = packet.pvCurrent;
+                SolarServerData.pvPower = packet.pvPower;
 
-                SolarServerData.battVoltage = battVoltage;
-                SolarServerData.battChargeCurrent = battChargeCurrent;
-                SolarServerData.battChargePower = battChargePower;
+                SolarServerData.battVoltage = packet.battVoltage;
+                SolarServerData.battChargeCurrent = packet.battChargeCurrent;
+                SolarServerData.battChargePower = packet.battChargePower;
 
-                SolarServerData.lPower = lPower;
+                SolarServerData.lPower = packet.lPower;
 
-                SolarServerData.battRemaining = battRemaining;
-                SolarServerData.battOverallCurrent = battOverallCurrent;
-                SolarServerData.timeRemaining = timeRemaining;
-                SolarServerData.timestamp = timestamp;
-                SolarServerData.powerProfile = powerProfile;
+                SolarServerData.battRemaining = packet.battRemaining;
+                SolarServerData.battOverallCurrent = packet.battOverallCurrent;
+                SolarServerData.timeRemaining = packet.timeRemaining;
+                SolarServerData.timestamp = packet.timestamp;
+                SolarServerData.powerProfile = packet.powerProfile;
 
-                SolarServerData.cooldownSecondsRemaining = cooldownSecondsRemaining;
+                SolarServerData.cooldownSecondsRemaining = packet.cooldownSecondsRemaining;
         });
         return true;
     }
