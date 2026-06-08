@@ -58,7 +58,7 @@ public class HUD {
 
             String powerString = "Burning " + powerConsumption  + " Watts";
             String solarStats = "Solar: " + SolarServerData.pvVoltage + "V | " + SolarServerData.pvCurrent + "A";
-            String timeRemainingString = SolarServerData.timeRemaining < 0 ?
+            String timeRemainingString = SolarServerData.timeRemaining < 0.0f ?
                     "Calculating" :
                     SolarServerData.timeRemaining  + " Hours remaining";
 
@@ -155,8 +155,10 @@ public class HUD {
             String usage_stats = "USAGE: " + SolarServerData.lPower + "w";
             String time_left = SolarServerData.cooldownSecondsRemaining > 0 ?
                     "COOLDOWN: " + SolarServerData.cooldownSecondsRemaining + " Secs" :
-                    "TIME LEFT: " + SolarServerData.timeRemaining + " Hours";
-            String power_profile = "POWER MODE:" + SolarServerData.powerProfile;
+                    SolarServerData.timeRemaining < 0.0f ?
+                    "Calculating" :
+                    SolarServerData.timeRemaining  + " Hours remaining";
+            String power_profile = "POWER MODE: " + SolarServerData.powerProfile;
 
 
             FormattedText t = FormattedText.of(solar_stats + delim + battery_stats + delim + usage_stats + delim + time_left + delim + power_profile);
@@ -205,10 +207,11 @@ public class HUD {
 
         try {
             int hour = Integer.parseInt(timestamp.split(":")[0]);
-            if (hour >= NIGHT) return BG_NIGHT;
-            else if (hour >= EVENING) return BG_DUSK;
+            if (hour >= NIGHT ) return BG_NIGHT;
+            else if (hour >= EVENING ) return BG_DUSK;
             else if (hour >= DAY) return BG_DAY;
-            else return BG_DAWN;
+            else if (hour >= DAWN) return BG_DAWN;
+            else return BG_NIGHT;
         } catch (Exception e) {
             LOGGER.error("Error parsing timestamp '{}': {}", timestamp, e.getMessage());
             return BG_DAY;
