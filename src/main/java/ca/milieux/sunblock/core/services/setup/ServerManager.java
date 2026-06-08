@@ -80,7 +80,7 @@ public class ServerManager {
         float avg = sumOfQueue(powerConsumptionHistory) / powerConsumptionHistory.size();
         if (avg <= 0f) return -1f;
 
-        float maxCapacity = ConfigHandlerServer.BATTERY_CAPACITY.get();
+        float maxCapacity = ConfigHandlerServer.BATTERY_CAPACITY.get().floatValue();
         return Math.round((maxCapacity / avg) * battRemaining) / 100f;
 
     }
