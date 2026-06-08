@@ -57,8 +57,6 @@ public class ServerDataS2CPacket {
         this.powerProfile = powerProfile;
         this.cooldownSecondsRemaining = cooldownSecondsRemaining;
 
-//        System.out.println("SunBlockCore::ServerDataS2CPacket -- created new packet");
-
     }
 
     public ServerDataS2CPacket(FriendlyByteBuf buf) {
@@ -107,14 +105,11 @@ public class ServerDataS2CPacket {
         buf.writeUtf(powerProfile);
 
         buf.writeInt(cooldownSecondsRemaining);
-//        System.out.println("SunBlockCore::ServerDataS2CPacket -- converting to bytes ");
-
     }
 
     public static boolean handle(ServerDataS2CPacket packet, Supplier<NetworkEvent.ClientCustomPayloadEvent.Context> ctx) {
         ctx.get().enqueueWork( () ->{
                 // On client side
-//                System.out.println("SunBlockCore::ServerDataS2CPacket -- received packets on client side");
 
                 SolarServerData.cpuTemp = cpuTemp;
                 SolarServerData.power = power;
@@ -136,9 +131,6 @@ public class ServerDataS2CPacket {
                 SolarServerData.powerProfile = powerProfile;
 
                 SolarServerData.cooldownSecondsRemaining = cooldownSecondsRemaining;
-
-//                System.out.println("SunBlockCore::ServerDataS2CPacket -- handled and  parsed packets");
-
         });
         return true;
     }

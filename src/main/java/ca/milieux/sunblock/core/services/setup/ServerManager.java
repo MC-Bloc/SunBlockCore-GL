@@ -60,7 +60,7 @@ public class ServerManager {
             try (BufferedReader ignored = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {}
             LAST_PROFILE_SWITCH = ConfigHandlerServer.POWER_PROFILE_COOLDOWN.get();
         } catch (Exception e) {
-            SunBlockCore.LOGGER.error("SunBlockCore: PerformanceMode() error: {}", e.getMessage());
+            SunBlockCore.LOGGER.error("SunBlockCore: ServerManager::PowerProfileSwitch() error: {}", e.getMessage());
         }
     }
 
