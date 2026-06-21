@@ -7,18 +7,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -31,18 +29,18 @@ public class PowerButton extends ButtonBlock {
     private static final DustParticleOptions YELLOW_DUST =
             new DustParticleOptions(new Vector3f(1.0F, 0.96F, 0.01F), 1.0F);
 
-    public PowerButton(Properties props, BlockSetType type, int ticksToStayPressed, boolean arrowsCanPress) {
-        super(props, type, ticksToStayPressed, arrowsCanPress);
+    public PowerButton(BlockSetType type, int ticksToStayPressed, Properties props) {
+        super(type, ticksToStayPressed, props);
     }
 
     //right‑click behaviour
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-                                 Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+                                               Player player, BlockHitResult hit) {
 
         if (ServerManager.LAST_PROFILE_SWITCH > 0) return InteractionResult.FAIL;
         //vanilla press logic (handles POWERED state & click sounds)
-        InteractionResult result = super.use(state, level, pos, player, hand, hit);
+        InteractionResult result = super.useWithoutItem(state, level, pos, player, hit);
 
         //server‑side custom logic
         if (!level.isClientSide && result.consumesAction()) {
@@ -91,8 +89,8 @@ public class PowerButton extends ButtonBlock {
 
     //tooltip
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.literal("Switch power profile of the system (right‑click)!"));
-        super.appendHoverText(stack, level, tooltip, flag);
+        super.appendHoverText(stack, context, tooltip, flag);
     }
 }

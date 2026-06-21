@@ -25,16 +25,16 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, SunBlockCore.MODID);
 
     public static final RegistryObject<Block> POWER_BUTTON = registerBlock("power_button",
-            () -> new PowerButton(BlockBehaviour.Properties.copy(Blocks.STONE_BUTTON).strength(-1.0F, 3600000.0F), BlockSetType.IRON, 10, true));
+            () -> new PowerButton(BlockSetType.IRON, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BUTTON).strength(-1.0F, 3600000.0F)));
 
     public static final RegistryObject<Block> SOLAR_SWITCH = registerBlock("solar_switch",
-            () -> new SolarSwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+            () -> new SolarSwitchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
                     .strength(-1.0F, 3600000.0F)
                     .noOcclusion()
                     .lightLevel(state -> state.getValue(SolarSwitchBlock.SWITCH_STATE) == SolarSwitchBlock.SolarSwitchState.ON ? 14 : 0)));
 
     public static final RegistryObject<Block> SOLAR_LIGHT_SWITCH = registerBlock("solar_light_switch",
-            () -> new SolarLightSwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+            () -> new SolarLightSwitchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
                     .strength(1.5F)
                     .noOcclusion()
                     .lightLevel(state -> state.getValue(SolarLightSwitchBlock.SWITCH_STATE) == SolarLightSwitchBlock.SolarLightSwitchState.ON ? 14 : 0)));
