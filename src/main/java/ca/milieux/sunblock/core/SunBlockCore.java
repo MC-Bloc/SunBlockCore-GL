@@ -13,10 +13,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,33 +25,20 @@ public class SunBlockCore {
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static ModConfig CLIENT_MOD_CONFIG;
 
-	public SunBlockCore() {
-		//Get the mod‑event bus Forge creates for us
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-		//Register blocks, items, sounds, etc.
+	public SunBlockCore(IEventBus modEventBus, ModContainer modContainer) {
 		ModItems.register(modEventBus);
 		ModBlocks.register(modEventBus);
-		ModSounds.init(modEventBus);           // <-- NEW: sound events
+		ModSounds.init(modEventBus);
 		ModLootModifiers.register(modEventBus);
 
-		//Common + client setup hooks
 		modEventBus.addListener(CommonSetup::init);
 		modEventBus.addListener(this::addCreative);
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () ->
 				() -> modEventBus.addListener(ClientSetup::init));
 
-		//Config files
-		ModLoadingContext.get().registerConfig(
-				ModConfig.Type.CLIENT,
-				ConfigHandler.CLIENT_SPEC,
-				"SunBlockCore-ClientConfig.toml");
-
-		ModLoadingContext.get().registerConfig(
-				ModConfig.Type.SERVER,
-				ConfigHandlerServer.SPEC,
-				"SunBlockCore-server.toml");
+		modContainer.addConfig(new ModConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, modContainer, "SunBlockCore-ClientConfig.toml"));
+		modContainer.addConfig(new ModConfig(ModConfig.Type.SERVER, ConfigHandlerServer.SPEC, modContainer, "SunBlockCore-server.toml"));
 	}
 
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {
