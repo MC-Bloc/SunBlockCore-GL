@@ -19,7 +19,7 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> POWER_OFF = register("power_off");
 
     private static RegistryObject<SoundEvent> register(String name) {
-        ResourceLocation id = new ResourceLocation(SunBlockCore.MODID, name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, name);
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

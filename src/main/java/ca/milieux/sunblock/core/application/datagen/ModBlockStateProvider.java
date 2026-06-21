@@ -17,7 +17,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        buttonBlock((ButtonBlock) ModBlocks.POWER_BUTTON.get(), new ResourceLocation(SunBlockCore.MODID, "block/power_button"));
+        buttonBlock((ButtonBlock) ModBlocks.POWER_BUTTON.get(), ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "block/power_button"));
 
     }
 
