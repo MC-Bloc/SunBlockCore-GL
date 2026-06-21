@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[52,)"
 license="All Rights Reserved"
 issueTrackerURL=" "
 [[mods]]
@@ -13,12 +13,12 @@ issueTrackerURL=" "
 [[dependencies.sunblockcore]]
     modId="forge"
     mandatory=true
-    versionRange="[47,)"
+    versionRange="[52,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.sunblockcore]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20.1,)"
+    versionRange="[1.21.1,)"
     ordering="NONE"
     side="BOTH"
