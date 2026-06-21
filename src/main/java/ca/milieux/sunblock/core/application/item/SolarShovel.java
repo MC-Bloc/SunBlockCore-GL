@@ -10,25 +10,18 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 
-import java.util.function.Consumer;
-
 public class SolarShovel extends ShovelItem {
-    public SolarShovel(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
-        super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
+    public SolarShovel(Tier pTier, Properties pProperties) {
+        super(pTier, pProperties);
     }
 
     //    Healing
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack  && player.isShiftKeyDown()) {
+        if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack && player.isShiftKeyDown()) {
             int recover = pStack.getDamageValue() - (int) Math.ceil(ServerManager.cachedPvPower / 20);
             pStack.setDamageValue(recover);
         }
-    }
-
-    @Override
-    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-        return super.damageItem(stack, amount, entity, onBroken);
     }
 
     @Override

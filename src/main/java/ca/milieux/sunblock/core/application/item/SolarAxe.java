@@ -11,42 +11,34 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 
-import java.util.function.Consumer;
-
 public class SolarAxe extends AxeItem {
-    public SolarAxe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
-        super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
+    public SolarAxe(Tier pTier, Properties pProperties) {
+        super(pTier, pProperties);
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker){
+    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
 
         //Additional Damage to target when struck with solar axe
-        float inc_damage =  ServerManager.cachedPvPower / 10;
+        float inc_damage = ServerManager.cachedPvPower / 10;
 
         DamageSource source =
                 pAttacker instanceof Player player ?
                         pAttacker.level().damageSources().playerAttack(player) :
-                        pAttacker.level().damageSources().mobAttack(pAttacker) ;
+                        pAttacker.level().damageSources().mobAttack(pAttacker);
 
         pTarget.hurt(source, inc_damage);
 
         return super.hurtEnemy(pStack, pTarget, pAttacker);
     }
 
-
     //    Healing
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack  && player.isShiftKeyDown()) {
+        if (!pLevel.isClientSide && pEntity instanceof Player player && player.getMainHandItem() == pStack && player.isShiftKeyDown()) {
             int recover = pStack.getDamageValue() - (int) Math.ceil(ServerManager.cachedPvPower / 20);
             pStack.setDamageValue(recover);
         }
-    }
-
-    @Override
-    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
-        return super.damageItem(stack, amount, entity, onBroken);
     }
 
     @Override
