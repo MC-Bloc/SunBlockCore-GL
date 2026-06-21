@@ -3,14 +3,12 @@ package ca.milieux.sunblock.core.application.client;
 import ca.milieux.sunblock.core.SunBlockCore;
 import ca.milieux.sunblock.core.application.config.ConfigHandler;
 import ca.milieux.sunblock.core.application.util.RenderUtils;
-import ca.milieux.sunblock.core.application.client.SolarServerData;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import org.apache.logging.log4j.Logger;
 
 public class HUD {
@@ -21,37 +19,37 @@ public class HUD {
     public static int statsIndex = 0;
     public static HUDType type = HUDType.GraphicalV0;
 
-    private static final ResourceLocation BG_DAWN       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dawn.png");
-    private static final ResourceLocation BG_DAY        = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_day.png");
-    private static final ResourceLocation BG_DUSK       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dusk.png");
-    private static final ResourceLocation BG_NIGHT      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_night.png");
+    private static final ResourceLocation BG_DAWN       = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dawn.png");
+    private static final ResourceLocation BG_DAY        = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_hud_day.png");
+    private static final ResourceLocation BG_DUSK       = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_hud_dusk.png");
+    private static final ResourceLocation BG_NIGHT      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_hud_night.png");
 
-    private static final ResourceLocation CPU_LOW       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_g.png");
-    private static final ResourceLocation CPU_MED       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_y.png");
-    private static final ResourceLocation CPU_HIGH      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_r.png");
+    private static final ResourceLocation CPU_LOW       = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_g.png");
+    private static final ResourceLocation CPU_MED       = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_y.png");
+    private static final ResourceLocation CPU_HIGH      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_cpu_r.png");
 
-    private static final ResourceLocation LOAD_LOW      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_g.png");
-    private static final ResourceLocation LOAD_MED      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_y.png");
-    private static final ResourceLocation LOAD_HIGH     = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_r.png");
+    private static final ResourceLocation LOAD_LOW      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_g.png");
+    private static final ResourceLocation LOAD_MED      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_y.png");
+    private static final ResourceLocation LOAD_HIGH     = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_globe_r.png");
 
-    private static final ResourceLocation GEN_LOW       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_r.png");
-    private static final ResourceLocation GEN_MED       = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_o.png");
-    private static final ResourceLocation GEN_HIGH      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun.png");
+    private static final ResourceLocation GEN_LOW       = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_r.png");
+    private static final ResourceLocation GEN_MED       = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun_o.png");
+    private static final ResourceLocation GEN_HIGH      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_sun.png");
 
-    private static final ResourceLocation BATT_HIGH     = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_g.png");
-    private static final ResourceLocation BATT_MED      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_y.png");
-    private static final ResourceLocation BATT_LOW      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_o.png");
-    private static final ResourceLocation BATT_DAM      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_r.png");
+    private static final ResourceLocation BATT_HIGH     = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_g.png");
+    private static final ResourceLocation BATT_MED      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_y.png");
+    private static final ResourceLocation BATT_LOW      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_o.png");
+    private static final ResourceLocation BATT_DAM      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_battery_r.png");
 
-    private static final ResourceLocation TIME_HIGH     = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_g.png");
-    private static final ResourceLocation TIME_MED      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_y.png");
-    private static final ResourceLocation TIME_LOW      = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_r.png");
+    private static final ResourceLocation TIME_HIGH     = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_g.png");
+    private static final ResourceLocation TIME_MED      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_y.png");
+    private static final ResourceLocation TIME_LOW      = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_clock_r.png");
 
-    private static final ResourceLocation BATT_CHARGING = new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_up.png");
-    private static final ResourceLocation BATT_DISCHARGE= new ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_down.png");
+    private static final ResourceLocation BATT_CHARGING = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_up.png");
+    private static final ResourceLocation BATT_DISCHARGE= ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_icons_iso_arrow_down.png");
 
 
-    public static void TextHUD(RenderGuiOverlayEvent.Post event) {
+    public static void TextHUD(GuiGraphics guiGraphics) {
         if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
 
             float powerConsumption = SolarServerData.lPower;
@@ -68,18 +66,18 @@ public class HUD {
             int powerConsumptionColor = powerConsumption > 20 ? 0xD6520B : powerConsumption <= 15 ? 0xFFFFFF : 0xCAE34B;
 
             if (statsIndex < 5) {
-                RenderUtils.drawStringTopLeft(event.getGuiGraphics(), timeRemainingString, 0xFFFFFF, 0);
+                RenderUtils.drawStringTopLeft(guiGraphics, timeRemainingString, 0xFFFFFF, 0);
             } else if (statsIndex < 10) {
-                RenderUtils.drawStringTopLeft(event.getGuiGraphics(), powerString, powerConsumptionColor, 0);
+                RenderUtils.drawStringTopLeft(guiGraphics, powerString, powerConsumptionColor, 0);
             } else if (statsIndex < 15) {
-                RenderUtils.drawStringTopLeft(event.getGuiGraphics(), solarStats, solarStatsColor, 0);
+                RenderUtils.drawStringTopLeft(guiGraphics, solarStats, solarStatsColor, 0);
             }
 
 
         }
     }
 
-    static void TextHUDDetailed(RenderGuiOverlayEvent.Post event) {
+    static void TextHUDDetailed(GuiGraphics guiGraphics) {
 
         float CPUTemp = SolarServerData.cpuTemp;
         float CPUPower = SolarServerData.power; // CPU power consumption
@@ -104,25 +102,23 @@ public class HUD {
         String powerState = powerConsumption >= solarPower ? "draining. Consumption is higher than solar regeneration" : "Storing Power";
         int powerStateColor = powerConsumption >= solarPower ? 0xD6520B : 0xFFFFFF;
 
-        RenderUtils.drawStringTopLeft(event.getGuiGraphics(), cpuPowerString, 0xFFFFFF, 1);
-        RenderUtils.drawStringTopLeft(event.getGuiGraphics(), systemPowerString, 0xFFFFFF, 3);
-        RenderUtils.drawStringTopLeft(event.getGuiGraphics(), solarPowerString, 0xFFFFFF, 5);
-        RenderUtils.drawStringTopLeft(event.getGuiGraphics(), batteryPowerString, 0xFFFFFF, 7);
+        RenderUtils.drawStringTopLeft(guiGraphics, cpuPowerString, 0xFFFFFF, 1);
+        RenderUtils.drawStringTopLeft(guiGraphics, systemPowerString, 0xFFFFFF, 3);
+        RenderUtils.drawStringTopLeft(guiGraphics, solarPowerString, 0xFFFFFF, 5);
+        RenderUtils.drawStringTopLeft(guiGraphics, batteryPowerString, 0xFFFFFF, 7);
 
-        RenderUtils.drawStringTopLeft(event.getGuiGraphics(), "Battery is " + chargingState, chargingStateColor, 9);
-        RenderUtils.drawStringTopLeft(event.getGuiGraphics(), "Overall System is " + powerState, powerStateColor, 11);
-}
+        RenderUtils.drawStringTopLeft(guiGraphics, "Battery is " + chargingState, chargingStateColor, 9);
+        RenderUtils.drawStringTopLeft(guiGraphics, "Overall System is " + powerState, powerStateColor, 11);
+    }
 
-    public static void GraphicHUD(RenderGuiOverlayEvent.Post event) {
+    public static void GraphicHUD(GuiGraphics guiGraphics) {
         if (mc.player != null && mc.level != null && !mc.options.hideGui && (mc.screen == null || (ConfigHandler.CLIENT.displayWithChatOpen.get() && mc.screen instanceof ChatScreen))) {
-
-            GuiGraphics guiGraphics = event.getGuiGraphics();
 
             String timeString = SolarServerData.timestamp;
 
             double configScale = ConfigHandler.CLIENT.HUD_SCALE.get();
             double configOpacity = ConfigHandler.CLIENT.HUD_OPACITY.get();
-            float op = (float) configOpacity / 10;
+            float op = (float) configOpacity;
 
             int textColor = 0xDDDDDD;
 

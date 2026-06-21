@@ -104,7 +104,7 @@ public class HUDSettings extends Screen {
 
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
         // Center the title.
@@ -125,9 +125,9 @@ public class HUDSettings extends Screen {
         guiGraphics.pose().translate(this.hudX, this.hudY, 0);
         guiGraphics.pose().scale((float)this.scaleSlider.getValue(), (float)this.scaleSlider.getValue(), 1.0F);
 
-        RenderSystem.setShaderTexture(0, new net.minecraft.resources.ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_day.png"));
-        guiGraphics.blit(new net.minecraft.resources.ResourceLocation(SunBlockCore.MODID, "textures/gui/mc_sb_hud_day.png"),
-                0, 0, 0, 0, 168, 108, 168, 108);
+        net.minecraft.resources.ResourceLocation hudDayTex = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, "textures/gui/mc_sb_hud_day.png");
+        RenderSystem.setShaderTexture(0, hudDayTex);
+        guiGraphics.blit(hudDayTex, 0, 0, 0, 0, 168, 108, 168, 108);
 
         // Reset shader color back to full white for "Drag to Reposition" text.
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
