@@ -1,22 +1,22 @@
 package ca.milieux.sunblock.core.application.datagen;
 
 import ca.milieux.sunblock.core.SunBlockCore;
-import ca.milieux.sunblock.core.application.item.ModItems;
 import ca.milieux.sunblock.core.application.loot.AddItemModifier;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
+import java.util.concurrent.CompletableFuture;
+
 public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
-    public ModGlobalLootModifiersProvider(PackOutput output) {
-        super(output, SunBlockCore.MODID);
+    public ModGlobalLootModifiersProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, SunBlockCore.MODID, registries);
     }
 
     @Override
-    protected void start() {
+    protected void start(HolderLookup.Provider registries) {
 
         float _probability = 0.2f;
         add("spruce_sapling_chance_with_solar_hoe", new AddItemModifier(new LootItemCondition[]{
@@ -52,7 +52,7 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
                         LootItemRandomChanceCondition.randomChance(_probability).build(),
                 }, Blocks.DARK_OAK_SAPLING.asItem())
         );
-        add("dark_oak_sapling_chance_with_solar_hoe", new AddItemModifier(new LootItemCondition[]{
+        add("jungle_sapling_chance_with_solar_hoe", new AddItemModifier(new LootItemCondition[]{
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.JUNGLE_LEAVES).build(),
                         LootItemRandomChanceCondition.randomChance(_probability).build(),
                 }, Blocks.JUNGLE_SAPLING.asItem())
