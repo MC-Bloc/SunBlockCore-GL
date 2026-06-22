@@ -6,17 +6,17 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.*;
-import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
     public ModGlobalLootModifiersProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, SunBlockCore.MODID, registries);
+        super(output, registries, SunBlockCore.MODID);
     }
 
     @Override
-    protected void start(HolderLookup.Provider registries) {
+    protected void start() {
 
         float _probability = 0.2f;
         add("spruce_sapling_chance_with_solar_hoe", new AddItemModifier(new LootItemCondition[]{

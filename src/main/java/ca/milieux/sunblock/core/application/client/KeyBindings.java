@@ -3,7 +3,7 @@ package ca.milieux.sunblock.core.application.client;
 import ca.milieux.sunblock.core.SunBlockCore;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.client.settings.KeyConflictContext;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
 
 public final class KeyBindings {
     public static final KeyBindings INSTANCE = new KeyBindings();

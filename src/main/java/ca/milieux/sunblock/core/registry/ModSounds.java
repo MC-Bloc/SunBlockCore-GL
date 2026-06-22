@@ -1,24 +1,24 @@
 package ca.milieux.sunblock.core.registry;
 
 import ca.milieux.sunblock.core.SunBlockCore;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.IEventBus;
 
 public final class ModSounds {
 
     public static final DeferredRegister<SoundEvent> SOUNDS =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, SunBlockCore.MODID);
+            DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, SunBlockCore.MODID);
 
-    public static final RegistryObject<SoundEvent> POWER_ON  = register("power_on");
-    public static final RegistryObject<SoundEvent> POWER_OFF = register("power_off");
+    public static final DeferredHolder<SoundEvent, SoundEvent> POWER_ON  = register("power_on");
+    public static final DeferredHolder<SoundEvent, SoundEvent> POWER_OFF = register("power_off");
 
-    private static RegistryObject<SoundEvent> register(String name) {
+    private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(SunBlockCore.MODID, name);
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }

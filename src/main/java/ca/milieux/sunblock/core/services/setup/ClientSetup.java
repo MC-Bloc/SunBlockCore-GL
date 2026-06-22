@@ -5,7 +5,7 @@ import ca.milieux.sunblock.core.application.item.ModItems;
 import ca.milieux.sunblock.core.application.client.SolarServerData;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 
 public class ClientSetup {

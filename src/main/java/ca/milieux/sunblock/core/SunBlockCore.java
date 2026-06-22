@@ -6,16 +6,12 @@ import ca.milieux.sunblock.core.application.config.ConfigHandlerServer;
 import ca.milieux.sunblock.core.application.item.ModItems;
 import ca.milieux.sunblock.core.application.loot.ModLootModifiers;
 import ca.milieux.sunblock.core.registry.ModSounds;
-import ca.milieux.sunblock.core.services.setup.ClientSetup;
-import ca.milieux.sunblock.core.services.setup.CommonSetup;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 public class SunBlockCore {
 	public static final String MODID = "sunblockcore";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
-	public static ModConfig CLIENT_MOD_CONFIG;
 
 	public SunBlockCore(IEventBus modEventBus, ModContainer modContainer) {
 		ModItems.register(modEventBus);
@@ -31,14 +26,18 @@ public class SunBlockCore {
 		ModSounds.init(modEventBus);
 		ModLootModifiers.register(modEventBus);
 
-		modEventBus.addListener(CommonSetup::init);
 		modEventBus.addListener(this::addCreative);
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () ->
-				() -> modEventBus.addListener(ClientSetup::init));
+		// Client-only setup (ClientSetup::init) is registered by the Dist.CLIENT-gated
+		// ClientModHandler class instead of here. A direct method reference to
+		// ClientSetup::init in this constructor would force the JVM to resolve the
+		// ClientSetup class (which touches client-only rendering classes) even on a
+		// dedicated server, crashing with NoClassDefFoundError. NeoForge removed
+		// DistExecutor, which used to guard against exactly this; class-level dist
+		// gating via @Mod.EventBusSubscriber(value = Dist.CLIENT) is the replacement.
 
-		modContainer.addConfig(new ModConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, modContainer, "SunBlockCore-ClientConfig.toml"));
-		modContainer.addConfig(new ModConfig(ModConfig.Type.SERVER, ConfigHandlerServer.SPEC, modContainer, "SunBlockCore-server.toml"));
+		modContainer.registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC, "SunBlockCore-ClientConfig.toml");
+		modContainer.registerConfig(ModConfig.Type.SERVER, ConfigHandlerServer.SPEC, "SunBlockCore-server.toml");
 	}
 
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {

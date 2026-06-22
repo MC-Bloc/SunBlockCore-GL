@@ -5,14 +5,14 @@ import ca.milieux.sunblock.core.services.SolarSnapshot;
 import ca.milieux.sunblock.core.services.SolarSocketClient;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import ca.milieux.sunblock.core.SunBlockCore;
 import ca.milieux.sunblock.core.application.network.ModPackets;
 import ca.milieux.sunblock.core.application.network.packets.ServerDataS2CPacket;
@@ -145,7 +145,7 @@ public class ServerManager {
         return raw;
     }
 
-    @Mod.EventBusSubscriber(modid = SunBlockCore.MODID)
+    @EventBusSubscriber(modid = SunBlockCore.MODID)
     public class ServerEvents {
 
         // Decrements LAST_PROFILE_SWITCH once every 20 ticks (~1s).
@@ -184,8 +184,7 @@ public class ServerManager {
         }
 
         @SubscribeEvent
-        public static void onServerTick(TickEvent.ServerTickEvent event) {
-            if (event.phase != TickEvent.Phase.END) return;
+        public static void onServerTick(ServerTickEvent.Post event) {
             if (++cooldownTickCounter < 20) return;
             cooldownTickCounter = 0;
             if (LAST_PROFILE_SWITCH > 0) LAST_PROFILE_SWITCH--;

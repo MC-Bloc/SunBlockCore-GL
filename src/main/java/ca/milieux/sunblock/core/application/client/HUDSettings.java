@@ -58,8 +58,8 @@ public class HUDSettings extends Screen {
             ConfigHandler.CLIENT.HUD_Y_POSITION.set(this.hudY);
             ConfigHandler.CLIENT.HUD_OPACITY.set(this.opacitySlider.getValue());
 
-            if (SunBlockCore.CLIENT_MOD_CONFIG != null) {
-                SunBlockCore.CLIENT_MOD_CONFIG.save();
+            if (ConfigHandler.CLIENT_SPEC.isLoaded()) {
+                ConfigHandler.CLIENT_SPEC.save();
             }
 
             Minecraft.getInstance().setScreen(null);

@@ -1,18 +1,18 @@
 package ca.milieux.sunblock.core.application.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ConfigHandlerServer {
-    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec SPEC;
+    public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
 
-    public static final ForgeConfigSpec.ConfigValue<String> CPU_TEMP_PATH;
-    public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_URL;
-    public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_PERFORMANCE;
-    public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_POWER_SAVER;
-    public static final ForgeConfigSpec.ConfigValue<String> SUNBLOCK_API_TOKEN;
-    public static final ForgeConfigSpec.ConfigValue<Double> BATTERY_CAPACITY;
-    public static final ForgeConfigSpec.ConfigValue<Integer> POWER_PROFILE_COOLDOWN;
+    public static final ModConfigSpec.ConfigValue<String> CPU_TEMP_PATH;
+    public static final ModConfigSpec.ConfigValue<String> SUNBLOCK_API_URL;
+    public static final ModConfigSpec.ConfigValue<String> SUNBLOCK_API_PERFORMANCE;
+    public static final ModConfigSpec.ConfigValue<String> SUNBLOCK_API_POWER_SAVER;
+    public static final ModConfigSpec.ConfigValue<String> SUNBLOCK_API_TOKEN;
+    public static final ModConfigSpec.ConfigValue<Double> BATTERY_CAPACITY;
+    public static final ModConfigSpec.ConfigValue<Integer> POWER_PROFILE_COOLDOWN;
 
     static {
         BUILDER.push("Server");

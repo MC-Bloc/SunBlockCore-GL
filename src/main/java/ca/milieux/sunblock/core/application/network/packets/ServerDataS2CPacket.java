@@ -7,7 +7,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /* Server data packets are sent from the server to clients whenever a new
    "solar_data" reading arrives over the websocket (see ServerManager.onSolarData).
@@ -104,29 +104,27 @@ public record ServerDataS2CPacket(
         return TYPE;
     }
 
-    /** Invoked on the client's main thread when a packet of this type arrives. */
-    public static void handle(ServerDataS2CPacket packet, CustomPayloadEvent.Context ctx) {
-        ctx.enqueueWork(() -> {
-            SolarServerData.cpuTemp = packet.cpuTemp;
-            SolarServerData.power = packet.power;
+    /** Invoked on the client's main thread when a packet of this type arrives (NeoForge runs payload handlers on the main thread by default). */
+    public static void handle(ServerDataS2CPacket packet, IPayloadContext context) {
+        SolarServerData.cpuTemp = packet.cpuTemp;
+        SolarServerData.power = packet.power;
 
-            SolarServerData.pvVoltage = packet.pvVoltage;
-            SolarServerData.pvCurrent = packet.pvCurrent;
-            SolarServerData.pvPower = packet.pvPower;
+        SolarServerData.pvVoltage = packet.pvVoltage;
+        SolarServerData.pvCurrent = packet.pvCurrent;
+        SolarServerData.pvPower = packet.pvPower;
 
-            SolarServerData.battVoltage = packet.battVoltage;
-            SolarServerData.battChargeCurrent = packet.battChargeCurrent;
-            SolarServerData.battChargePower = packet.battChargePower;
+        SolarServerData.battVoltage = packet.battVoltage;
+        SolarServerData.battChargeCurrent = packet.battChargeCurrent;
+        SolarServerData.battChargePower = packet.battChargePower;
 
-            SolarServerData.lPower = packet.lPower;
+        SolarServerData.lPower = packet.lPower;
 
-            SolarServerData.battRemaining = packet.battRemaining;
-            SolarServerData.battOverallCurrent = packet.battOverallCurrent;
-            SolarServerData.timeRemaining = packet.timeRemaining;
-            SolarServerData.timestamp = packet.timestamp;
-            SolarServerData.powerProfile = packet.powerProfile;
+        SolarServerData.battRemaining = packet.battRemaining;
+        SolarServerData.battOverallCurrent = packet.battOverallCurrent;
+        SolarServerData.timeRemaining = packet.timeRemaining;
+        SolarServerData.timestamp = packet.timestamp;
+        SolarServerData.powerProfile = packet.powerProfile;
 
-            SolarServerData.cooldownSecondsRemaining = packet.cooldownSecondsRemaining;
-        });
+        SolarServerData.cooldownSecondsRemaining = packet.cooldownSecondsRemaining;
     }
 }

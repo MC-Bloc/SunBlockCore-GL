@@ -2,40 +2,37 @@ package ca.milieux.sunblock.core.application.client;
 
 import ca.milieux.sunblock.core.SunBlockCore;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.time.LocalDateTime;
-@Mod.EventBusSubscriber(modid = SunBlockCore.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = SunBlockCore.MODID, value = Dist.CLIENT)
 public class ClientForgeHandler {
 
     static Minecraft mc = Minecraft.getInstance();
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         HUD.statsIndex = LocalDateTime.now().toLocalTime().toSecondOfDay() % 15;
-        if (event.phase == TickEvent.Phase.END) {
-            if (HUD.type == HUDType.GraphicalV0 && KeyBindings.INSTANCE.HUDDetailsKey.consumeClick())
-            {
-                if (mc.screen == null) {
-                    mc.setScreen(new HUDSettings());
-                }
+        if (HUD.type == HUDType.GraphicalV0 && KeyBindings.INSTANCE.HUDDetailsKey.consumeClick())
+        {
+            if (mc.screen == null) {
+                mc.setScreen(new HUDSettings());
             }
+        }
 
-            if (KeyBindings.INSTANCE.HUDCycleForward.consumeClick()) {
-                if (HUD.type == HUDType.GraphicalV0) {
-                    HUD.type = HUDType.TextV1;
-                } else if (HUD.type == HUDType.TextV1) {
-                    HUD.type = HUDType.TextV0;
-                } else if (HUD.type == HUDType.TextV0) {
-                    HUD.type = HUDType.None;
-                } else if (HUD.type == HUDType.None) {
-                    HUD.type = HUDType.GraphicalV0;
-                }
+        if (KeyBindings.INSTANCE.HUDCycleForward.consumeClick()) {
+            if (HUD.type == HUDType.GraphicalV0) {
+                HUD.type = HUDType.TextV1;
+            } else if (HUD.type == HUDType.TextV1) {
+                HUD.type = HUDType.TextV0;
+            } else if (HUD.type == HUDType.TextV0) {
+                HUD.type = HUDType.None;
+            } else if (HUD.type == HUDType.None) {
+                HUD.type = HUDType.GraphicalV0;
             }
-
         }
     }
 }
