@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[52,)"
+loaderVersion="[2,)"
 license="All Rights Reserved"
 issueTrackerURL=" "
 [[mods]]
@@ -11,14 +11,14 @@ issueTrackerURL=" "
     description='''The core mod for SunBlock - the solar-powered minecraft server.'''
 
 [[dependencies.sunblockcore]]
-    modId="forge"
-    mandatory=true
-    versionRange="[52,)"
+    modId="neoforge"
+    type="required"
+    versionRange="${neoforge_version_range}"
     ordering="NONE"
     side="BOTH"
 [[dependencies.sunblockcore]]
     modId="minecraft"
-    mandatory=true
+    type="required"
     versionRange="[1.21.1,)"
     ordering="NONE"
     side="BOTH"

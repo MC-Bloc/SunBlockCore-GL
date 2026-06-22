@@ -2,8 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'net.neoforged.moddev' version '2.0.141'
 }
 
 version = mod_version
@@ -17,94 +16,50 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-minecraft {
-    // The mappings can be changed at any time and must be in the following format.
-    // Channel:   Version:
-    // official   MCVersion             Official field/method names from Mojang mapping files
-    // parchment  YYYY.MM.DD-MCVersion  Open community-sourced parameter names and javadocs layered on top of official
-    //
-    // You must be aware of the Mojang license when using the 'official' or 'parchment' mappings.
-    // See more information here: https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
-    //
-    // Parchment is an unofficial project maintained by ParchmentMC, separate from MinecraftForge
-    // Additional setup is needed to use their mappings: https://parchmentmc.org/docs/getting-started
-    //
-    // Use non-default mappings at your own risk. They may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: mapping_channel, version: mapping_version
+neoForge {
+    version = neoforge_version
 
-    // When true, this property will have all Eclipse/IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
-    // In most cases, it is not necessary to enable.
-    // enableEclipsePrepareRuns = true
-    // enableIdeaPrepareRuns = true
+    // Parchment community mappings (parameter names + docs) layered on top of official Mojang mappings.
+    // See https://parchmentmc.org/docs/getting-started
+    parchment {
+        minecraftVersion = parchment_minecraft_version
+        mappingsVersion = parchment_mappings_version
+    }
 
-    // This property allows configuring Gradle's ProcessResources task(s) to run on IDE output locations before launching the game.
-    // It is REQUIRED to be set to true for this template to function.
-    // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
-    copyIdeResources = true
-
-    // When true, this property will add the folder name of all declared run configurations to generated IDE run configurations.
-    // The folder name can be set on a run configuration using the "folderName" property.
-    // By default, the folder name of a run configuration is the name of the Gradle project containing it.
-    // generateRunFolders = true
-
-    // This property enables access transformers for use in development.
-    // They will be applied to the Minecraft artifact.
-    // The access transformer file can be anywhere in the project.
-    // However, it must be at "META-INF/accesstransformer.cfg" in the final mod jar to be loaded by Forge.
-    // This default location is a best practice to automatically put the file in the right place in the final jar.
-    // See https://docs.minecraftforge.net/en/latest/advanced/accesstransformers/ for more information.
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
     runs {
-        // applies to all the run configs below
-        configureEach {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            // The markers can be added/remove as needed separated by commas.
-            // "SCAN": For mods scan.
-            // "REGISTRIES": For firing of registry events.
-            // "REGISTRYDUMP": For getting the contents of all registries.
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            // Recommended logging level for the console
-            // You can set various levels here.
-            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
         client {
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', mod_id
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
         server {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            args '--nogui'
+            server()
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+            programArgument '--nogui'
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
         // By default, the server will crash when no gametests are provided.
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
         data {
-            // example of overriding the workingDirectory set in configureEach above
-            workingDirectory project.file('run-data')
-
+            data()
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').absolutePath, '--existing', file('src/main/resources/').absolutePath
+        }
+
+        configureEach {
+            gameDirectory = project.file('run')
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
         }
     }
 }
@@ -112,29 +67,22 @@ minecraft {
 // Include resources generated by data generators.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-// FML 52.x ClasspathLocator discovers mods by scanning the JVM classloader for mods.toml,
-// then creates a SecureJar from ONLY the directory that contains it (build/resources/main).
-// That SecureJar has no .class files, so @Mod annotation scanning finds nothing and the mod
-// fails to load with "0 mods constructed". Fix: redirect processResources output into the
-// same directory as compiled classes so that ClasspathLocator gets one dir with both.
-sourceSets.main.output.resourcesDir = sourceSets.main.java.classesDirectory
+// NOTE: Forge 52.x needed `sourceSets.main.output.resourcesDir = sourceSets.main.java.classesDirectory`
+// to work around an FML ClasspathLocator bug that left compiled classes out of the mod's discovered
+// SecureJar. ModDevGradle's dev-mode mod discovery is a different mechanism — intentionally NOT porting
+// this workaround. If "mods that were not found" reappears under runClient, investigate ModDevGradle's
+// mod discovery first before reintroducing an equivalent fix.
 
 // Bundle non-Minecraft runtime dependencies (e.g. the Socket.IO client) into the mod jar.
-// jarJar embeds them under META-INF/jarjar/; Forge's JarJar classloader exposes them at runtime.
-//
-// The plain `jar` task is given a 'dev' classifier so it doesn't conflict with the jarJar output.
-// `jarJar` produces sunblockcore-<version>.jar (no classifier) — that is the file to distribute.
-// `./gradlew build` runs both tasks; upload only the file without a classifier suffix.
-jarJar.enable()
-
-// Wire jarJar into the standard build lifecycle so `./gradlew build` produces it.
-// Output: sunblockcore-<version>.jar (thin, no deps) and sunblockcore-<version>-all.jar (distribute this one).
-tasks.named('jarJar').configure { archiveClassifier = 'all' }
-tasks.named('build').configure { dependsOn 'jarJar' }
+// ModDevGradle wires its `jarJar` task directly into the regular `jar` task's inputs
+// (JarJarPlugin#apply does `jar.from(jarJarTask)`), so unlike the old ForgeGradle setup
+// there is no separate thin/fat jar split here: `./gradlew build` produces a single
+// sunblockcore-<version>.jar that already has the jarJar dependencies embedded under
+// META-INF/jarjar/ — that is the only jar, and it's the one to distribute.
 
 repositories {
     // Put repositories for dependencies here
-    // ForgeGradle automatically adds the Forge maven and Maven Central for you
+    // ModDevGradle automatically adds the NeoForged maven and Maven Central for you
 
     // Mojang's own library CDN — some LWJGL natives artifacts referenced by the
     // 1.21.x version manifest (e.g. lwjgl-freetype:3.3.3:natives-macos-patch,
@@ -153,34 +101,25 @@ repositories {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use.
-    // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
-    // The "userdev" classifier will be requested and setup by ForgeGradle.
-    // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
-    // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
     // Socket.IO client — used by SolarSocketClient to receive live solar telemetry
     // pushes ("solar_data") from the SunBlockExpress API instead of polling a JSON
-    // file every second. It isn't present on the Forge/Minecraft classpath at
+    // file every second. It isn't present on the NeoForge/Minecraft classpath at
     // runtime, so it must be declared BOTH ways:
     //
-    //  1. Via ForgeGradle's `minecraftLibrary` configuration — this is the
-    //     configuration ForgeGradle feeds into the `minecraft_classpath` lazy
-    //     token used to build the actual JVM classpath for `runClient` /
+    //  1. Via `additionalRuntimeClasspath` — this is ModDevGradle's mechanism for
+    //     adding non-mod libraries to the actual JVM classpath used by `runClient` /
     //     `runServer` (a plain `implementation`/`compileOnly` dependency is NOT
     //     enough — it never reaches that launch classpath, which is what was
     //     causing `ClassNotFoundException: io.socket.client.IO` when testing
-    //     with runClient). `minecraftLibrary` also extendsFrom into
-    //     `implementation`, so normal compilation keeps working too.
+    //     with runClient under the old ForgeGradle `minecraftLibrary` setup).
     //  2. Registered with `jarJar` — this embeds it into the shipped mod jar so
-    //     production servers/clients have it too (see the jarJar.enable() note
-    //     below for which build artifact to actually deploy).
+    //     production servers/clients have it too (see the jarJar note above for
+    //     which build artifact to actually deploy — there's only one now).
     //
     //     IMPORTANT: `jarJar(...)` only writes a metadata.json entry for the
     //     dependency it's given directly — NOT for transitive dependencies,
     //     even though Gradle still physically embeds their jars under
-    //     META-INF/jarjar/. Without a metadata entry Forge's JarJar
+    //     META-INF/jarjar/. Without a metadata entry the JarJar
     //     classloader won't expose those nested jars as usable modules, which
     //     is what caused `NoClassDefFoundError: io/socket/engineio/client/
     //     Socket$Options` (and would similarly break on okhttp/okio/org.json
@@ -188,33 +127,34 @@ dependencies {
     //     socket.io-client actually needs at runtime must be jarJar-registered
     //     explicitly too — see `dependencies --configuration jarJar` for the
     //     resolved tree this list mirrors.
-    minecraftLibrary 'io.socket:socket.io-client:2.1.1'
-    jarJar('io.socket:socket.io-client:2.1.1') {
-        jarJar.ranged(it, '[2.1.0,3.0)')
+    additionalRuntimeClasspath 'io.socket:socket.io-client:2.1.1'
+    implementation 'io.socket:socket.io-client:2.1.1'
+    jarJar('io.socket:socket.io-client') {
+        version { strictly '[2.1.0,3.0)'; prefer '2.1.1' }
     }
-    jarJar('io.socket:engine.io-client:2.1.0') {
-        jarJar.ranged(it, '[2.1.0,3.0)')
+    jarJar('io.socket:engine.io-client') {
+        version { strictly '[2.1.0,3.0)'; prefer '2.1.0' }
     }
-    jarJar('com.squareup.okhttp3:okhttp:3.12.12') {
-        jarJar.ranged(it, '[3.12.12,4.0)')
+    jarJar('com.squareup.okhttp3:okhttp') {
+        version { strictly '[3.12.12,4.0)'; prefer '3.12.12' }
     }
-    jarJar('com.squareup.okio:okio:1.15.0') {
-        jarJar.ranged(it, '[1.15.0,2.0)')
+    jarJar('com.squareup.okio:okio') {
+        version { strictly '[1.15.0,2.0)'; prefer '1.15.0' }
     }
-    jarJar('org.json:json:20090211') {
-        jarJar.ranged(it, '[20090211,)')
+    jarJar('org.json:json') {
+        version { strictly '[20090211,)'; prefer '20090211' }
     }
 
-    // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
-    // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
-    // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+    // Example mod dependency with JEI - using the NeoForge "deobf" helper ensures the dependency is
+    // remapped to your development mappings.
+    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
+    // compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
+    // runtimeOnly "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
+    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -228,19 +168,19 @@ dependencies {
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-            forge_version: forge_version, forge_version_range: forge_version_range,
-            loader_version_range: loader_version_range,
+            neoforge_version: neoforge_version, neoforge_version_range: neoforge_version_range,
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
             mod_authors: mod_authors, mod_description: mod_description,
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
     }
 }
 
-// Embed manifest attributes in both the thin dev jar and the distributable jarJar output.
+// Embed manifest attributes in the distributable jar (jarJar dependencies are folded into
+// this same `jar` task's output by ModDevGradle, so there's only one manifest to set).
 def manifestAttributes = [
         'Specification-Title'     : mod_id,
         'Specification-Vendor'    : mod_authors,
@@ -251,9 +191,6 @@ def manifestAttributes = [
         'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
 ]
 tasks.named('jar', Jar).configure { manifest { attributes(manifestAttributes) } }
-tasks.named('jarJar', Jar).configure { manifest { attributes(manifestAttributes) } }
-
-// reobfJar was removed in ForgeGradle 6 — FG6 no longer requires a separate re-obfuscation step.
 
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {
