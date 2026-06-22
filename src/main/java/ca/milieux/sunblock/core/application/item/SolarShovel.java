@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 
 public class SolarShovel extends ShovelItem {
@@ -29,10 +28,6 @@ public class SolarShovel extends ShovelItem {
         return super.isEnchantable(pStack);
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return super.canApplyAtEnchantingTable(stack, enchantment);
-    }
 
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
