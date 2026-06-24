@@ -1,4 +1,4 @@
 {
-  "parent": "sunblockcore:item/solar_sword_base",
+  "parent": "sunblockcore:item/solar_sword",
   "textures": { "layer0": "sunblockcore:item/solar_sword_low" }
 }

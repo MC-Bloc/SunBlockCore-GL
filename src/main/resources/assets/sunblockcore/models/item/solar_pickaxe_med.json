@@ -1,4 +1,4 @@
 {
-  "parent": "sunblockcore:item/solar_pickaxe_base",
+  "parent": "sunblockcore:item/solar_pickaxe",
   "textures": { "layer0": "sunblockcore:item/solar_pickaxe_med" }
 }

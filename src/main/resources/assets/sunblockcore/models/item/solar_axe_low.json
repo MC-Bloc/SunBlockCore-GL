@@ -1,4 +1,4 @@
 {
-  "parent": "sunblockcore:item/solar_axe_base",
+  "parent": "sunblockcore:item/solar_axe",
   "textures": { "layer0": "sunblockcore:item/solar_axe_low" }
 }

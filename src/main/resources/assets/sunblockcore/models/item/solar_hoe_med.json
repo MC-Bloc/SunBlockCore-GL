@@ -1,4 +1,4 @@
 {
-  "parent": "sunblockcore:item/solar_hoe_base",
+  "parent": "sunblockcore:item/solar_hoe",
   "textures": { "layer0": "sunblockcore:item/solar_hoe_med" }
 }
