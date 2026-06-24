@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "G": {
-      "item": "minecraft:gray_stained_glass_pane"
-    },
     "C": {
       "item": "minecraft:copper_block"
+    },
+    "G": {
+      "item": "minecraft:gray_stained_glass_pane"
     },
     "L": {
       "item": "minecraft:lightning_rod"
