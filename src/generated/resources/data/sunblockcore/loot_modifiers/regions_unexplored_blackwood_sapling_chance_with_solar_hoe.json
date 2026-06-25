@@ -3,7 +3,7 @@
   "conditions": [
     {
       "block": "regions_unexplored:blackwood_leaves",
-      "condition": "minecraft:block_state_property"
+      "condition": "sunblockcore:has_block_id"
     },
     {
       "chance": 0.37,

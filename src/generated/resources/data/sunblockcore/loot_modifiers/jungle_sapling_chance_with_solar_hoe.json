@@ -2,8 +2,8 @@
   "type": "sunblockcore:add_item",
   "conditions": [
     {
-      "block": "minecraft:mangrove_leaves",
-      "condition": "minecraft:block_state_property"
+      "block": "minecraft:jungle_leaves",
+      "condition": "sunblockcore:has_block_id"
     },
     {
       "chance": 0.37,
@@ -18,5 +18,5 @@
       }
     }
   ],
-  "item": "minecraft:mangrove_propagule"
+  "item": "minecraft:jungle_sapling"
 }

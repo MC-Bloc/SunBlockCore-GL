@@ -2,7 +2,7 @@
   "type": "sunblockcore:add_item",
   "conditions": [
     {
-      "block": "natures_spirit:pink_wisteria_leaves",
+      "block": "minecraft:mangrove_leaves",
       "condition": "sunblockcore:has_block_id"
     },
     {
@@ -18,5 +18,5 @@
       }
     }
   ],
-  "item": "natures_spirit:pink_wisteria_sapling"
+  "item": "minecraft:mangrove_propagule"
 }

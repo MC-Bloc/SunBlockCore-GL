@@ -2,8 +2,8 @@
   "type": "sunblockcore:add_item",
   "conditions": [
     {
-      "block": "minecraft:jungle_leaves",
-      "condition": "minecraft:block_state_property"
+      "block": "minecraft:dark_oak_leaves",
+      "condition": "sunblockcore:has_block_id"
     },
     {
       "chance": 0.37,
@@ -18,5 +18,5 @@
       }
     }
   ],
-  "item": "minecraft:jungle_sapling"
+  "item": "minecraft:dark_oak_sapling"
 }

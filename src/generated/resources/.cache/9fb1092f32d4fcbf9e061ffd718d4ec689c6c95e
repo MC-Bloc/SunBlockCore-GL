@@ -1,0 +1,11 @@
+// 1.20.1	2026-06-21T20:24:55.155515	Recipes
+4cec7d3fa4a3753b7ee55929ceaa8c6b0c659d50 data/sunblockcore/advancements/recipes/combat/solar_sword.json
+55a7a8216350b35c9079afcedba3b327c67f98f0 data/sunblockcore/advancements/recipes/tools/solar_axe.json
+514cffe7c7810c3244c6eded39cb2533d2df5d8b data/sunblockcore/advancements/recipes/tools/solar_hoe.json
+45855ce43312d4ac3f914ffeafa10419f5ce6017 data/sunblockcore/advancements/recipes/tools/solar_pickaxe.json
+0c30049693bae5c9a3ad0ce4688fe53230444895 data/sunblockcore/advancements/recipes/tools/solar_shovel.json
+f26be1c5bb7ab9922862ccae8a33f039df89b507 data/sunblockcore/recipes/solar_axe.json
+cd6e039ed136f19aba30d3dfd77f4b8560956a16 data/sunblockcore/recipes/solar_hoe.json
+323f08477e16746b451cc17c94f6e19635fb1bc2 data/sunblockcore/recipes/solar_pickaxe.json
+0350dadddddb36d16e828fd044eaec17f96b64f3 data/sunblockcore/recipes/solar_shovel.json
+e309f2001076925772627d58a19600d65ad5ea03 data/sunblockcore/recipes/solar_sword.json
